@@ -417,20 +417,20 @@ function initPreloader() {
       const span = document.createElement("span");
       span.className = "letter" + (char === " " ? " space" : "") + (index < 9 ? " gold-char" : "");
       span.textContent = char === " " ? "\u00A0" : char;
-      span.style.animationDelay = `${0.3 + index * 0.065}s`;
+      span.style.animationDelay = `${0.35 + index * 0.075}s`;
       titleElem.appendChild(span);
     });
   }
 
-  // Smooth fade-out automatically opening the public page after 5 seconds
+  // Smooth fade-out after 5 seconds
   const hidePreloader = () => {
     preloader.classList.add("fade-out");
     setTimeout(() => {
       preloader.style.display = "none";
-    }, 800);
+    }, 850);
   };
 
-  // Exactly 5000ms (5 seconds) automatic transition to public page
+  // 5000ms countdown timer
   const autoHideTimer = setTimeout(hidePreloader, 5000);
 
   // Skip button click handler

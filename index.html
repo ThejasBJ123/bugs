@@ -18,13 +18,15 @@
     <button class="preloader-skip-btn" id="skipPreloaderBtn">Skip <i class="fa-solid fa-forward-step"></i></button>
     <div class="preloader-ambient-glow"></div>
     <div class="preloader-card">
-      <!-- Sacred God Avatar & Mantra -->
-      <div class="god-avatar-wrapper">
-        <div class="god-circle-frame">
-          <img src="assets/images/raghavendra-swamy.jpg" alt="Guru Sri Raghavendra Swamy" class="god-avatar-img">
+      <!-- Sacred God Avatar & Mantra inside Golden Animated Circle -->
+      <div class="god-circle-frame-container">
+        <div class="god-rotating-ring"></div>
+        <div class="god-outer-halo"></div>
+        <div class="god-circle-inner">
+          <img src="assets/images/raghavendra-swamy.jpg" alt="Guru Sri Raghavendra Swamy" class="god-circle-img">
         </div>
-        <div class="god-mantra">|| ಶ್ರೀ ರಾಘವೇಂದ್ರಾಯ ನಮಃ ||</div>
       </div>
+      <div class="god-mantra">|| ಶ್ರೀ ರಾಘವೇಂದ್ರಾಯ ನಮಃ ||</div>
 
       <!-- Company Logo -->
       <div class="preloader-logo-wrap">
@@ -44,27 +46,9 @@
       <div class="preloader-progress-wrap">
         <div class="preloader-progress-bar"></div>
       </div>
+      <div class="preloader-timer-label">Entering Experience...</div>
     </div>
   </div>
-
-  <script>
-    (function() {
-      function dismissIntro() {
-        var preloader = document.getElementById("sitePreloader");
-        if (preloader) {
-          preloader.classList.add("fade-out");
-          setTimeout(function() {
-            preloader.style.display = "none";
-          }, 800);
-        }
-      }
-      setTimeout(dismissIntro, 5000);
-      var skipBtn = document.getElementById("skipPreloaderBtn");
-      if (skipBtn) {
-        skipBtn.addEventListener("click", dismissIntro);
-      }
-    })();
-  </script>
 
   <!-- Top Bar with Official Contact Details -->
   <div class="top-bar">

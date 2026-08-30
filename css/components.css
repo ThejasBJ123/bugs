@@ -352,37 +352,14 @@
   color: #ffffff;
   padding: 1.5rem;
   overflow: hidden;
-  animation: preloaderAutoExit 0.8s ease 5s forwards;
   transition: opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.75s ease, transform 0.75s ease;
 }
 
 .site-preloader.fade-out {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  transform: scale(1.05) !important;
-  pointer-events: none !important;
-}
-
-@keyframes preloaderAutoExit {
-  0% {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-    transform: scale(1);
-  }
-  99% {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: scale(1.04);
-  }
-  100% {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    display: none;
-    transform: scale(1.04);
-  }
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.05);
+  pointer-events: none;
 }
 
 .preloader-ambient-glow {
@@ -406,63 +383,68 @@
   z-index: 2;
 }
 
-/* God Portrait Container - Ornate Divine Circular Frame */
-.god-avatar-wrapper {
+/* God Portrait Animated Circle Container */
+.god-circle-frame-container {
   position: relative;
-  margin-bottom: 0.95rem;
-  animation: godFloat 3.5s infinite ease-in-out;
+  width: 175px;
+  height: 175px;
+  margin: 0 auto 0.6rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.god-circle-frame {
-  width: 165px;
-  height: 165px;
-  border-radius: 50%;
-  padding: 4px;
-  background: linear-gradient(135deg, #dfb774 0%, #fef08a 35%, #b45309 70%, #dfb774 100%);
-  box-shadow: 0 0 40px rgba(223, 183, 116, 0.7), 0 0 80px rgba(223, 183, 116, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.god-circle-frame::before {
-  content: '';
+.god-rotating-ring {
   position: absolute;
-  inset: -7px;
+  inset: -12px;
   border-radius: 50%;
-  border: 1.5px dashed rgba(223, 183, 116, 0.65);
-  animation: rotateCircle 20s linear infinite;
+  border: 3px dashed #dfb774;
+  animation: rotateRays 14s linear infinite;
+  pointer-events: none;
+  box-shadow: 0 0 25px rgba(223, 183, 116, 0.4);
+}
+
+.god-outer-halo {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(245, 158, 11, 0.7);
+  box-shadow: 0 0 45px rgba(223, 183, 116, 0.8), 0 0 90px rgba(223, 183, 116, 0.45);
+  animation: haloGlow 2.5s infinite alternate ease-in-out;
   pointer-events: none;
 }
 
-@keyframes rotateCircle {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.god-avatar-img {
+.god-circle-inner {
   width: 100%;
   height: 100%;
   border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #dfb774;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.5);
+  position: relative;
+  background: #02201d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.god-circle-img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: 50% 20%;
   display: block;
-  border: 2.5px solid #02201d;
-  background: #02201d;
+  animation: godZoomBreath 4.5s infinite alternate ease-in-out;
 }
 
 .god-mantra {
   display: inline-block;
   color: #dfb774;
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.08em;
-  margin-top: 0.75rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.6rem;
   text-shadow: 0 2px 14px rgba(223, 183, 116, 0.7);
   animation: mantraGlow 2.5s infinite alternate ease-in-out;
 }
@@ -500,7 +482,7 @@
   display: inline-block;
   opacity: 0;
   transform: translateY(18px) scale(0.7);
-  animation: letterReveal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: letterReveal 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 .animated-letters-title .letter.space {
@@ -518,12 +500,12 @@
   letter-spacing: 0.05em;
   margin-bottom: 1.5rem;
   opacity: 0;
-  animation: subFadeIn 0.8s ease 1.2s forwards;
+  animation: subFadeIn 0.8s ease 1.8s forwards;
 }
 
 /* 5-Second Progress Bar */
 .preloader-progress-wrap {
-  width: 260px;
+  width: 250px;
   height: 6px;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 9999px;
@@ -619,5 +601,34 @@
   }
   100% {
     width: 100%;
+  }
+}
+
+@keyframes rotateRays {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes haloGlow {
+  0% {
+    transform: scale(0.96);
+    box-shadow: 0 0 35px rgba(223, 183, 116, 0.65), 0 0 70px rgba(223, 183, 116, 0.35);
+  }
+  100% {
+    transform: scale(1.05);
+    box-shadow: 0 0 55px rgba(223, 183, 116, 0.95), 0 0 110px rgba(223, 183, 116, 0.55);
+  }
+}
+
+@keyframes godZoomBreath {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.08);
   }
 }
