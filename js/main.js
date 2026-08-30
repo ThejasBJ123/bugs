@@ -129,6 +129,17 @@ function initNavbar() {
       toggleMenu();
     });
 
+    // Add Staff Portal link to mobile menu if not present
+    if (!navMenu.querySelector("a[href='admin.html']")) {
+      const adminLink = document.createElement("a");
+      adminLink.href = "admin.html";
+      adminLink.className = "nav-link";
+      adminLink.style.borderColor = "var(--gold-400)";
+      adminLink.style.color = "var(--gold-600)";
+      adminLink.innerHTML = `<span><i class="fa-solid fa-lock" style="margin-right: 0.5rem; color: var(--gold-500);"></i> Staff Portal</span> <i class="fa-solid fa-arrow-right" style="font-size: 0.8rem;"></i>`;
+      navMenu.appendChild(adminLink);
+    }
+
     // Close menu when clicking nav links
     const navLinks = navMenu.querySelectorAll(".nav-link");
     navLinks.forEach(link => {
