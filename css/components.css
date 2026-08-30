@@ -495,10 +495,10 @@
   letter-spacing: 0.05em;
   margin-bottom: 1.5rem;
   opacity: 0;
-  animation: subFadeIn 0.8s ease 3s forwards;
+  animation: subFadeIn 0.8s ease 1.2s forwards;
 }
 
-/* 10-Second Progress Bar */
+/* 5-Second Progress Bar */
 .preloader-progress-wrap {
   width: 260px;
   height: 6px;
@@ -514,7 +514,7 @@
   width: 0%;
   background: linear-gradient(90deg, #dfb774, #f59e0b, #10b981);
   border-radius: 9999px;
-  animation: progress10Sec 10s linear forwards;
+  animation: progress5Sec 5s linear forwards;
   box-shadow: 0 0 10px rgba(223, 183, 116, 0.8);
 }
 
@@ -590,7 +590,7 @@
   }
 }
 
-@keyframes progress10Sec {
+@keyframes progress5Sec {
   0% {
     width: 0%;
   }
