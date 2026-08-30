@@ -1119,29 +1119,6 @@ ul, ol {
   }
 }
 
-.floating-rfq-btn {
-  position: fixed;
-  bottom: 102px;
-  right: 28px;
-  padding: 0.75rem 1.25rem;
-  border-radius: 9999px;
-  background: linear-gradient(135deg, var(--gold-500), var(--gold-700));
-  color: var(--primary-900);
-  font-weight: 800;
-  font-size: 0.875rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  box-shadow: 0 8px 20px rgba(197, 157, 95, 0.4);
-  z-index: 99998;
-  transition: all var(--transition-normal);
-}
-
-.floating-rfq-btn:hover {
-  transform: scale(1.06) translateY(-2px);
-  box-shadow: 0 12px 28px rgba(197, 157, 95, 0.6);
-}
-
 /* ==========================================================================
    Responsive Overhaul for Tablets & Mobile (320px - 1024px)
    ========================================================================== */
@@ -1464,15 +1441,6 @@ ul, ol {
 
   .floating-whatsapp .wa-tooltip {
     display: none !important;
-  }
-
-  .floating-rfq-btn {
-    bottom: 1.25rem !important;
-    left: 1.15rem !important;
-    right: auto !important;
-    font-size: 0.775rem !important;
-    padding: 0.65rem 1rem !important;
-    box-shadow: 0 6px 18px rgba(197, 157, 95, 0.45) !important;
   }
 }
 
