@@ -3,6 +3,7 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  initPreloader();
   initNavbar();
   initToast();
   initRFQModal();
@@ -398,6 +399,51 @@ function initProductGrid() {
   render("All");
 }
 
+/* ==========================================================================
+   Divine 5-Second Intro Preloader Controller with Letter-by-Letter Animation
+   ========================================================================== */
+
+function initPreloader() {
+  const preloader = document.getElementById("sitePreloader");
+  if (!preloader) return;
+
+  // Generate Letter-by-Letter Staggered Animation for Company Name
+  const titleElem = document.getElementById("animatedPreloaderTitle");
+  if (titleElem) {
+    const text = "RAYASHREE WEAVING PVT. LTD.";
+    titleElem.innerHTML = "";
+    
+    [...text].forEach((char, index) => {
+      const span = document.createElement("span");
+      span.className = "letter" + (char === " " ? " space" : "") + (index < 9 ? " gold-char" : "");
+      span.textContent = char === " " ? "\u00A0" : char;
+      span.style.animationDelay = `${0.35 + index * 0.075}s`;
+      titleElem.appendChild(span);
+    });
+  }
+
+  // Smooth fade-out after 5 seconds
+  const hidePreloader = () => {
+    preloader.classList.add("fade-out");
+    setTimeout(() => {
+      preloader.style.display = "none";
+    }, 850);
+  };
+
+  // 5000ms countdown timer
+  const autoHideTimer = setTimeout(hidePreloader, 5000);
+
+  // Skip button click handler
+  const skipBtn = document.getElementById("skipPreloaderBtn");
+  if (skipBtn) {
+    skipBtn.addEventListener("click", () => {
+      clearTimeout(autoHideTimer);
+      hidePreloader();
+    });
+  }
+}
+
 window.openRFQModal = openRFQModal;
 window.closeRFQModal = closeRFQModal;
 window.showToast = showToast;
+
