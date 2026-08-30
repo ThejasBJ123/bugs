@@ -44,9 +44,27 @@
       <div class="preloader-progress-wrap">
         <div class="preloader-progress-bar"></div>
       </div>
-      <div class="preloader-timer-label">Entering Experience...</div>
     </div>
   </div>
+
+  <script>
+    (function() {
+      function dismissIntro() {
+        var preloader = document.getElementById("sitePreloader");
+        if (preloader) {
+          preloader.classList.add("fade-out");
+          setTimeout(function() {
+            preloader.style.display = "none";
+          }, 800);
+        }
+      }
+      setTimeout(dismissIntro, 5000);
+      var skipBtn = document.getElementById("skipPreloaderBtn");
+      if (skipBtn) {
+        skipBtn.addEventListener("click", dismissIntro);
+      }
+    })();
+  </script>
 
   <!-- Top Bar with Official Contact Details -->
   <div class="top-bar">

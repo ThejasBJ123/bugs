@@ -352,14 +352,37 @@
   color: #ffffff;
   padding: 1.5rem;
   overflow: hidden;
+  animation: preloaderAutoExit 0.8s ease 5s forwards;
   transition: opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.75s ease, transform 0.75s ease;
 }
 
 .site-preloader.fade-out {
-  opacity: 0;
-  visibility: hidden;
-  transform: scale(1.05);
-  pointer-events: none;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: scale(1.05) !important;
+  pointer-events: none !important;
+}
+
+@keyframes preloaderAutoExit {
+  0% {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: scale(1);
+  }
+  99% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    display: none;
+    transform: scale(1.04);
+  }
 }
 
 .preloader-ambient-glow {
