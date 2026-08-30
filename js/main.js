@@ -400,7 +400,7 @@ function initProductGrid() {
 }
 
 /* ==========================================================================
-   Divine 5-Second Intro Preloader Controller with Letter-by-Letter Animation
+   Divine 10-Second Intro Preloader Controller with Letter-by-Letter Animation
    ========================================================================== */
 
 function initPreloader() {
@@ -417,7 +417,7 @@ function initPreloader() {
       const span = document.createElement("span");
       span.className = "letter" + (char === " " ? " space" : "") + (index < 9 ? " gold-char" : "");
       span.textContent = char === " " ? "\u00A0" : char;
-      span.style.animationDelay = `${0.4 + index * 0.1}s`;
+      span.style.animationDelay = `${0.5 + index * 0.1}s`;
       titleElem.appendChild(span);
     });
   }
@@ -430,7 +430,7 @@ function initPreloader() {
     }, 850);
   };
 
-  // 10000ms countdown timer (10 Seconds)
+  // 10000ms countdown timer (10 seconds)
   const autoHideTimer = setTimeout(hidePreloader, 10000);
 
   // Skip button click handler

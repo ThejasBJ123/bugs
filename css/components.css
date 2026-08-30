@@ -383,33 +383,64 @@
   z-index: 2;
 }
 
-/* God Portrait Container */
+/* God Portrait Container - Ornate Divine Circular Frame */
 .god-avatar-wrapper {
   position: relative;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.95rem;
   animation: godFloat 3.5s infinite ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.god-circle-frame {
+  width: 165px;
+  height: 165px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, #dfb774 0%, #fef08a 35%, #b45309 70%, #dfb774 100%);
+  box-shadow: 0 0 40px rgba(223, 183, 116, 0.7), 0 0 80px rgba(223, 183, 116, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.god-circle-frame::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(223, 183, 116, 0.65);
+  animation: rotateCircle 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotateCircle {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .god-avatar-img {
-  width: 140px;
-  height: 140px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  object-position: top center;
-  border: 3.5px solid #dfb774;
-  box-shadow: 0 0 35px rgba(223, 183, 116, 0.65), 0 0 65px rgba(223, 183, 116, 0.35);
-  background: #02201d;
+  object-position: 50% 20%;
   display: block;
+  border: 2.5px solid #02201d;
+  background: #02201d;
 }
 
 .god-mantra {
   display: inline-block;
   color: #dfb774;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  margin-top: 0.65rem;
-  text-shadow: 0 2px 12px rgba(223, 183, 116, 0.6);
+  margin-top: 0.75rem;
+  text-shadow: 0 2px 14px rgba(223, 183, 116, 0.7);
   animation: mantraGlow 2.5s infinite alternate ease-in-out;
 }
 
@@ -446,7 +477,7 @@
   display: inline-block;
   opacity: 0;
   transform: translateY(18px) scale(0.7);
-  animation: letterReveal 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: letterReveal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 .animated-letters-title .letter.space {
@@ -464,7 +495,7 @@
   letter-spacing: 0.05em;
   margin-bottom: 1.5rem;
   opacity: 0;
-  animation: subFadeIn 0.8s ease 1.8s forwards;
+  animation: subFadeIn 0.8s ease 3s forwards;
 }
 
 /* 10-Second Progress Bar */
@@ -489,10 +520,9 @@
 
 .preloader-timer-label {
   font-size: 0.75rem;
-  color: rgba(223, 183, 116, 0.85);
+  color: rgba(223, 183, 116, 0.8);
   margin-top: 0.5rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
 }
 
 .preloader-skip-btn {
