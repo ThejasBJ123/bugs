@@ -44,8 +44,19 @@ function applyDynamicSiteContent() {
   });
 
   const waLinks = document.querySelectorAll("a[href*='wa.me']");
+  const waNum = company.whatsappNumber || '919108713258';
   waLinks.forEach(a => {
-    a.href = `https://wa.me/${company.whatsappNumber || '919108713258'}`;
+    if (a.classList.contains("floating-whatsapp")) {
+      a.href = `https://wa.me/${waNum}?text=Hello%20Rayashree%20Weaving,%20I%20am%20interested%20in%20your%20products.`;
+      if (!a.querySelector(".wa-tooltip")) {
+        const tip = document.createElement("span");
+        tip.className = "wa-tooltip";
+        tip.textContent = "Chat on WhatsApp";
+        a.appendChild(tip);
+      }
+    } else if (!a.href.includes("?text=")) {
+      a.href = `https://wa.me/${waNum}`;
+    }
   });
 
   // 2. Home Page Hero & Stats (if on index.html)
@@ -98,24 +109,38 @@ function initNavbar() {
   const navMenu = document.getElementById("navMenu");
 
   if (mobileToggle && navMenu) {
-    mobileToggle.addEventListener("click", () => {
-      navMenu.classList.toggle("active");
+    const toggleMenu = (open) => {
+      const shouldOpen = open !== undefined ? open : !navMenu.classList.contains("active");
+      if (shouldOpen) {
+        navMenu.classList.add("active");
+        document.body.style.overflow = "hidden";
+      } else {
+        navMenu.classList.remove("active");
+        document.body.style.overflow = "";
+      }
       const icon = mobileToggle.querySelector("i");
       if (icon) {
-        if (navMenu.classList.contains("active")) {
-          icon.className = "fa-solid fa-xmark";
-        } else {
-          icon.className = "fa-solid fa-bars";
-        }
+        icon.className = shouldOpen ? "fa-solid fa-xmark" : "fa-solid fa-bars";
       }
+    };
+
+    mobileToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    // Close menu when clicking nav links
+    const navLinks = navMenu.querySelectorAll(".nav-link");
+    navLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        toggleMenu(false);
+      });
     });
 
     // Close menu when clicking outside
     document.addEventListener("click", (e) => {
-      if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
-        navMenu.classList.remove("active");
-        const icon = mobileToggle.querySelector("i");
-        if (icon) icon.className = "fa-solid fa-bars";
+      if (navMenu.classList.contains("active") && !navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+        toggleMenu(false);
       }
     });
   }
