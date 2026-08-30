@@ -467,9 +467,9 @@
   animation: subFadeIn 0.8s ease 1.8s forwards;
 }
 
-/* 5-Second Progress Bar */
+/* 10-Second Progress Bar */
 .preloader-progress-wrap {
-  width: 250px;
+  width: 260px;
   height: 6px;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 9999px;
@@ -483,15 +483,16 @@
   width: 0%;
   background: linear-gradient(90deg, #dfb774, #f59e0b, #10b981);
   border-radius: 9999px;
-  animation: progress5Sec 5s linear forwards;
+  animation: progress10Sec 10s linear forwards;
   box-shadow: 0 0 10px rgba(223, 183, 116, 0.8);
 }
 
 .preloader-timer-label {
   font-size: 0.75rem;
-  color: rgba(223, 183, 116, 0.8);
+  color: rgba(223, 183, 116, 0.85);
   margin-top: 0.5rem;
   font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 .preloader-skip-btn {
@@ -559,7 +560,7 @@
   }
 }
 
-@keyframes progress5Sec {
+@keyframes progress10Sec {
   0% {
     width: 0%;
   }
