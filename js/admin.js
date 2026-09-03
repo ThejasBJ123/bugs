@@ -528,8 +528,7 @@ function initProductManager() {
       document.getElementById("prodFormId").value = "";
       document.getElementById("prodFormName").value = "";
       
-      const currentProducts = getProducts();
-      document.getElementById("prodFormBadge").value = `${currentProducts.length + 1}. Bag`;
+      document.getElementById("prodFormBadge").value = "Premium Quality";
       document.getElementById("prodFormCategorySelect").value = "Feed & Agri";
       if (categoryCustom) {
         categoryCustom.value = "";
