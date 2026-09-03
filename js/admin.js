@@ -233,6 +233,9 @@ function renderInquiriesTable() {
       <td><span class="badge ${badgeClass}">${item.status}</span></td>
       <td>
         <div class="action-btns">
+          <button class="btn-icon" title="Copy Inquiry Details" onclick="copyInquiryDetails('${item.id}')">
+            <i class="fa-solid fa-copy"></i>
+          </button>
           <button class="btn-icon" title="Edit Status / Notes" onclick="openStatusModal('${item.id}')">
             <i class="fa-solid fa-pen-to-square"></i>
           </button>
@@ -511,6 +514,25 @@ function initProductManager() {
     });
   }
 
+  if (imageUrlInput) {
+    imageUrlInput.addEventListener("input", () => {
+      const val = imageUrlInput.value.trim();
+      if (val) {
+        if (previewImg) previewImg.src = val;
+        if (liveCardImg) liveCardImg.src = val;
+      }
+    });
+  }
+
+  const pSearch = document.getElementById("adminProductSearch");
+  const pCatFilter = document.getElementById("adminProductCategoryFilter");
+  if (pSearch) {
+    pSearch.addEventListener("input", renderProductsTable);
+  }
+  if (pCatFilter) {
+    pCatFilter.addEventListener("change", renderProductsTable);
+  }
+
   if (categorySelect && categoryCustom) {
     categorySelect.addEventListener("change", () => {
       if (categorySelect.value === "Custom") {
@@ -634,7 +656,7 @@ function initProductManager() {
       saveProducts(products);
       closeProductModal();
       renderProductsTable();
-      alert(`Success! Product "${name}" has been saved with its photo and published live to the public website home and catalog.`);
+      showAdminToast(`Product "${name}" published live to public website!`);
     });
   }
 }
@@ -648,12 +670,34 @@ function renderProductsTable() {
   const tbody = document.getElementById("productsTableBody");
   if (!tbody) return;
 
-  const products = getProducts();
+  const searchInput = document.getElementById("adminProductSearch");
+  const catFilter = document.getElementById("adminProductCategoryFilter");
+  const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
+  const selectedCat = catFilter ? catFilter.value : "All";
+
+  let products = getProducts();
+  if (selectedCat !== "All") {
+    products = products.filter(p => p.category === selectedCat);
+  }
+  if (query) {
+    products = products.filter(p => 
+      (p.name && p.name.toLowerCase().includes(query)) ||
+      (p.category && p.category.toLowerCase().includes(query)) ||
+      (p.gsmRange && p.gsmRange.toLowerCase().includes(query)) ||
+      (p.tagline && p.tagline.toLowerCase().includes(query))
+    );
+  }
+
   tbody.innerHTML = "";
+
+  if (products.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #64748b;">No products matched your filter. <button class="btn btn-sm btn-outline" style="margin-left: 0.5rem;" onclick="if(document.getElementById('adminProductSearch')) document.getElementById('adminProductSearch').value=''; if(document.getElementById('adminProductCategoryFilter')) document.getElementById('adminProductCategoryFilter').value='All'; renderProductsTable();">Clear Filters</button></td></tr>`;
+    return;
+  }
 
   const knownPages = ['cattle-feed', 'poultry-feed', 'cement', 'silage-bags', 'jute', 'linen-fabric', 'bags'];
 
-  products.forEach((p, index) => {
+  products.forEach((p) => {
     const tr = document.createElement("tr");
     const isDedicated = knownPages.includes(p.slug);
     const viewLink = isDedicated ? `${p.slug}.html` : `index.html#products`;
@@ -663,7 +707,7 @@ function renderProductsTable() {
         <img src="${p.image}" alt="${p.name}" style="width: 58px; height: 50px; object-fit: cover; border-radius: 8px; border: 1.5px solid #dfb774; box-shadow: 0 2px 5px rgba(0,0,0,0.08);" onerror="this.src='assets/images/bags.jpg'">
       </td>
       <td>
-        <div style="font-weight: 700; color: #032b27;">${index + 1}. ${p.name}</div>
+        <div style="font-weight: 700; color: #032b27;">${p.name}</div>
         <div style="font-size: 0.775rem; color: #64748b;">${p.tagline || ""}</div>
       </td>
       <td><span class="badge badge-under-review">${p.category}</span></td>
@@ -675,6 +719,9 @@ function renderProductsTable() {
           <a href="${viewLink}" class="btn-icon" title="View On Public Website" target="_blank">
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
+          <button class="btn-icon" title="Duplicate / Clone Product" onclick="cloneProduct('${p.id}')">
+            <i class="fa-solid fa-copy"></i>
+          </button>
           <button class="btn-icon" title="Edit Product" onclick="editProductRow('${p.id}')">
             <i class="fa-solid fa-pen"></i>
           </button>
@@ -686,6 +733,43 @@ function renderProductsTable() {
     `;
     tbody.appendChild(tr);
   });
+}
+
+function cloneProduct(productId) {
+  const products = getProducts();
+  const prod = products.find(p => p.id === productId || p.slug === productId);
+  if (!prod) return;
+
+  editProductRow(productId);
+  document.getElementById("prodFormId").value = "";
+  document.getElementById("productModalTitle").textContent = `Duplicate: ${prod.name} (Copy)`;
+  document.getElementById("prodFormName").value = `${prod.name} (Copy)`;
+  document.getElementById("prodFormBadge").value = "New Variation";
+  showAdminToast("Product cloned! Adjust specifications and click Save.");
+}
+
+function copyInquiryDetails(id) {
+  const inquiries = getInquiries();
+  const item = inquiries.find(i => i.id === id);
+  if (!item) return;
+
+  const text = `Rayashree Inquiry #${item.id}\nClient: ${item.clientName}\nPhone: ${item.phone}\nEmail: ${item.email}\nProduct: ${item.product}\nQuantity: ${item.quantity}\nSpecs: ${item.specifications}\nStatus: ${item.status}`;
+  navigator.clipboard.writeText(text).then(() => {
+    showAdminToast(`Inquiry #${item.id} copied to clipboard!`);
+  }).catch(() => {
+    showAdminToast(`Inquiry #${item.id} details copied.`);
+  });
+}
+
+function showAdminToast(msg) {
+  const toast = document.getElementById("adminToast");
+  const toastMsg = document.getElementById("adminToastMsg");
+  if (!toast || !toastMsg) return;
+  toastMsg.textContent = msg;
+  toast.classList.add("active");
+  setTimeout(() => {
+    toast.classList.remove("active");
+  }, 3200);
 }
 
 function editProductRow(productId) {

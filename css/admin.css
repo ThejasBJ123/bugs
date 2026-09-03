@@ -386,6 +386,54 @@ body.admin-body {
   color: #ef4444;
 }
 
+/* Compact Modal & Edit Options (Zero Extra Wasted Space) */
+.modal-body-compact {
+  padding: 1.25rem 1.5rem !important;
+}
+
+.modal-body-compact .form-group {
+  margin-bottom: 0.75rem !important;
+}
+
+.modal-body-compact .form-label {
+  margin-bottom: 0.25rem !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+}
+
+.modal-body-compact .form-control,
+.modal-body-compact .form-select {
+  padding: 0.45rem 0.75rem !important;
+  font-size: 0.875rem !important;
+}
+
+/* Admin Notification Toast */
+.admin-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #032b27;
+  color: #ffffff;
+  border-left: 4px solid #dfb774;
+  padding: 0.85rem 1.35rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  z-index: 9999;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-toast.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   body.admin-body {

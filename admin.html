@@ -198,15 +198,27 @@
       <!-- VIEW 2: PRODUCT CATALOG -->
       <section class="admin-view-section" id="viewProducts" style="display: none;">
         <div class="admin-card">
-          <div class="admin-card-header">
+          <div class="admin-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
             <div>
-              <h3 style="font-size: 1.15rem; font-weight: 800; color: #032b27;">
+              <h3 style="font-size: 1.15rem; font-weight: 800; color: #032b27; margin: 0 0 0.25rem 0;">
                 Manufacturing Product Lines Catalog
               </h3>
               <span style="font-size: 0.85rem; color: #64748b;">Add new product lines, upload custom photos, update GSM ranges, and display directly on the public website.</span>
             </div>
-            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-              <button class="btn btn-outline btn-sm" onclick="resetDefaultProducts()" title="Restore the 7 factory default lines">
+            <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;">
+              <div style="position: relative; width: 220px;">
+                <input type="text" id="adminProductSearch" class="form-control" placeholder="Search products, GSM..." style="padding: 0.45rem 0.75rem 0.45rem 2rem; font-size: 0.825rem;">
+                <i class="fa-solid fa-search" style="position: absolute; left: 0.65rem; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.8rem;"></i>
+              </div>
+              <select id="adminProductCategoryFilter" class="form-select" style="padding: 0.45rem 0.75rem; font-size: 0.825rem; width: 160px;">
+                <option value="All">All Categories</option>
+                <option value="Feed & Agri">Feed & Agri</option>
+                <option value="Building & Construction">Cement & Construction</option>
+                <option value="Eco & Natural">Jute & Eco Bags</option>
+                <option value="Textiles">Linen Fabric Textiles</option>
+                <option value="Industrial Bulk">Industrial FIBC Bags</option>
+              </select>
+              <button class="btn btn-outline btn-sm" onclick="resetDefaultProducts()" title="Restore factory default product lines">
                 <i class="fa-solid fa-rotate-left"></i> Reset Defaults
               </button>
               <button class="btn btn-gold btn-sm" onclick="document.getElementById('addNewProductBtn').click()">
@@ -736,12 +748,12 @@
 
   <!-- Status / Notes Edit Modal -->
   <div class="modal-backdrop" id="statusModal">
-    <div class="modal-card" style="max-width: 500px;">
+    <div class="modal-card" style="max-width: 480px;">
       <div class="modal-header">
         <h3 id="modalInquiryTitle">Update Inquiry Status</h3>
         <button class="modal-close-btn modal-close-trigger" onclick="closeStatusModal()"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body modal-body-compact">
         <form id="statusForm">
           <div class="form-group">
             <label class="form-label" for="modalStatusSelect">Workflow Status</label>
@@ -756,10 +768,10 @@
 
           <div class="form-group">
             <label class="form-label" for="modalNotesText">Internal Notes & Action Log</label>
-            <textarea id="modalNotesText" class="form-control" rows="4" placeholder="Enter notes from call, quote details, or dispatch schedule..."></textarea>
+            <textarea id="modalNotesText" class="form-control" rows="3" placeholder="Enter notes from call, quote details, or dispatch schedule..."></textarea>
           </div>
 
-          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+          <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
             <button type="submit" class="btn btn-primary" style="flex: 1;">Save Changes</button>
             <button type="button" class="btn btn-outline modal-close-trigger" onclick="closeStatusModal()">Cancel</button>
           </div>
@@ -770,79 +782,79 @@
 
   <!-- Product Edit Modal -->
   <div class="modal-backdrop" id="productEditModal">
-    <div class="modal-card" style="max-width: 820px; max-height: 92vh; overflow-y: auto;">
-      <div class="modal-header">
-        <h3 id="productModalTitle" style="color: #032b27; display: flex; align-items: center; gap: 0.5rem;">
+    <div class="modal-card" style="max-width: 800px; max-height: 94vh; overflow-y: auto;">
+      <div class="modal-header" style="padding: 0.85rem 1.25rem;">
+        <h3 id="productModalTitle" style="color: #032b27; display: flex; align-items: center; gap: 0.5rem; font-size: 1.15rem;">
           <i class="fa-solid fa-box-open text-gold"></i> Product Catalog Entry
         </h3>
         <button class="modal-close-btn modal-close-trigger" onclick="closeProductModal()"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body modal-body-compact">
         <form id="productEditForm">
           <input type="hidden" id="prodFormId">
 
-          <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+          <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1rem; margin-bottom: 0.85rem;">
             
             <!-- Left: Image Controls & Presets -->
             <div>
               <!-- Dropzone Box -->
-              <div id="prodImageDropzone" style="background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 1.25rem; text-align: center; transition: all 0.2s ease;">
-                <div style="margin-bottom: 0.75rem;">
-                  <img id="prodImagePreview" src="assets/images/bags.jpg" alt="Product Image Preview" style="width: 130px; height: 100px; object-fit: cover; border-radius: 10px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #dfb774;" onerror="this.src='assets/images/bags.jpg'">
+              <div id="prodImageDropzone" style="background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 10px; padding: 0.75rem; text-align: center; transition: all 0.2s ease;">
+                <div style="margin-bottom: 0.5rem;">
+                  <img id="prodImagePreview" src="assets/images/bags.jpg" alt="Product Image Preview" style="width: 105px; height: 80px; object-fit: cover; border-radius: 8px; margin: 0 auto; box-shadow: 0 3px 8px rgba(0,0,0,0.08); border: 1.5px solid #dfb774;" onerror="this.src='assets/images/bags.jpg'">
                 </div>
                 
-                <div style="font-weight: 700; font-size: 0.85rem; color: #032b27; margin-bottom: 0.25rem;">
+                <div style="font-weight: 700; font-size: 0.8rem; color: #032b27; margin-bottom: 0.15rem;">
                   <i class="fa-solid fa-cloud-arrow-up text-gold"></i> Drag & Drop Bag Image Here
                 </div>
-                <div style="font-size: 0.75rem; color: #64748b; margin-bottom: 0.75rem;">
-                  Auto-compressed & optimized for high speed & instant loading
+                <div style="font-size: 0.725rem; color: #64748b; margin-bottom: 0.5rem;">
+                  Auto-compressed & optimized for high speed
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
                   <div>
-                    <label for="prodFormImageFile" class="btn btn-outline btn-sm" style="width: 100%; cursor: pointer; display: block; font-size: 0.775rem;">
+                    <label for="prodFormImageFile" class="btn btn-outline btn-sm" style="width: 100%; cursor: pointer; display: block; font-size: 0.75rem; padding: 0.35rem 0.5rem;">
                       <i class="fa-solid fa-folder-open"></i> Browse Device
                     </label>
                     <input type="file" id="prodFormImageFile" accept="image/*" style="display: none;">
                   </div>
                   <div>
-                    <input type="text" id="prodFormImageUrl" class="form-control" placeholder="Or paste Image URL / Path" style="font-size: 0.775rem; padding: 0.4rem 0.6rem;">
+                    <input type="text" id="prodFormImageUrl" class="form-control" placeholder="Or paste Image URL / Path" style="font-size: 0.75rem; padding: 0.35rem 0.5rem;">
                   </div>
                 </div>
               </div>
 
               <!-- Preset Gallery Buttons -->
-              <div style="margin-top: 0.75rem;">
-                <label style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 0.35rem; display: block;">
+              <div style="margin-top: 0.5rem;">
+                <label style="font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 0.25rem; display: block;">
                   Quick Factory Image Presets:
                 </label>
-                <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/cattle-feed.jpg" style="font-size: 0.725rem; padding: 0.2rem 0.5rem;">Cattle Feed</button>
-                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/poultry-feed.jpg" style="font-size: 0.725rem; padding: 0.2rem 0.5rem;">Poultry Feed</button>
-                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/cement.jpg" style="font-size: 0.725rem; padding: 0.2rem 0.5rem;">Cement Sacks</button>
-                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/silage-bags.jpg" style="font-size: 0.725rem; padding: 0.2rem 0.5rem;">Silage Bags</button>
-                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/jute.jpg" style="font-size: 0.725rem; padding: 0.2rem 0.5rem;">Jute Sacks</button>
-                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/linen-fabric.jpg" style="font-size: 0.725rem; padding: 0.2rem 0.5rem;">Linen Fabric</button>
-                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/bags.jpg" style="font-size: 0.725rem; padding: 0.2rem 0.5rem;">FIBC Jumbo Bags</button>
-                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/hero-factory.jpg" style="font-size: 0.725rem; padding: 0.2rem 0.5rem;">Factory Looms</button>
+                <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/cattle-feed.jpg" style="font-size: 0.7rem; padding: 0.15rem 0.45rem;">Cattle Feed</button>
+                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/poultry-feed.jpg" style="font-size: 0.7rem; padding: 0.15rem 0.45rem;">Poultry Feed</button>
+                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/cement.jpg" style="font-size: 0.7rem; padding: 0.15rem 0.45rem;">Cement Sacks</button>
+                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/silage-bags.jpg" style="font-size: 0.7rem; padding: 0.15rem 0.45rem;">Silage Bags</button>
+                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/jute.jpg" style="font-size: 0.7rem; padding: 0.15rem 0.45rem;">Jute Sacks</button>
+                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/linen-fabric.jpg" style="font-size: 0.7rem; padding: 0.15rem 0.45rem;">Linen Fabric</button>
+                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/bags.jpg" style="font-size: 0.7rem; padding: 0.15rem 0.45rem;">FIBC Bags</button>
+                  <button type="button" class="btn btn-outline btn-sm img-preset-btn" data-img="assets/images/hero-factory.jpg" style="font-size: 0.7rem; padding: 0.15rem 0.45rem;">Factory</button>
                 </div>
               </div>
             </div>
 
             <!-- Right: Real-time Public Website Card Preview -->
             <div>
-              <label style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 0.35rem; display: block;">
+              <label style="font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 0.25rem; display: block;">
                 Live Public Card Preview:
               </label>
-              <div style="background: #ffffff; border: 1.5px solid #dfb774; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06);">
-                <div style="position: relative; height: 120px;">
+              <div style="background: #ffffff; border: 1.5px solid #dfb774; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+                <div style="position: relative; height: 105px;">
                   <img id="livePreviewImg" src="assets/images/bags.jpg" alt="Preview" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/bags.jpg'">
-                  <span id="livePreviewBadge" style="position: absolute; top: 8px; left: 8px; background: #032b27; color: #dfb774; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px;">1. Cattle Feed</span>
+                  <span id="livePreviewBadge" style="position: absolute; top: 6px; left: 6px; background: #032b27; color: #dfb774; font-size: 0.675rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 4px;">Premium Grade</span>
                 </div>
-                <div style="padding: 0.85rem;">
-                  <span id="livePreviewCategory" style="font-size: 0.7rem; font-weight: 700; color: #07524a; text-transform: uppercase; letter-spacing: 0.05em; display: block;">Feed & Agri</span>
-                  <h4 id="livePreviewTitle" style="font-size: 0.95rem; font-weight: 800; color: #032b27; margin: 0.2rem 0;">Product Title Preview</h4>
-                  <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #64748b; margin-top: 0.5rem; border-top: 1px solid #f1f5f9; padding-top: 0.4rem;">
+                <div style="padding: 0.75rem;">
+                  <span id="livePreviewCategory" style="font-size: 0.675rem; font-weight: 700; color: #07524a; text-transform: uppercase; letter-spacing: 0.05em; display: block;">Feed & Agri</span>
+                  <h4 id="livePreviewTitle" style="font-size: 0.9rem; font-weight: 800; color: #032b27; margin: 0.15rem 0;">Product Title Preview</h4>
+                  <div style="display: flex; justify-content: space-between; font-size: 0.725rem; color: #64748b; margin-top: 0.35rem; border-top: 1px solid #f1f5f9; padding-top: 0.3rem;">
                     <span>Cap: <strong id="livePreviewCapacity" style="color: #032b27;">50 kg</strong></span>
                     <span>GSM: <strong id="livePreviewGsm" style="color: #032b27;">75 - 120 GSM</strong></span>
                   </div>
@@ -861,7 +873,7 @@
 
             <div class="form-group">
               <label class="form-label" for="prodFormBadge">Badge / Short Label</label>
-              <input type="text" id="prodFormBadge" class="form-control" placeholder="e.g. 1. Cattle Feed or Best Seller">
+              <input type="text" id="prodFormBadge" class="form-control" placeholder="e.g. Best Seller or Export Grade">
             </div>
           </div>
 
@@ -878,7 +890,7 @@
                 <option value="Chemical Packaging">Chemical & Fertilizer Packaging</option>
                 <option value="Custom">Other / Custom Category...</option>
               </select>
-              <input type="text" id="prodFormCategoryCustom" class="form-control" placeholder="Enter custom category name" style="display: none; margin-top: 0.5rem;">
+              <input type="text" id="prodFormCategoryCustom" class="form-control" placeholder="Enter custom category name" style="display: none; margin-top: 0.35rem;">
             </div>
 
             <div class="form-group">
@@ -907,15 +919,15 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="prodFormFeatures">Key Engineering Features (One per line)</label>
-              <textarea id="prodFormFeatures" class="form-control" rows="3" placeholder="High drop and burst resistance&#10;UV stabilized for outdoor warehouse storage&#10;Food-grade certified virgin polymer"></textarea>
+              <textarea id="prodFormFeatures" class="form-control" rows="2" placeholder="High drop and burst resistance&#10;UV stabilized for outdoor warehouse storage&#10;Food-grade certified virgin polymer"></textarea>
             </div>
             <div class="form-group">
               <label class="form-label" for="prodFormSpecs">Specifications Key-Value (e.g. Key: Value per line)</label>
-              <textarea id="prodFormSpecs" class="form-control" rows="3" placeholder="Denier: 700D to 1200D&#10;Mesh Count: 10x10 to 14x14&#10;Lamination: BOPP Extrusion 20 micron"></textarea>
+              <textarea id="prodFormSpecs" class="form-control" rows="2" placeholder="Denier: 700D to 1200D&#10;Mesh Count: 10x10 to 14x14&#10;Lamination: BOPP Extrusion 20 micron"></textarea>
             </div>
           </div>
 
-          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+          <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
             <button type="submit" class="btn btn-gold" style="flex: 1.5;">
               <i class="fa-solid fa-cloud-arrow-up"></i> Save & Publish Live to Public Website
             </button>
@@ -928,12 +940,12 @@
 
   <!-- Company Profile Edit Modal -->
   <div class="modal-backdrop" id="companyEditModal">
-    <div class="modal-card" style="max-width: 580px;">
+    <div class="modal-card" style="max-width: 540px;">
       <div class="modal-header">
         <h3>Edit Company Credentials & Contacts</h3>
         <button class="modal-close-btn modal-close-trigger" onclick="closeCompanyModal()"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body modal-body-compact">
         <form id="companyEditForm">
           <div class="form-group">
             <label class="form-label" for="compEditName">Company Legal Name</label>
@@ -961,9 +973,9 @@
           </div>
           <div class="form-group">
             <label class="form-label" for="compEditAddress">Registered Factory Address</label>
-            <textarea id="compEditAddress" class="form-control" rows="3">No. 09 Survey No. 77/3, Hosahalli, Kannali, Kodigenahalli post, Yeshwanthpura Hobli, Bangalore North, Bangalore - 560112, Karnataka, India</textarea>
+            <textarea id="compEditAddress" class="form-control" rows="2">No. 09 Survey No. 77/3, Hosahalli, Kannali, Kodigenahalli post, Yeshwanthpura Hobli, Bangalore North, Bangalore - 560112, Karnataka, India</textarea>
           </div>
-          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+          <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
             <button type="submit" class="btn btn-gold" style="flex: 1;">
               <i class="fa-solid fa-floppy-disk"></i> Save & Apply Across All Pages
             </button>
@@ -972,6 +984,12 @@
         </form>
       </div>
     </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="admin-toast" id="adminToast">
+    <i class="fa-solid fa-circle-check text-gold"></i>
+    <span id="adminToastMsg">Changes saved successfully</span>
   </div>
 
   <!-- Scripts -->
