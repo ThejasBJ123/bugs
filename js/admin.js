@@ -699,12 +699,9 @@ function renderProductsTable() {
     return;
   }
 
-  const knownPages = ['cattle-feed', 'poultry-feed', 'cement', 'silage-bags', 'jute', 'linen-fabric', 'bags'];
-
   products.forEach((p) => {
     const tr = document.createElement("tr");
-    const isDedicated = knownPages.includes(p.slug);
-    const viewLink = isDedicated ? `${p.slug}.html` : `index.html#products`;
+    const viewLink = `products.html#products`;
 
     tr.innerHTML = `
       <td>

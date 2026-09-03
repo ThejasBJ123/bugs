@@ -464,8 +464,6 @@ function initProductThumbBar() {
   bar.style.display = "grid";
   bar.innerHTML = "";
 
-  const knownPages = ['cattle-feed', 'poultry-feed', 'cement', 'silage-bags', 'jute', 'linen-fabric', 'bags'];
-
   products.forEach((prod) => {
     const item = document.createElement("div");
     item.style.cursor = "pointer";
@@ -488,8 +486,7 @@ function initProductThumbBar() {
       item.style.boxShadow = "var(--shadow-sm)";
     };
 
-    const isDedicatedPage = knownPages.includes(prod.slug);
-    const linkTarget = isDedicatedPage ? `${prod.slug}.html` : `javascript:openProductSpecsModal('${prod.id}')`;
+    const linkTarget = `javascript:openProductSpecsModal('${prod.id}')`;
 
     item.innerHTML = `
       <a href="${linkTarget}" style="text-decoration: none; color: inherit; display: block;">
@@ -514,7 +511,6 @@ function initProductGrid() {
 
   const products = getProducts();
   const filterBar = document.getElementById("productFilterBar") || document.querySelector(".product-filter-bar");
-  const knownPages = ['cattle-feed', 'poultry-feed', 'cement', 'silage-bags', 'jute', 'linen-fabric', 'bags'];
 
   if (products.length === 0) {
     if (filterBar) filterBar.style.display = "none";
@@ -585,11 +581,9 @@ function initProductGrid() {
       return;
     }
 
-    filtered.forEach((prod, index) => {
+    filtered.forEach((prod) => {
       const card = document.createElement("div");
       card.className = "product-card";
-      
-      const isDedicatedPage = knownPages.includes(prod.slug);
 
       card.innerHTML = `
         <div class="product-card-img" onclick="openProductSpecsModal('${prod.id}')" style="cursor: pointer;">
@@ -613,10 +607,7 @@ function initProductGrid() {
           </div>
 
           <div class="product-card-footer">
-            ${isDedicatedPage
-              ? `<a href="${prod.slug}.html" class="btn btn-outline btn-sm" style="flex: 1;"><i class="fa-solid fa-circle-info"></i> View Specs</a>`
-              : `<button class="btn btn-outline btn-sm" onclick="openProductSpecsModal('${prod.id}')" style="flex: 1;"><i class="fa-solid fa-circle-info"></i> View Specs</button>`
-            }
+            <button class="btn btn-outline btn-sm" onclick="openProductSpecsModal('${prod.id}')" style="flex: 1;"><i class="fa-solid fa-circle-info"></i> View Specs</button>
             <button class="btn btn-gold btn-sm" onclick="openRFQModal('${prod.name}')" style="flex: 1.2;">
               <i class="fa-solid fa-paper-plane"></i> Quick Quote
             </button>
