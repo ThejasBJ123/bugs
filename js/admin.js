@@ -402,7 +402,6 @@ function initProductManager() {
   const dropZone = document.getElementById("prodImageDropzone");
   const categorySelect = document.getElementById("prodFormCategorySelect");
   const categoryCustom = document.getElementById("prodFormCategoryCustom");
-  const presetBtns = document.querySelectorAll(".img-preset-btn");
 
   // Live Card Preview Elements
   const liveCardTitle = document.getElementById("livePreviewTitle");
@@ -438,16 +437,6 @@ function initProductManager() {
   });
   if (categorySelect) categorySelect.addEventListener("change", updateLivePreview);
   if (categoryCustom) categoryCustom.addEventListener("input", updateLivePreview);
-
-  // Preset Image Buttons
-  presetBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const imgPath = btn.getAttribute("data-img");
-      if (previewImg) previewImg.src = imgPath;
-      if (imageUrlInput) imageUrlInput.value = imgPath;
-      updateLivePreview();
-    });
-  });
 
   // URL Input
   if (imageUrlInput) {
