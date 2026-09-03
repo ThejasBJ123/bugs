@@ -436,11 +436,16 @@ function initProductThumbBar() {
   if (!bar || typeof getProducts !== "function") return;
 
   const products = getProducts();
+  if (products.length === 0) {
+    bar.style.display = "none";
+    return;
+  }
+  bar.style.display = "grid";
   bar.innerHTML = "";
 
   const knownPages = ['cattle-feed', 'poultry-feed', 'cement', 'silage-bags', 'jute', 'linen-fabric', 'bags'];
 
-  products.forEach((prod, index) => {
+  products.forEach((prod) => {
     const item = document.createElement("div");
     item.style.cursor = "pointer";
     item.style.background = "var(--white)";
@@ -489,6 +494,25 @@ function initProductGrid() {
   const products = getProducts();
   const filterBar = document.getElementById("productFilterBar") || document.querySelector(".product-filter-bar");
   const knownPages = ['cattle-feed', 'poultry-feed', 'cement', 'silage-bags', 'jute', 'linen-fabric', 'bags'];
+
+  if (products.length === 0) {
+    if (filterBar) filterBar.style.display = "none";
+    container.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 4rem 2rem; background: var(--white); border-radius: var(--radius-lg); border: 2px dashed var(--dark-200);">
+        <div style="font-size: 3rem; color: var(--gold-500); margin-bottom: 1rem;"><i class="fa-solid fa-boxes-packing"></i></div>
+        <h3 style="font-size: 1.35rem; color: var(--primary-900); font-weight: 800; margin-bottom: 0.5rem;">Product Catalog Ready</h3>
+        <p style="color: var(--dark-600); max-width: 500px; margin: 0 auto 1.5rem auto;">
+          Add your manufacturing bag lines and custom specifications in the Staff Admin Portal to display them live here.
+        </p>
+        <a href="admin.html" class="btn btn-gold">
+          <i class="fa-solid fa-plus"></i> Go to Admin Portal to Add Products
+        </a>
+      </div>
+    `;
+    return;
+  }
+
+  if (filterBar) filterBar.style.display = "flex";
 
   // Dynamically populate Filter Buttons
   if (filterBar) {

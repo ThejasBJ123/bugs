@@ -688,7 +688,22 @@ function renderProductsTable() {
     );
   }
 
-  tbody.innerHTML = "";
+  const allProducts = getProducts();
+  if (allProducts.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align: center; padding: 3.5rem 2rem;">
+          <div style="font-size: 2.5rem; color: #dfb774; margin-bottom: 0.75rem;"><i class="fa-solid fa-boxes-stacked"></i></div>
+          <h4 style="font-size: 1.15rem; color: #032b27; font-weight: 800; margin-bottom: 0.35rem;">No Products in Catalog Yet</h4>
+          <p style="color: #64748b; font-size: 0.875rem; margin-bottom: 1.25rem;">Your catalog is empty. Click "Add New Product" to create and publish your first manufacturing product.</p>
+          <button class="btn btn-gold btn-sm" onclick="document.getElementById('addNewProductBtn').click()">
+            <i class="fa-solid fa-plus"></i> Add New Product Now
+          </button>
+        </td>
+      </tr>
+    `;
+    return;
+  }
 
   if (products.length === 0) {
     tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #64748b;">No products matched your filter. <button class="btn btn-sm btn-outline" style="margin-left: 0.5rem;" onclick="if(document.getElementById('adminProductSearch')) document.getElementById('adminProductSearch').value=''; if(document.getElementById('adminProductCategoryFilter')) document.getElementById('adminProductCategoryFilter').value='All'; renderProductsTable();">Clear Filters</button></td></tr>`;
@@ -852,11 +867,10 @@ function deleteProductRow(productId) {
 }
 
 function resetDefaultProducts() {
-  if (confirm("Restore all manufacturing product lines to factory defaults?")) {
-    localStorage.removeItem("rw_products");
-    getProducts();
+  if (confirm("Are you sure you want to remove all products from the catalog? You can then add new products from scratch.")) {
+    saveProducts([]);
     renderProductsTable();
-    alert("Products restored to default catalog.");
+    showAdminToast("All products removed from catalog.");
   }
 }
 
