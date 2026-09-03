@@ -68,7 +68,11 @@
         </div>
       </div>
       <div class="top-bar-links">
-        <span style="color: var(--gold-400); font-weight: 700;">ISO 9001:2015 Certified</span>
+        <div class="lang-switcher" id="topLangSwitcher">
+          <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">English</button>
+          <button class="lang-btn" data-lang="kn" onclick="setLanguage('kn')">ಕನ್ನಡ</button>
+          <button class="lang-btn" data-lang="hi" onclick="setLanguage('hi')">हिंदी</button>
+        </div>
         <span>•</span>
         <a href="admin.html"><i class="fa-solid fa-lock"></i> Staff Portal</a>
       </div>
@@ -84,7 +88,7 @@
 
       <nav class="nav-menu" id="navMenu">
         <a href="index.html" class="nav-link active">Home</a>
-        <a href="products.html" class="nav-link">Products (7)</a>
+        <a href="products.html" class="nav-link">Products</a>
         <a href="infrastructure.html" class="nav-link">Infrastructure</a>
         <a href="about.html" class="nav-link">About Us</a>
         <a href="contact.html" class="nav-link">Contact</a>
@@ -118,7 +122,7 @@
 
         <div class="hero-actions">
           <a href="products.html" class="btn btn-gold btn-lg">
-            <i class="fa-solid fa-cubes-stacked"></i> Explore 7 Product Lines
+            <i class="fa-solid fa-cubes-stacked"></i> Explore All Products
           </a>
           <button class="btn btn-outline-white btn-lg" onclick="openRFQModal()">
             <i class="fa-solid fa-file-invoice"></i> Request Direct Quote
@@ -167,7 +171,7 @@
           <div class="stat-label">Circular Looms Operating</div>
         </div>
         <div class="stat-item">
-          <div class="stat-number">7 Lines</div>
+          <div class="stat-number">Full Portfolio</div>
           <div class="stat-label">Core Industrial Products</div>
         </div>
         <div class="stat-item">
@@ -205,11 +209,11 @@
 
       <!-- All Products Grid with Images (Populated Dynamically by js/main.js) -->
       <div class="products-grid" id="productShowcaseGrid">
-        <!-- 1. Cattle Feed -->
+        <!-- Cattle Feed -->
         <div class="product-card" data-category="Feed & Agri">
           <div class="product-card-img">
             <img src="assets/images/cattle-feed.jpg" alt="Cattle Feed Woven Sacks" loading="lazy">
-            <span class="product-badge">1. Cattle Feed</span>
+            <span class="product-badge">Cattle Feed</span>
           </div>
           <div class="product-card-body">
             <span class="product-category">Feed & Agri</span>
@@ -236,11 +240,11 @@
           </div>
         </div>
 
-        <!-- 2. Poultry Feed -->
+        <!-- Poultry Feed -->
         <div class="product-card" data-category="Feed & Agri">
           <div class="product-card-img">
             <img src="assets/images/poultry-feed.jpg" alt="Poultry Feed Bags" loading="lazy">
-            <span class="product-badge">2. Poultry Feed</span>
+            <span class="product-badge">Poultry Feed</span>
           </div>
           <div class="product-card-body">
             <span class="product-category">Feed & Agri</span>
@@ -267,11 +271,11 @@
           </div>
         </div>
 
-        <!-- 3. Cement -->
+        <!-- Cement -->
         <div class="product-card" data-category="Building & Construction">
           <div class="product-card-img">
             <img src="assets/images/cement.jpg" alt="Cement & Construction Bags" loading="lazy">
-            <span class="product-badge">3. Cement</span>
+            <span class="product-badge">Cement</span>
           </div>
           <div class="product-card-body">
             <span class="product-category">Building & Construction</span>
@@ -298,11 +302,11 @@
           </div>
         </div>
 
-        <!-- 4. Silage Bags -->
+        <!-- Silage Bags -->
         <div class="product-card" data-category="Feed & Agri">
           <div class="product-card-img">
             <img src="assets/images/silage-bags.jpg" alt="Agricultural Silage & Tube Bags" loading="lazy">
-            <span class="product-badge">4. Silage Bags</span>
+            <span class="product-badge">Silage Bags</span>
           </div>
           <div class="product-card-body">
             <span class="product-category">Feed & Agri</span>
@@ -329,11 +333,11 @@
           </div>
         </div>
 
-        <!-- 5. Jute -->
+        <!-- Jute -->
         <div class="product-card" data-category="Eco & Natural">
           <div class="product-card-img">
             <img src="assets/images/jute.jpg" alt="Eco-Friendly Jute & Burlap Sacks" loading="lazy">
-            <span class="product-badge">5. Jute</span>
+            <span class="product-badge">Jute</span>
           </div>
           <div class="product-card-body">
             <span class="product-category">Eco & Natural</span>
@@ -360,11 +364,11 @@
           </div>
         </div>
 
-        <!-- 6. Linen Fabric -->
+        <!-- Linen Fabric -->
         <div class="product-card" data-category="Textiles">
           <div class="product-card-img">
             <img src="assets/images/linen-fabric.jpg" alt="Linen Fabric & Industrial Textiles" loading="lazy">
-            <span class="product-badge">6. Linen Fabric</span>
+            <span class="product-badge">Linen Fabric</span>
           </div>
           <div class="product-card-body">
             <span class="product-category">Textiles</span>
@@ -391,11 +395,11 @@
           </div>
         </div>
 
-        <!-- 7. Bags (FIBC & Industrial Liners) -->
+        <!-- Bags (FIBC & Industrial Liners) -->
         <div class="product-card" data-category="Industrial Bulk">
           <div class="product-card-img">
             <img src="assets/images/bags.jpg" alt="Industrial FIBC Jumbo Bags & Liners" loading="lazy">
-            <span class="product-badge">7. Bags (FIBC / Sacks)</span>
+            <span class="product-badge">FIBC Bags & Liners</span>
           </div>
           <div class="product-card-body">
             <span class="product-category">Industrial Bulk</span>
@@ -425,7 +429,7 @@
 
       <div class="text-center" style="margin-top: 3.5rem;">
         <button class="btn btn-primary btn-lg" onclick="openRFQModal()">
-          <i class="fa-solid fa-file-invoice"></i> Request Direct Factory Pricing on All 7 Lines
+          <i class="fa-solid fa-file-invoice"></i> Request Direct Factory Pricing on All Products
         </button>
       </div>
     </div>
@@ -685,13 +689,13 @@
             <div class="form-group">
               <label class="form-label" for="rfqProduct">Select Product Line <span class="req">*</span></label>
               <select id="rfqProduct" class="form-select" required>
-                <option value="Cattle Feed Woven Sacks">1. Cattle Feed Woven Sacks</option>
-                <option value="Poultry Feed Bags">2. Poultry Feed Bags</option>
-                <option value="Cement & Construction Bags">3. Cement & Construction Bags</option>
-                <option value="Agricultural Silage & Tube Bags">4. Silage Bags</option>
-                <option value="Eco-Friendly Jute & Burlap Sacks">5. Jute</option>
-                <option value="Linen Fabric & Industrial Textiles">6. Linen Fabric</option>
-                <option value="Industrial FIBC Jumbo Bags & Liners">7. Bags (FIBC / Sacks / Liners)</option>
+                <option value="Cattle Feed Woven Sacks">Cattle Feed Woven Sacks</option>
+                <option value="Poultry Feed Bags">Poultry Feed Bags</option>
+                <option value="Cement & Construction Bags">Cement & Construction Bags</option>
+                <option value="Agricultural Silage & Tube Bags">Silage Bags</option>
+                <option value="Eco-Friendly Jute & Burlap Sacks">Jute Sacks</option>
+                <option value="Linen Fabric & Industrial Textiles">Linen Fabric</option>
+                <option value="Industrial FIBC Jumbo Bags & Liners">FIBC Jumbo Bags & Liners</option>
               </select>
             </div>
           </div>
@@ -721,6 +725,7 @@
 
   <!-- JavaScript Scripts -->
   <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

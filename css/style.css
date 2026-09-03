@@ -1467,3 +1467,61 @@ ul, ol {
     height: 32px !important;
   }
 }
+
+/* ==========================================================================
+   Language Switcher (English, Kannada, Hindi)
+   ========================================================================== */
+
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(223, 183, 116, 0.35);
+  border-radius: 9999px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.lang-btn {
+  background: transparent;
+  color: var(--dark-200);
+  border: none;
+  font-size: 0.775rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.lang-btn:hover {
+  color: var(--gold-300);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lang-btn.active {
+  background: var(--gold-500);
+  color: var(--primary-900);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.nav-lang-switcher {
+  background: var(--dark-100);
+  border: 1px solid var(--dark-300);
+}
+
+.nav-lang-switcher .lang-btn {
+  color: var(--dark-700);
+}
+
+.nav-lang-switcher .lang-btn:hover {
+  color: var(--primary-900);
+  background: var(--dark-200);
+}
+
+.nav-lang-switcher .lang-btn.active {
+  background: var(--primary-900);
+  color: var(--gold-400);
+}
+

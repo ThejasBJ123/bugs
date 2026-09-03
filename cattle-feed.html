@@ -30,7 +30,11 @@
         </div>
       </div>
       <div class="top-bar-links">
-        <span style="color: var(--gold-400); font-weight: 700;">CEO: Lakshmi Kanth</span>
+        <div class="lang-switcher" id="topLangSwitcher">
+          <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">English</button>
+          <button class="lang-btn" data-lang="kn" onclick="setLanguage('kn')">ಕನ್ನಡ</button>
+          <button class="lang-btn" data-lang="hi" onclick="setLanguage('hi')">हिंदी</button>
+        </div>
         <span>•</span>
         <a href="admin.html"><i class="fa-solid fa-lock"></i> Staff Portal</a>
       </div>
@@ -261,13 +265,13 @@
             <div class="form-group">
               <label class="form-label" for="rfqProduct">Selected Product <span class="req">*</span></label>
               <select id="rfqProduct" class="form-select" required>
-                <option value="Cattle Feed Woven Sacks" selected>1. Cattle Feed Woven Sacks</option>
-                <option value="Poultry Feed Bags">2. Poultry Feed Bags</option>
-                <option value="Cement & Construction Bags">3. Cement & Construction Bags</option>
-                <option value="Agricultural Silage & Tube Bags">4. Silage Bags</option>
-                <option value="Eco-Friendly Jute & Burlap Sacks">5. Jute</option>
-                <option value="Linen Fabric & Industrial Textiles">6. Linen Fabric</option>
-                <option value="Industrial FIBC Jumbo Bags & Liners">7. Bags (FIBC / Sacks / Liners)</option>
+                <option value="Cattle Feed Woven Sacks" selected>Cattle Feed Woven Sacks</option>
+                <option value="Poultry Feed Bags">Poultry Feed Bags</option>
+                <option value="Cement & Construction Bags">Cement & Construction Bags</option>
+                <option value="Agricultural Silage & Tube Bags">Silage Bags</option>
+                <option value="Eco-Friendly Jute & Burlap Sacks">Jute Sacks</option>
+                <option value="Linen Fabric & Industrial Textiles">Linen Fabric</option>
+                <option value="Industrial FIBC Jumbo Bags & Liners">FIBC Jumbo Bags & Liners</option>
               </select>
             </div>
           </div>
@@ -289,6 +293,7 @@
   </div>
 
   <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

@@ -769,11 +769,11 @@ function deleteProductRow(productId) {
 }
 
 function resetDefaultProducts() {
-  if (confirm("Restore all original 7 manufacturing product lines to factory defaults?")) {
+  if (confirm("Restore all manufacturing product lines to factory defaults?")) {
     localStorage.removeItem("rw_products");
     getProducts();
     renderProductsTable();
-    alert("Products restored to default 7 lines.");
+    alert("Products restored to default catalog.");
   }
 }
 
@@ -811,6 +811,7 @@ function initCmsEditor() {
 function loadCmsFormValues() {
   const content = getSiteContent();
   const company = getCompanyInfo();
+  const trans = typeof getStoredTranslations === "function" ? getStoredTranslations() : null;
 
   // Home
   if (document.getElementById("cmsHomeHeroTag")) document.getElementById("cmsHomeHeroTag").value = content.home.heroTag || "";
@@ -845,6 +846,21 @@ function loadCmsFormValues() {
   if (document.getElementById("cmsContactEmail")) document.getElementById("cmsContactEmail").value = company.email || "rayashreewpvtltd@gmail.com";
   if (document.getElementById("cmsContactHours")) document.getElementById("cmsContactHours").value = company.hours || "Mon - Sat: 8:30 AM - 7:30 PM (IST)";
   if (document.getElementById("cmsContactAddress")) document.getElementById("cmsContactAddress").value = company.address || "";
+
+  // Languages & Translations
+  if (trans) {
+    if (document.getElementById("langKnHeroTitle")) document.getElementById("langKnHeroTitle").value = trans.kn.hero_title || "";
+    if (document.getElementById("langKnHeroTag")) document.getElementById("langKnHeroTag").value = trans.kn.hero_tag || "";
+    if (document.getElementById("langKnHeroSubtitle")) document.getElementById("langKnHeroSubtitle").value = trans.kn.hero_subtitle || "";
+    if (document.getElementById("langKnBtnQuote")) document.getElementById("langKnBtnQuote").value = trans.kn.btn_request_quote || "";
+    if (document.getElementById("langKnNavProducts")) document.getElementById("langKnNavProducts").value = trans.kn.nav_products || "";
+
+    if (document.getElementById("langHiHeroTitle")) document.getElementById("langHiHeroTitle").value = trans.hi.hero_title || "";
+    if (document.getElementById("langHiHeroTag")) document.getElementById("langHiHeroTag").value = trans.hi.hero_tag || "";
+    if (document.getElementById("langHiHeroSubtitle")) document.getElementById("langHiHeroSubtitle").value = trans.hi.hero_subtitle || "";
+    if (document.getElementById("langHiBtnQuote")) document.getElementById("langHiBtnQuote").value = trans.hi.btn_request_quote || "";
+    if (document.getElementById("langHiNavProducts")) document.getElementById("langHiNavProducts").value = trans.hi.nav_products || "";
+  }
 }
 
 function saveAllSitePages() {
@@ -896,7 +912,27 @@ function saveAllSitePages() {
   saveSiteContent(content);
   saveCompanyInfo(company);
 
-  alert("Success! All public pages (Home, About, Infrastructure, Contact) have been updated and published.");
+  // Multilingual Translations Save
+  if (typeof getStoredTranslations === "function" && typeof saveStoredTranslations === "function") {
+    const trans = getStoredTranslations();
+    if (document.getElementById("langKnHeroTitle")) {
+      trans.kn.hero_title = document.getElementById("langKnHeroTitle").value.trim() || trans.kn.hero_title;
+      trans.kn.hero_tag = document.getElementById("langKnHeroTag").value.trim() || trans.kn.hero_tag;
+      trans.kn.hero_subtitle = document.getElementById("langKnHeroSubtitle").value.trim() || trans.kn.hero_subtitle;
+      trans.kn.btn_request_quote = document.getElementById("langKnBtnQuote").value.trim() || trans.kn.btn_request_quote;
+      trans.kn.nav_products = document.getElementById("langKnNavProducts").value.trim() || trans.kn.nav_products;
+    }
+    if (document.getElementById("langHiHeroTitle")) {
+      trans.hi.hero_title = document.getElementById("langHiHeroTitle").value.trim() || trans.hi.hero_title;
+      trans.hi.hero_tag = document.getElementById("langHiHeroTag").value.trim() || trans.hi.hero_tag;
+      trans.hi.hero_subtitle = document.getElementById("langHiHeroSubtitle").value.trim() || trans.hi.hero_subtitle;
+      trans.hi.btn_request_quote = document.getElementById("langHiBtnQuote").value.trim() || trans.hi.btn_request_quote;
+      trans.hi.nav_products = document.getElementById("langHiNavProducts").value.trim() || trans.hi.nav_products;
+    }
+    saveStoredTranslations(trans);
+  }
+
+  alert("Success! All public pages and language translations (English, Kannada, Hindi) have been updated and published.");
 }
 
 function resetDefaultSiteContent() {

@@ -32,7 +32,7 @@
 
       <button class="sidebar-btn" data-view="viewProducts" id="btnNavProducts">
         <i class="fa-solid fa-boxes-stacked"></i>
-        <span>Product Catalog (7)</span>
+        <span>Product Catalog</span>
       </button>
 
       <button class="sidebar-btn" data-view="viewStats" id="btnNavStats">
@@ -80,6 +80,11 @@
       </div>
 
       <div class="topbar-actions">
+        <div class="lang-switcher nav-lang-switcher" id="adminLangSwitcher">
+          <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+          <button class="lang-btn" data-lang="kn" onclick="setLanguage('kn')">ಕನ್ನಡ</button>
+          <button class="lang-btn" data-lang="hi" onclick="setLanguage('hi')">हिंदी</button>
+        </div>
         <button id="exportCsvBtn" class="btn btn-outline btn-sm">
           <i class="fa-solid fa-file-csv"></i> Export CSV
         </button>
@@ -510,6 +515,9 @@
             <button class="cms-tab-btn" data-cms-tab="cmsContact" style="padding: 0.75rem 1.25rem; font-weight: 600; color: #64748b; background: transparent; border: none; cursor: pointer;">
               <i class="fa-solid fa-address-book"></i> Contact & Footer Info
             </button>
+            <button class="cms-tab-btn" data-cms-tab="cmsLanguages" style="padding: 0.75rem 1.25rem; font-weight: 700; color: #b5832a; background: transparent; border: none; cursor: pointer;">
+              <i class="fa-solid fa-language"></i> Language Customizer (ಕನ್ನಡ / हिंदी / EN)
+            </button>
           </div>
 
           <!-- CMS TAB 1: HOME PAGE -->
@@ -632,6 +640,83 @@
               <label class="form-label">Registered Factory & Campus Address</label>
               <textarea id="cmsContactAddress" class="form-control" rows="3">No. 09 Survey No. 77/3, Hosahalli, Kannali, Kodigenahalli post, Yeshwanthpura Hobli, Bangalore North, Bangalore - 560112, Karnataka, India</textarea>
             </div>
+          </div>
+
+          <!-- CMS TAB 5: LANGUAGE CUSTOMIZER (KANNADA, HINDI, ENGLISH) -->
+          <div class="cms-tab-content" id="cmsLanguages" style="display: none;">
+            <div style="background: #fef9ee; border: 1.5px solid #dfb774; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+              <h4 style="color: #032b27; font-weight: 800; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fa-solid fa-language text-gold"></i> Multilingual Customizer (ಕನ್ನಡ • हिंदी • English)
+              </h4>
+              <p style="font-size: 0.85rem; color: #64748b; margin: 0;">
+                Customize the translations for Kannada, Hindi, and English to match your exact regional terminology and client preferences.
+              </p>
+            </div>
+
+            <!-- Kannada (KN) Customization -->
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem; margin-bottom: 1.5rem;">
+              <h5 style="color: #07524a; font-weight: 800; font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="background: #dfb774; color: #032b27; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.8rem;">KN</span>
+                ಕನ್ನಡ ಭಾಷೆಯ ಪಠ್ಯಗಳು (Kannada Content)
+              </h5>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">ಕನ್ನಡ ಮುಖ್ಯಾಂಶ (Hero Title)</label>
+                  <input type="text" id="langKnHeroTitle" class="form-control" placeholder="ಉತ್ತಮ ಗುಣಮಟ್ಟದ ನೇಯ್ದ ಪ್ಯಾಕೇಜಿಂಗ್ ಮತ್ತು ಕೈಗಾರಿಕಾ ಬಟ್ಟೆಗಳು">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">ಕನ್ನಡ ಟ್ಯಾಗ್ ಲೈನ್ (Hero Tag)</label>
+                  <input type="text" id="langKnHeroTag" class="form-control" placeholder="ಬೆಂಗಳೂರಿನ ಪ್ರಮುಖ ನೇಯ್ಗೆ ಮತ್ತು ಚೀಲಗಳ ತಯಾರಿಕಾ ಕಾರ್ಖಾನೆ">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">ಕನ್ನಡ ವಿವರಣೆ (Hero Subtitle)</label>
+                <textarea id="langKnHeroSubtitle" class="form-control" rows="2"></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">ಉಲ್ಲೇಖ ಬಟನ್ (Quote Button)</label>
+                  <input type="text" id="langKnBtnQuote" class="form-control" placeholder="ಉಲ್ಲೇಖ ಪಡೆಯಿರಿ">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">ಉತ್ಪನ್ನಗಳು ಶೀರ್ಷಿಕೆ (Products Nav)</label>
+                  <input type="text" id="langKnNavProducts" class="form-control" placeholder="ಉತ್ಪನ್ನಗಳು">
+                </div>
+              </div>
+            </div>
+
+            <!-- Hindi (HI) Customization -->
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem; margin-bottom: 1.5rem;">
+              <h5 style="color: #07524a; font-weight: 800; font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="background: #07524a; color: #fff; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.8rem;">HI</span>
+                हिंदी भाषा सामग्री (Hindi Content)
+              </h5>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">हिंदी मुख्य शीर्षक (Hero Title)</label>
+                  <input type="text" id="langHiHeroTitle" class="form-control" placeholder="प्रीमियम वोवन पैकेजिंग और औद्योगिक फैब्रिक समाधान">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">हिंदी टैगलाइन (Hero Tag)</label>
+                  <input type="text" id="langHiHeroTag" class="form-control" placeholder="बैंगलोर की अग्रणी बुनाई और बैग निर्माता कंपनी">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">हिंदी विवरण (Hero Subtitle)</label>
+                <textarea id="langHiHeroSubtitle" class="form-control" rows="2"></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">कोटेशन बटन (Quote Button)</label>
+                  <input type="text" id="langHiBtnQuote" class="form-control" placeholder="कोटेशन प्राप्त करें">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">उत्पाद लिंक (Products Nav)</label>
+                  <input type="text" id="langHiNavProducts" class="form-control" placeholder="उत्पाद">
+                </div>
+              </div>
+            </div>
+
           </div>
 
           <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 1rem;">
@@ -891,6 +976,7 @@
 
   <!-- Scripts -->
   <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/admin.js"></script>
 </body>
 </html>

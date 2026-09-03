@@ -231,10 +231,10 @@ function populateRFQSelect() {
   const currentValue = select.value;
   select.innerHTML = "";
 
-  products.forEach((prod, index) => {
+  products.forEach((prod) => {
     const opt = document.createElement("option");
     opt.value = prod.name;
-    opt.textContent = `${index + 1}. ${prod.name}`;
+    opt.textContent = prod.name;
     select.appendChild(opt);
   });
 
@@ -396,7 +396,7 @@ function initProductThumbBar() {
       <a href="${linkTarget}" style="text-decoration: none; color: inherit; display: block;">
         <img src="${prod.image}" alt="${prod.name}" style="width: 100%; height: 75px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 0.4rem;" onerror="this.src='assets/images/bags.jpg'">
         <strong style="font-size: 0.8rem; color: var(--primary-900); display: block; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-          ${index + 1}. ${prod.shortName || prod.name}
+          ${prod.shortName || prod.name}
         </strong>
       </a>
     `;
@@ -425,15 +425,15 @@ function initProductGrid() {
     const allBtn = document.createElement("button");
     allBtn.className = "filter-btn active";
     allBtn.setAttribute("data-filter", "All");
-    allBtn.textContent = `All (${products.length}) Products`;
+    allBtn.textContent = `All Products (${products.length})`;
     filterBar.appendChild(allBtn);
 
     // Individual Product Filter Buttons
-    products.forEach((prod, index) => {
+    products.forEach((prod) => {
       const btn = document.createElement("button");
       btn.className = "filter-btn";
       btn.setAttribute("data-filter", prod.id);
-      btn.textContent = `${index + 1}. ${prod.shortName || prod.name}`;
+      btn.textContent = prod.shortName || prod.name;
       filterBar.appendChild(btn);
     });
 

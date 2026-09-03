@@ -456,13 +456,13 @@ const DEFAULT_TRAFFIC_DATA = {
   pageBreakdown: {
     "Home (index.html)": 548,
     "Products Catalog (products.html)": 312,
-    "1. Cattle Feed (cattle-feed.html)": 182,
-    "2. Poultry Feed (poultry-feed.html)": 146,
-    "3. Cement (cement.html)": 118,
-    "4. Silage Bags (silage-bags.html)": 64,
-    "5. Jute Sacks (jute.html)": 42,
-    "6. Linen Fabric (linen-fabric.html)": 38,
-    "7. FIBC Jumbo Bags (bags.html)": 32
+    "Cattle Feed (cattle-feed.html)": 182,
+    "Poultry Feed (poultry-feed.html)": 146,
+    "Cement (cement.html)": 118,
+    "Silage Bags (silage-bags.html)": 64,
+    "Jute Sacks (jute.html)": 42,
+    "Linen Fabric (linen-fabric.html)": 38,
+    "FIBC Jumbo Bags (bags.html)": 32
   },
   recentVisitors: [
     { time: "Just now", page: "Home (index.html)", source: "Direct / Organic Search", location: "Bangalore, IN" },
