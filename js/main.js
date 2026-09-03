@@ -3,41 +3,42 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  initPreloader();
-  initNavbar();
-  initToast();
-  initRFQModal();
-  initProductSpecsModal();
-  initProductThumbBar();
-  initProductGrid();
-  initContactPageForm();
-  applyDynamicSiteContent();
-  populateRFQSelect();
+  try { initPreloader(); } catch (e) { console.error("initPreloader error:", e); }
+  try { initNavbar(); } catch (e) { console.error("initNavbar error:", e); }
+  try { initRFQModal(); } catch (e) { console.error("initRFQModal error:", e); }
+  try { initProductSpecsModal(); } catch (e) { console.error("initProductSpecsModal error:", e); }
+  try { initProductThumbBar(); } catch (e) { console.error("initProductThumbBar error:", e); }
+  try { initProductGrid(); } catch (e) { console.error("initProductGrid error:", e); }
+  try { initContactPageForm(); } catch (e) { console.error("initContactPageForm error:", e); }
+  try { applyDynamicSiteContent(); } catch (e) { console.error("applyDynamicSiteContent error:", e); }
+  try { populateRFQSelect(); } catch (e) { console.error("populateRFQSelect error:", e); }
 
   // Sync products from server (for Hostinger or multi-device browsing)
   if (typeof syncServerProducts === "function") {
     syncServerProducts(() => {
-      initProductThumbBar();
-      initProductGrid();
-      applyDynamicSiteContent();
-      populateRFQSelect();
+      try { initProductThumbBar(); } catch (e) {}
+      try { initProductGrid(); } catch (e) {}
+      try { applyDynamicSiteContent(); } catch (e) {}
+      try { populateRFQSelect(); } catch (e) {}
     });
   }
   
   // Track pageview for Admin analytics
   if (typeof trackPageView === "function") {
-    const pageName = document.title ? document.title.split("|")[0].trim() : window.location.pathname;
-    trackPageView(pageName);
+    try {
+      const pageName = document.title ? document.title.split("|")[0].trim() : window.location.pathname;
+      trackPageView(pageName);
+    } catch (e) {}
   }
 });
 
 // Instant live re-render when admin updates products in another tab
 window.addEventListener("storage", (e) => {
   if (e.key === "rw_products" || e.key === "rw_site_content" || e.key === "rw_company_info") {
-    initProductThumbBar();
-    initProductGrid();
-    applyDynamicSiteContent();
-    populateRFQSelect();
+    try { initProductThumbBar(); } catch (err) {}
+    try { initProductGrid(); } catch (err) {}
+    try { applyDynamicSiteContent(); } catch (err) {}
+    try { populateRFQSelect(); } catch (err) {}
   }
 });
 
