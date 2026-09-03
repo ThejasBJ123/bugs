@@ -7,8 +7,11 @@ document.addEventListener("DOMContentLoaded", () => {
   initNavbar();
   initToast();
   initRFQModal();
+  initProductSpecsModal();
+  initProductThumbBar();
   initProductGrid();
   applyDynamicSiteContent();
+  populateRFQSelect();
   
   // Track pageview for Admin analytics
   if (typeof trackPageView === "function") {
@@ -18,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================================================================
-   Dynamic CMS Site Content Hydration
+   Dynamic CMS Site Content & Products Hydration
    ========================================================================== */
 
 function applyDynamicSiteContent() {
@@ -26,6 +29,25 @@ function applyDynamicSiteContent() {
 
   const company = getCompanyInfo();
   const content = getSiteContent();
+  const products = typeof getProducts === "function" ? getProducts() : [];
+
+  // Update dynamic product count across headers and nav links
+  const prodCount = products.length;
+  
+  const navProductLinks = document.querySelectorAll("a.nav-link[href*='products.html']");
+  navProductLinks.forEach(link => {
+    link.textContent = `Products (${prodCount})`;
+  });
+
+  const countBadges = document.querySelectorAll(".products-count-badge, .dynamic-prod-count");
+  countBadges.forEach(el => {
+    el.textContent = prodCount;
+  });
+
+  const countHeadings = document.querySelectorAll(".dynamic-prod-heading");
+  countHeadings.forEach(el => {
+    el.textContent = `${prodCount} Specialized Product Categories`;
+  });
 
   // 1. Company Contact Details across Topbar, Contact Sections & Footers
   const phoneLinks = document.querySelectorAll("a[href^='tel:']");
@@ -71,7 +93,7 @@ function applyDynamicSiteContent() {
     const heroSubtitle = document.querySelector(".hero-subtitle");
     if (heroSubtitle && content.home.heroSubtitle) heroSubtitle.textContent = content.home.heroSubtitle;
 
-    const statCards = document.querySelectorAll(".stat-card");
+    const statCards = document.querySelectorAll(".stat-card, .stat-item");
     if (statCards.length >= 4) {
       if (content.home.stat1Val) {
         const num = statCards[0].querySelector(".stat-number");
@@ -82,8 +104,8 @@ function applyDynamicSiteContent() {
       if (content.home.stat2Val) {
         const num = statCards[1].querySelector(".stat-number");
         const lbl = statCards[1].querySelector(".stat-label");
-        if (num) num.textContent = content.home.stat2Val;
-        if (lbl) lbl.textContent = content.home.stat2Label;
+        if (num) num.textContent = `${prodCount} Lines`;
+        if (lbl) lbl.textContent = content.home.stat2Label || "Core Industrial Products";
       }
       if (content.home.stat3Val) {
         const num = statCards[2].querySelector(".stat-number");
@@ -198,10 +220,42 @@ function showToast(message, iconClass = "fa-solid fa-circle-check", duration = 4
 }
 
 /* ==========================================================================
-   RFQ Modal & Inquiry Handler
+   Dynamic RFQ Product Select Options Hydration
    ========================================================================== */
 
-let selectedProductForRFQ = "";
+function populateRFQSelect() {
+  const select = document.getElementById("rfqProduct");
+  if (!select || typeof getProducts !== "function") return;
+
+  const products = getProducts();
+  const currentValue = select.value;
+  select.innerHTML = "";
+
+  products.forEach((prod, index) => {
+    const opt = document.createElement("option");
+    opt.value = prod.name;
+    opt.textContent = `${index + 1}. ${prod.name}`;
+    select.appendChild(opt);
+  });
+
+  const customOpt = document.createElement("option");
+  customOpt.value = "Custom Packaging Requirement";
+  customOpt.textContent = "Custom Bespoke Packaging Specification";
+  select.appendChild(customOpt);
+
+  if (currentValue) {
+    for (let opt of select.options) {
+      if (opt.value === currentValue) {
+        opt.selected = true;
+        break;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   RFQ Modal & Inquiry Handler
+   ========================================================================== */
 
 function initRFQModal() {
   const modal = document.getElementById("rfqModal");
@@ -268,6 +322,8 @@ function openRFQModal(productName = "") {
   const modal = document.getElementById("rfqModal");
   if (!modal) return;
 
+  populateRFQSelect();
+
   const select = document.getElementById("rfqProduct");
   if (select && productName) {
     for (let opt of select.options) {
@@ -281,7 +337,6 @@ function openRFQModal(productName = "") {
   modal.classList.add("active");
   document.body.style.overflow = "hidden";
 
-  // Push history state so browser Back button closes modal
   if (!window.location.hash.includes("quote")) {
     history.pushState({ modalOpen: true }, "", "#quote");
   }
@@ -293,41 +348,106 @@ function closeRFQModal() {
     modal.classList.remove("active");
     document.body.style.overflow = "";
     
-    // Clear hash if present without triggering navigation
     if (window.location.hash === "#quote") {
       history.replaceState(null, "", window.location.pathname + window.location.search);
     }
   }
 }
 
-// Handle Browser Back button closing modal
-window.addEventListener("popstate", (e) => {
-  const modal = document.getElementById("rfqModal");
-  if (modal && modal.classList.contains("active")) {
-    modal.classList.remove("active");
-    document.body.style.overflow = "";
-  }
-});
+/* ==========================================================================
+   Dynamic Quick Visual Product Thumbnail Bar Rendering
+   ========================================================================== */
 
-// Handle ESC key closing modal
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" || e.keyCode === 27) {
-    closeRFQModal();
-  }
-});
+function initProductThumbBar() {
+  const bar = document.getElementById("productThumbBar") || document.querySelector(".product-thumb-bar");
+  if (!bar || typeof getProducts !== "function") return;
+
+  const products = getProducts();
+  bar.innerHTML = "";
+
+  const knownPages = ['cattle-feed', 'poultry-feed', 'cement', 'silage-bags', 'jute', 'linen-fabric', 'bags'];
+
+  products.forEach((prod, index) => {
+    const item = document.createElement("div");
+    item.style.cursor = "pointer";
+    item.style.background = "var(--white)";
+    item.style.border = "1.5px solid var(--dark-200)";
+    item.style.borderRadius = "var(--radius-md)";
+    item.style.padding = "0.75rem";
+    item.style.textAlign = "center";
+    item.style.transition = "all var(--transition-normal)";
+    item.style.boxShadow = "var(--shadow-sm)";
+
+    item.onmouseover = () => {
+      item.style.borderColor = "var(--gold-500)";
+      item.style.transform = "translateY(-3px)";
+      item.style.boxShadow = "var(--shadow-md)";
+    };
+    item.onmouseout = () => {
+      item.style.borderColor = "var(--dark-200)";
+      item.style.transform = "translateY(0)";
+      item.style.boxShadow = "var(--shadow-sm)";
+    };
+
+    const isDedicatedPage = knownPages.includes(prod.slug);
+    const linkTarget = isDedicatedPage ? `${prod.slug}.html` : `javascript:openProductSpecsModal('${prod.id}')`;
+
+    item.innerHTML = `
+      <a href="${linkTarget}" style="text-decoration: none; color: inherit; display: block;">
+        <img src="${prod.image}" alt="${prod.name}" style="width: 100%; height: 75px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 0.4rem;" onerror="this.src='assets/images/bags.jpg'">
+        <strong style="font-size: 0.8rem; color: var(--primary-900); display: block; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          ${index + 1}. ${prod.shortName || prod.name}
+        </strong>
+      </a>
+    `;
+
+    bar.appendChild(item);
+  });
+}
 
 /* ==========================================================================
-   Dynamic Product Showcase Grid Rendering
+   Dynamic Product Showcase Grid & Dynamic Filter Bar
    ========================================================================== */
 
 function initProductGrid() {
   const container = document.getElementById("productShowcaseGrid");
-  if (!container) return;
+  if (!container || typeof getProducts !== "function") return;
 
   const products = getProducts();
-  const filterBtns = document.querySelectorAll(".filter-btn");
+  const filterBar = document.getElementById("productFilterBar") || document.querySelector(".product-filter-bar");
+  const knownPages = ['cattle-feed', 'poultry-feed', 'cement', 'silage-bags', 'jute', 'linen-fabric', 'bags'];
 
-  function render(filterKey = "All") {
+  // Dynamically populate Filter Buttons
+  if (filterBar) {
+    filterBar.innerHTML = "";
+    
+    // "All Products" button
+    const allBtn = document.createElement("button");
+    allBtn.className = "filter-btn active";
+    allBtn.setAttribute("data-filter", "All");
+    allBtn.textContent = `All (${products.length}) Products`;
+    filterBar.appendChild(allBtn);
+
+    // Individual Product Filter Buttons
+    products.forEach((prod, index) => {
+      const btn = document.createElement("button");
+      btn.className = "filter-btn";
+      btn.setAttribute("data-filter", prod.id);
+      btn.textContent = `${index + 1}. ${prod.shortName || prod.name}`;
+      filterBar.appendChild(btn);
+    });
+
+    const filterBtns = filterBar.querySelectorAll(".filter-btn");
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderGrid(btn.getAttribute("data-filter"));
+      });
+    });
+  }
+
+  function renderGrid(filterKey = "All") {
     container.innerHTML = "";
     
     const filtered = (filterKey === "All" || !filterKey)
@@ -336,47 +456,48 @@ function initProductGrid() {
           const key = filterKey.toLowerCase().trim();
           return p.id.toLowerCase() === key || 
                  p.slug.toLowerCase() === key || 
-                 p.shortName.toLowerCase() === key || 
-                 p.shortName.toLowerCase().includes(key) ||
+                 (p.shortName && p.shortName.toLowerCase() === key) || 
+                 (p.shortName && p.shortName.toLowerCase().includes(key)) ||
                  p.name.toLowerCase().includes(key) || 
-                 p.category.toLowerCase().includes(key);
+                 (p.category && p.category.toLowerCase().includes(key));
         });
+
+    if (filtered.length === 0) {
+      container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--dark-500); font-weight: 600;">No products found in this category.</div>`;
+      return;
+    }
 
     filtered.forEach((prod, index) => {
       const card = document.createElement("div");
       card.className = "product-card";
       
-      const specsKeys = Object.keys(prod.specifications || {});
-      const spec1Key = specsKeys[0] || "Capacity";
-      const spec1Val = prod.specifications ? prod.specifications[spec1Key] : prod.capacityRange;
-      const spec2Key = specsKeys[1] || "GSM Range";
-      const spec2Val = prod.specifications ? prod.specifications[spec2Key] : prod.gsmRange;
+      const isDedicatedPage = knownPages.includes(prod.slug);
 
       card.innerHTML = `
-        <div class="product-card-img">
-          <img src="${prod.image}" alt="${prod.name}" loading="lazy">
-          <span class="product-badge">${prod.shortName || prod.name}</span>
+        <div class="product-card-img" onclick="openProductSpecsModal('${prod.id}')" style="cursor: pointer;">
+          <img src="${prod.image}" alt="${prod.name}" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+          <span class="product-badge">${prod.shortName || prod.badge || prod.name}</span>
         </div>
         <div class="product-card-body">
-          <span class="product-category">${prod.category}</span>
-          <h3 class="product-title">${prod.name}</h3>
-          <p class="product-tagline">${prod.tagline}</p>
+          <span class="product-category">${prod.category || "Industrial Packaging"}</span>
+          <h3 class="product-title" onclick="openProductSpecsModal('${prod.id}')" style="cursor: pointer;">${prod.name}</h3>
+          <p class="product-tagline">${prod.tagline || "Heavy-Duty Precision Woven Packaging Solution."}</p>
           
           <div class="product-specs-preview">
             <div class="spec-preview-item">
               <span class="spec-preview-label">Capacity / Load:</span>
-              <span class="spec-preview-val">${prod.capacityRange}</span>
+              <span class="spec-preview-val">${prod.capacityRange || "Custom Sizing"}</span>
             </div>
             <div class="spec-preview-item">
               <span class="spec-preview-label">GSM Weight:</span>
-              <span class="spec-preview-val">${prod.gsmRange}</span>
+              <span class="spec-preview-val">${prod.gsmRange || "50 - 250 GSM"}</span>
             </div>
           </div>
 
           <div class="product-card-footer">
-            ${['cattle-feed', 'poultry-feed', 'cement', 'silage-bags', 'jute', 'linen-fabric', 'bags'].includes(prod.slug)
+            ${isDedicatedPage
               ? `<a href="${prod.slug}.html" class="btn btn-outline btn-sm" style="flex: 1;"><i class="fa-solid fa-circle-info"></i> View Specs</a>`
-              : `<button class="btn btn-outline btn-sm" onclick="openRFQModal('${prod.name}')" style="flex: 1;"><i class="fa-solid fa-circle-info"></i> View Specs</button>`
+              : `<button class="btn btn-outline btn-sm" onclick="openProductSpecsModal('${prod.id}')" style="flex: 1;"><i class="fa-solid fa-circle-info"></i> View Specs</button>`
             }
             <button class="btn btn-gold btn-sm" onclick="openRFQModal('${prod.name}')" style="flex: 1.2;">
               <i class="fa-solid fa-paper-plane"></i> Quick Quote
@@ -388,26 +509,168 @@ function initProductGrid() {
     });
   }
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      filterBtns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      render(btn.getAttribute("data-filter"));
-    });
-  });
-
-  render("All");
+  renderGrid("All");
 }
 
 /* ==========================================================================
-   Divine 5-Second Intro Preloader Controller with Letter-by-Letter Animation
+   Product Specs & Technical Details Modal Handler
+   ========================================================================== */
+
+function initProductSpecsModal() {
+  let modal = document.getElementById("productSpecsModal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "productSpecsModal";
+    modal.className = "modal-backdrop";
+    modal.innerHTML = `
+      <div class="modal-card" style="max-width: 780px; max-height: 90vh; overflow-y: auto;">
+        <div class="modal-header">
+          <h3 id="specsModalTitle" style="color: var(--primary-900); display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-box-open text-gold"></i> Product Specifications
+          </h3>
+          <button class="modal-close-btn" onclick="closeProductSpecsModal()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" id="specsModalBody">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeProductSpecsModal();
+    });
+  }
+}
+
+function openProductSpecsModal(productId) {
+  if (typeof getProducts !== "function") return;
+  const products = getProducts();
+  const prod = products.find(p => p.id === productId || p.slug === productId);
+  if (!prod) return;
+
+  initProductSpecsModal();
+  const modal = document.getElementById("productSpecsModal");
+  const modalTitle = document.getElementById("specsModalTitle");
+  const modalBody = document.getElementById("specsModalBody");
+
+  if (!modal || !modalBody) return;
+
+  modalTitle.innerHTML = `<i class="fa-solid fa-box-open text-gold"></i> ${prod.name}`;
+
+  // Build specs rows
+  let specsHtml = "";
+  if (prod.specifications && typeof prod.specifications === "object") {
+    specsHtml = Object.entries(prod.specifications).map(([key, val]) => `
+      <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--dark-200); font-size: 0.875rem;">
+        <strong style="color: var(--dark-700);">${key}:</strong>
+        <span style="color: var(--dark-900); font-weight: 600; text-align: right;">${val}</span>
+      </div>
+    `).join("");
+  }
+
+  // Build features list
+  let featuresHtml = "";
+  if (Array.isArray(prod.features) && prod.features.length > 0) {
+    featuresHtml = prod.features.map(f => `
+      <li style="display: flex; align-items: flex-start; gap: 0.6rem; color: var(--dark-800); font-size: 0.9rem; margin-bottom: 0.4rem;">
+        <i class="fa-solid fa-circle-check text-emerald" style="margin-top: 3px;"></i> <span>${f}</span>
+      </li>
+    `).join("");
+  }
+
+  modalBody.innerHTML = `
+    <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 1.75rem; margin-bottom: 1.5rem; align-items: start;">
+      <div>
+        <div style="border-radius: 12px; overflow: hidden; border: 2px solid var(--gold-300); box-shadow: var(--shadow-md); margin-bottom: 1rem;">
+          <img src="${prod.image}" alt="${prod.name}" style="width: 100%; height: 260px; object-fit: cover; display: block;" onerror="this.src='assets/images/bags.jpg'">
+        </div>
+        <div style="background: var(--dark-50); border: 1px solid var(--dark-200); border-radius: 10px; padding: 1rem;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--gold-700); text-transform: uppercase; margin-bottom: 0.25rem;">Category</div>
+          <div style="font-weight: 800; color: var(--primary-900);">${prod.category || "Industrial Manufacturing"}</div>
+          <div style="font-size: 0.85rem; color: var(--dark-600); margin-top: 0.5rem;">${prod.tagline || ""}</div>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--primary-900); margin-bottom: 0.75rem;">
+          Technical Specifications
+        </h4>
+        <div style="background: var(--white); border: 1px solid var(--dark-200); border-radius: 10px; padding: 1rem; margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--dark-200); font-size: 0.875rem;">
+            <strong style="color: var(--dark-700);">Standard Capacity:</strong>
+            <span style="color: var(--dark-900); font-weight: 700;">${prod.capacityRange || "Custom"}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--dark-200); font-size: 0.875rem;">
+            <strong style="color: var(--dark-700);">GSM Weight:</strong>
+            <span style="color: var(--dark-900); font-weight: 700;">${prod.gsmRange || "50 - 250 GSM"}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--dark-200); font-size: 0.875rem;">
+            <strong style="color: var(--dark-700);">Polymer Material:</strong>
+            <span style="color: var(--dark-900); font-weight: 600;">${prod.material || "100% Virgin Polymer"}</span>
+          </div>
+          ${specsHtml}
+        </div>
+
+        ${featuresHtml ? `
+          <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--primary-900); margin-bottom: 0.5rem;">
+            Key Engineering Highlights
+          </h4>
+          <ul style="padding-left: 0; list-style: none; margin-bottom: 1.25rem;">
+            ${featuresHtml}
+          </ul>
+        ` : ''}
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 1rem; border-top: 1px solid var(--dark-200); padding-top: 1.25rem; flex-wrap: wrap;">
+      <button class="btn btn-gold btn-lg" onclick="closeProductSpecsModal(); openRFQModal('${prod.name}');" style="flex: 1.5;">
+        <i class="fa-solid fa-calculator"></i> Request Direct Factory Quote
+      </button>
+      <a href="https://wa.me/919108713258?text=Hello%20CEO%20Lakshmi%20Kanth,%20I%20am%20interested%20in%20${encodeURIComponent(prod.name)}." target="_blank" class="btn btn-primary" style="flex: 1;">
+        <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+      </a>
+    </div>
+  `;
+
+  modal.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeProductSpecsModal() {
+  const modal = document.getElementById("productSpecsModal");
+  if (modal) {
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+}
+
+// Handle Browser Back button closing modals
+window.addEventListener("popstate", (e) => {
+  const modal = document.getElementById("rfqModal");
+  if (modal && modal.classList.contains("active")) {
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+  closeProductSpecsModal();
+});
+
+// Handle ESC key closing modals
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" || e.keyCode === 27) {
+    closeRFQModal();
+    closeProductSpecsModal();
+  }
+});
+
+/* ==========================================================================
+   5-Second Intro Preloader Controller with Letter-by-Letter Animation
    ========================================================================== */
 
 function initPreloader() {
   const preloader = document.getElementById("sitePreloader");
   if (!preloader) return;
 
-  // Generate Letter-by-Letter Staggered Animation for Company Name
   const titleElem = document.getElementById("animatedPreloaderTitle");
   if (titleElem) {
     const text = "RAYASHREE WEAVING PVT. LTD.";
@@ -422,7 +685,6 @@ function initPreloader() {
     });
   }
 
-  // Smooth fade-out after 5 seconds
   const hidePreloader = () => {
     preloader.classList.add("fade-out");
     setTimeout(() => {
@@ -430,10 +692,8 @@ function initPreloader() {
     }, 850);
   };
 
-  // 5000ms countdown timer
   const autoHideTimer = setTimeout(hidePreloader, 5000);
 
-  // Skip button click handler
   const skipBtn = document.getElementById("skipPreloaderBtn");
   if (skipBtn) {
     skipBtn.addEventListener("click", () => {
@@ -444,6 +704,12 @@ function initPreloader() {
 }
 
 window.openRFQModal = openRFQModal;
+window.openProductSpecsModal = openProductSpecsModal;
+window.closeProductSpecsModal = closeProductSpecsModal;
 window.closeRFQModal = closeRFQModal;
 window.showToast = showToast;
+
+
+
+
 

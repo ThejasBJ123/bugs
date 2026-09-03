@@ -46,7 +46,7 @@
 
       <nav class="nav-menu" id="navMenu">
         <a href="index.html" class="nav-link">Home</a>
-        <a href="products.html" class="nav-link active">Products (7)</a>
+        <a href="products.html" class="nav-link active">Products</a>
         <a href="infrastructure.html" class="nav-link">Infrastructure</a>
         <a href="about.html" class="nav-link">About Us</a>
         <a href="contact.html" class="nav-link">Contact</a>
@@ -75,7 +75,7 @@
         Manufacturing Product Lines
       </h1>
       <p style="max-width: 680px; font-size: 1.1rem; color: rgba(255, 255, 255, 0.85);">
-        Explore our 7 specialized manufacturing divisions engineered with precision weaving, high tensile yarn extrusion, and customized barrier protections.
+        Explore our <span class="dynamic-prod-count">7</span> specialized manufacturing divisions engineered with precision weaving, high tensile yarn extrusion, and customized barrier protections.
       </p>
     </div>
   </div>
@@ -85,15 +85,8 @@
     <div class="container">
       <!-- Search & Filters -->
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2.5rem;">
-        <div class="product-filter-bar" style="margin-bottom: 0;">
-          <button class="filter-btn active" data-filter="All">All 7 Products</button>
-          <button class="filter-btn" data-filter="cattle-feed">1. Cattle Feed</button>
-          <button class="filter-btn" data-filter="poultry-feed">2. Poultry Feed</button>
-          <button class="filter-btn" data-filter="cement">3. Cement</button>
-          <button class="filter-btn" data-filter="silage-bags">4. Silage Bags</button>
-          <button class="filter-btn" data-filter="jute">5. Jute</button>
-          <button class="filter-btn" data-filter="linen-fabric">6. Linen Fabric</button>
-          <button class="filter-btn" data-filter="bags">7. Bags</button>
+        <div class="product-filter-bar" id="productFilterBar" style="margin-bottom: 0;">
+          <!-- Populated dynamically by js/main.js -->
         </div>
 
         <div style="min-width: 250px;">

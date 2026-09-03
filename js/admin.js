@@ -350,8 +350,44 @@ function initExportCSV() {
 }
 
 /* ==========================================================================
-   Product Manager Logic (Image Upload, Category Edit, Live Sync)
+   Product Manager Logic (Image Upload, Auto Canvas Compression, Live Sync)
    ========================================================================== */
+
+function compressImageFile(file, maxWidth = 800, maxHeight = 600, quality = 0.82) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth || height > maxHeight) {
+          if (width / height > maxWidth / maxHeight) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          } else {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const dataUrl = canvas.toDataURL("image/jpeg", quality);
+        resolve(dataUrl);
+      };
+      img.onerror = () => resolve(e.target.result);
+      img.src = e.target.result;
+    };
+    reader.onerror = (err) => reject(err);
+    reader.readAsDataURL(file);
+  });
+}
 
 function initProductManager() {
   const addProductBtn = document.getElementById("addNewProductBtn");
@@ -360,36 +396,118 @@ function initProductManager() {
   const previewImg = document.getElementById("prodImagePreview");
   const imageUrlInput = document.getElementById("prodFormImageUrl");
   const imageFileInput = document.getElementById("prodFormImageFile");
+  const dropZone = document.getElementById("prodImageDropzone");
   const categorySelect = document.getElementById("prodFormCategorySelect");
   const categoryCustom = document.getElementById("prodFormCategoryCustom");
   const presetBtns = document.querySelectorAll(".img-preset-btn");
 
+  // Live Card Preview Elements
+  const liveCardTitle = document.getElementById("livePreviewTitle");
+  const liveCardBadge = document.getElementById("livePreviewBadge");
+  const liveCardCategory = document.getElementById("livePreviewCategory");
+  const liveCardCapacity = document.getElementById("livePreviewCapacity");
+  const liveCardGsm = document.getElementById("livePreviewGsm");
+  const liveCardImg = document.getElementById("livePreviewImg");
+
+  function updateLivePreview() {
+    const name = document.getElementById("prodFormName") ? document.getElementById("prodFormName").value.trim() : "";
+    const badge = document.getElementById("prodFormBadge") ? document.getElementById("prodFormBadge").value.trim() : "";
+    let cat = categorySelect ? categorySelect.value : "Feed & Agri";
+    if (cat === "Custom" && categoryCustom && categoryCustom.value.trim()) cat = categoryCustom.value.trim();
+    const cap = document.getElementById("prodFormCapacity") ? document.getElementById("prodFormCapacity").value.trim() : "";
+    const gsm = document.getElementById("prodFormGsm") ? document.getElementById("prodFormGsm").value.trim() : "";
+    const img = (imageUrlInput && imageUrlInput.value.trim()) ? imageUrlInput.value.trim() : "assets/images/bags.jpg";
+
+    if (liveCardTitle) liveCardTitle.textContent = name || "Product Title Preview";
+    if (liveCardBadge) liveCardBadge.textContent = badge || name || "New Bag";
+    if (liveCardCategory) liveCardCategory.textContent = cat || "Category";
+    if (liveCardCapacity) liveCardCapacity.textContent = cap || "25 kg / 50 kg";
+    if (liveCardGsm) liveCardGsm.textContent = gsm || "70 - 120 GSM";
+    if (liveCardImg) liveCardImg.src = img;
+    if (previewImg) previewImg.src = img;
+  }
+
+  // Bind live preview listeners
+  const formInputs = ["prodFormName", "prodFormBadge", "prodFormCapacity", "prodFormGsm", "prodFormTagline"];
+  formInputs.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", updateLivePreview);
+  });
+  if (categorySelect) categorySelect.addEventListener("change", updateLivePreview);
+  if (categoryCustom) categoryCustom.addEventListener("input", updateLivePreview);
+
+  // Preset Image Buttons
   presetBtns.forEach(btn => {
     btn.addEventListener("click", () => {
       const imgPath = btn.getAttribute("data-img");
       if (previewImg) previewImg.src = imgPath;
       if (imageUrlInput) imageUrlInput.value = imgPath;
+      updateLivePreview();
     });
   });
 
-  if (imageUrlInput && previewImg) {
+  // URL Input
+  if (imageUrlInput) {
     imageUrlInput.addEventListener("input", (e) => {
       const val = e.target.value.trim();
-      if (val) previewImg.src = val;
+      if (val) {
+        if (previewImg) previewImg.src = val;
+        updateLivePreview();
+      }
     });
   }
 
-  if (imageFileInput && previewImg && imageUrlInput) {
+  // Drag and drop & File Upload with Canvas Compression
+  async function handleFile(file) {
+    if (!file || !file.type.startsWith("image/")) {
+      alert("Please upload a valid image file (JPG, PNG, WebP).");
+      return;
+    }
+    try {
+      if (previewImg) previewImg.style.opacity = "0.5";
+      const compressedDataUrl = await compressImageFile(file, 800, 600, 0.82);
+      if (previewImg) {
+        previewImg.src = compressedDataUrl;
+        previewImg.style.opacity = "1";
+      }
+      if (imageUrlInput) imageUrlInput.value = compressedDataUrl;
+      updateLivePreview();
+    } catch (err) {
+      console.error("Image compression error:", err);
+      if (previewImg) previewImg.style.opacity = "1";
+    }
+  }
+
+  if (imageFileInput) {
     imageFileInput.addEventListener("change", (e) => {
       const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-          previewImg.src = evt.target.result;
-          imageUrlInput.value = evt.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
+      if (file) handleFile(file);
+    });
+  }
+
+  if (dropZone) {
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.style.borderColor = "#b5832a";
+        dropZone.style.background = "#fef9ee";
+      }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.style.borderColor = "#cbd5e1";
+        dropZone.style.background = "#f8fafc";
+      }, false);
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const file = dt.files[0];
+      if (file) handleFile(file);
     });
   }
 
@@ -406,24 +524,33 @@ function initProductManager() {
 
   if (addProductBtn && productModal) {
     addProductBtn.addEventListener("click", () => {
-      document.getElementById("productModalTitle").textContent = "Add New Manufacturing Product";
+      document.getElementById("productModalTitle").textContent = "Add New Manufacturing Product / Bag Line";
       document.getElementById("prodFormId").value = "";
       document.getElementById("prodFormName").value = "";
-      document.getElementById("prodFormBadge").value = "New Line";
+      
+      const currentProducts = getProducts();
+      document.getElementById("prodFormBadge").value = `${currentProducts.length + 1}. Bag`;
       document.getElementById("prodFormCategorySelect").value = "Feed & Agri";
       if (categoryCustom) {
         categoryCustom.value = "";
         categoryCustom.style.display = "none";
       }
-      document.getElementById("prodFormGsm").value = "80 GSM - 120 GSM";
-      document.getElementById("prodFormCapacity").value = "50 kg";
+      document.getElementById("prodFormGsm").value = "75 GSM - 120 GSM";
+      document.getElementById("prodFormCapacity").value = "25 kg / 50 kg";
       document.getElementById("prodFormMaterial").value = "100% Virgin Polypropylene (PP)";
-      document.getElementById("prodFormTagline").value = "";
+      document.getElementById("prodFormTagline").value = "Heavy-Duty Precision Woven Packaging Solution.";
+      if (document.getElementById("prodFormFeatures")) {
+        document.getElementById("prodFormFeatures").value = "High drop and burst resistance\nUV stabilized for outdoor warehouse storage\nCustom high-definition flexo/BOPP printing\nFood-grade certified polymer";
+      }
+      if (document.getElementById("prodFormSpecs")) {
+        document.getElementById("prodFormSpecs").value = "Denier: 700D - 1200D\nMesh Count: 10x10 to 14x14\nLamination: BOPP / Extrusion coated\nBottom Stitch: Heavy-duty single/double fold chain stitch";
+      }
       
       const defaultImg = "assets/images/bags.jpg";
       if (previewImg) previewImg.src = defaultImg;
       if (imageUrlInput) imageUrlInput.value = defaultImg;
       
+      updateLivePreview();
       productModal.classList.add("active");
     });
   }
@@ -441,14 +568,36 @@ function initProductManager() {
         category = categoryCustom.value.trim();
       }
 
-      const gsm = document.getElementById("prodFormGsm").value.trim();
-      const capacity = document.getElementById("prodFormCapacity").value.trim();
-      const material = document.getElementById("prodFormMaterial").value.trim() || "Virgin Polymer";
-      const tagline = document.getElementById("prodFormTagline").value.trim();
+      const gsm = document.getElementById("prodFormGsm").value.trim() || "65 - 120 GSM";
+      const capacity = document.getElementById("prodFormCapacity").value.trim() || "50 kg";
+      const material = document.getElementById("prodFormMaterial").value.trim() || "100% Virgin Polypropylene (PP)";
+      const tagline = document.getElementById("prodFormTagline").value.trim() || "Heavy-Duty Precision Woven Packaging Solution.";
       const image = (imageUrlInput && imageUrlInput.value.trim()) ? imageUrlInput.value.trim() : "assets/images/bags.jpg";
 
+      // Parse features
+      const featuresRaw = document.getElementById("prodFormFeatures") ? document.getElementById("prodFormFeatures").value : "";
+      const features = featuresRaw
+        ? featuresRaw.split("\n").map(f => f.replace(/^[-*•]\s*/, '').trim()).filter(Boolean)
+        : ["Custom high tensile extrusion", "Engineered for heavy logistics", "Food-grade & industrial certified"];
+
+      // Parse specs
+      const specsRaw = document.getElementById("prodFormSpecs") ? document.getElementById("prodFormSpecs").value : "";
+      const specifications = {
+        "Standard Sizes": capacity,
+        "GSM Weight": gsm,
+        "Material": material
+      };
+      if (specsRaw) {
+        specsRaw.split("\n").forEach(line => {
+          const parts = line.split(/:(.+)/);
+          if (parts.length >= 2 && parts[0].trim()) {
+            specifications[parts[0].trim()] = parts[1].trim();
+          }
+        });
+      }
+
       if (existingId) {
-        const idx = products.findIndex(p => p.id === existingId);
+        const idx = products.findIndex(p => p.id === existingId || p.slug === existingId);
         if (idx !== -1) {
           products[idx].name = name;
           products[idx].shortName = badge;
@@ -459,9 +608,11 @@ function initProductManager() {
           products[idx].material = material;
           products[idx].tagline = tagline;
           products[idx].image = image;
+          products[idx].features = features;
+          products[idx].specifications = specifications;
         }
       } else {
-        const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + Math.floor(100 + Math.random() * 900);
         products.push({
           id: slug,
           slug: slug,
@@ -474,13 +625,9 @@ function initProductManager() {
           material: material,
           tagline: tagline,
           image: image,
-          features: ["Custom high tensile extrusion", "Engineered for heavy logistics", "Food-grade & industrial certified"],
-          specifications: {
-            "Standard Sizes": capacity,
-            "GSM Weight": gsm,
-            "Material": material
-          },
-          applications: ["Industrial Logistics", "Bulk Packaging"],
+          features: features,
+          specifications: specifications,
+          applications: ["Industrial Logistics", "Bulk Packaging", "Commercial Distribution"],
           featured: true
         });
       }
@@ -488,7 +635,7 @@ function initProductManager() {
       saveProducts(products);
       closeProductModal();
       renderProductsTable();
-      alert(`Product "${name}" saved and published! It is now live on the public website home & products pages.`);
+      alert(`Success! Product "${name}" has been saved with its photo and published live to the public website home and catalog.`);
     });
   }
 }
@@ -505,23 +652,28 @@ function renderProductsTable() {
   const products = getProducts();
   tbody.innerHTML = "";
 
-  products.forEach(p => {
+  const knownPages = ['cattle-feed', 'poultry-feed', 'cement', 'silage-bags', 'jute', 'linen-fabric', 'bags'];
+
+  products.forEach((p, index) => {
     const tr = document.createElement("tr");
+    const isDedicated = knownPages.includes(p.slug);
+    const viewLink = isDedicated ? `${p.slug}.html` : `index.html#products`;
+
     tr.innerHTML = `
       <td>
-        <img src="${p.image}" alt="${p.name}" style="width: 55px; height: 50px; object-fit: cover; border-radius: 8px; border: 1.5px solid #dfb774; box-shadow: 0 2px 5px rgba(0,0,0,0.08);">
+        <img src="${p.image}" alt="${p.name}" style="width: 58px; height: 50px; object-fit: cover; border-radius: 8px; border: 1.5px solid #dfb774; box-shadow: 0 2px 5px rgba(0,0,0,0.08);" onerror="this.src='assets/images/bags.jpg'">
       </td>
       <td>
-        <div style="font-weight: 700; color: #032b27;">${p.name}</div>
+        <div style="font-weight: 700; color: #032b27;">${index + 1}. ${p.name}</div>
         <div style="font-size: 0.775rem; color: #64748b;">${p.tagline || ""}</div>
       </td>
       <td><span class="badge badge-under-review">${p.category}</span></td>
-      <td style="font-weight: 600; font-size: 0.85rem;">${p.capacityRange}</td>
-      <td style="font-size: 0.85rem;">${p.gsmRange}</td>
-      <td><span class="badge badge-quoted"><i class="fa-solid fa-circle-check"></i> Published</span></td>
+      <td style="font-weight: 600; font-size: 0.85rem;">${p.capacityRange || "50 kg"}</td>
+      <td style="font-size: 0.85rem;">${p.gsmRange || "70 - 120 GSM"}</td>
+      <td><span class="badge badge-quoted"><i class="fa-solid fa-circle-check"></i> Published Live</span></td>
       <td>
         <div class="action-btns">
-          <a href="${p.slug}.html" class="btn-icon" title="View Public Page" target="_blank">
+          <a href="${viewLink}" class="btn-icon" title="View On Public Website" target="_blank">
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
           <button class="btn-icon" title="Edit Product" onclick="editProductRow('${p.id}')">
@@ -539,7 +691,7 @@ function renderProductsTable() {
 
 function editProductRow(productId) {
   const products = getProducts();
-  const prod = products.find(p => p.id === productId);
+  const prod = products.find(p => p.id === productId || p.slug === productId);
   if (!prod) return;
 
   const modal = document.getElementById("productEditModal");
@@ -554,38 +706,63 @@ function editProductRow(productId) {
   const catCustom = document.getElementById("prodFormCategoryCustom");
   
   let matchFound = false;
-  for (let opt of catSelect.options) {
-    if (opt.value === prod.category) {
-      opt.selected = true;
-      matchFound = true;
-      if (catCustom) catCustom.style.display = "none";
-      break;
+  if (catSelect) {
+    for (let opt of catSelect.options) {
+      if (opt.value === prod.category) {
+        opt.selected = true;
+        matchFound = true;
+        if (catCustom) catCustom.style.display = "none";
+        break;
+      }
+    }
+    if (!matchFound && catCustom) {
+      catSelect.value = "Custom";
+      catCustom.value = prod.category;
+      catCustom.style.display = "block";
     }
   }
-  if (!matchFound && catSelect && catCustom) {
-    catSelect.value = "Custom";
-    catCustom.value = prod.category;
-    catCustom.style.display = "block";
-  }
 
-  document.getElementById("prodFormGsm").value = prod.gsmRange;
-  document.getElementById("prodFormCapacity").value = prod.capacityRange;
+  document.getElementById("prodFormGsm").value = prod.gsmRange || "70 - 120 GSM";
+  document.getElementById("prodFormCapacity").value = prod.capacityRange || "50 kg";
   document.getElementById("prodFormMaterial").value = prod.material || "100% Virgin Polymer";
   document.getElementById("prodFormTagline").value = prod.tagline || "";
   
+  if (document.getElementById("prodFormFeatures")) {
+    document.getElementById("prodFormFeatures").value = Array.isArray(prod.features) ? prod.features.join("\n") : "";
+  }
+  if (document.getElementById("prodFormSpecs") && prod.specifications) {
+    const lines = Object.entries(prod.specifications).map(([k, v]) => `${k}: ${v}`).join("\n");
+    document.getElementById("prodFormSpecs").value = lines;
+  }
+
   const imgPath = prod.image || "assets/images/bags.jpg";
   const previewImg = document.getElementById("prodImagePreview");
   const imageUrlInput = document.getElementById("prodFormImageUrl");
   if (previewImg) previewImg.src = imgPath;
   if (imageUrlInput) imageUrlInput.value = imgPath;
 
+  // Update Live preview
+  const liveCardTitle = document.getElementById("livePreviewTitle");
+  const liveCardBadge = document.getElementById("livePreviewBadge");
+  const liveCardCategory = document.getElementById("livePreviewCategory");
+  const liveCardCapacity = document.getElementById("livePreviewCapacity");
+  const liveCardGsm = document.getElementById("livePreviewGsm");
+  const liveCardImg = document.getElementById("livePreviewImg");
+
+  if (liveCardTitle) liveCardTitle.textContent = prod.name;
+  if (liveCardBadge) liveCardBadge.textContent = prod.badge || prod.shortName || prod.name;
+  if (liveCardCategory) liveCardCategory.textContent = prod.category;
+  if (liveCardCapacity) liveCardCapacity.textContent = prod.capacityRange;
+  if (liveCardGsm) liveCardGsm.textContent = prod.gsmRange;
+  if (liveCardImg) liveCardImg.src = imgPath;
+
   modal.classList.add("active");
 }
 
 function deleteProductRow(productId) {
-  if (confirm(`Are you sure you want to remove product line "${productId}" from the public catalog?`)) {
+  if (confirm(`Are you sure you want to remove product "${productId}" from the public catalog?`)) {
     let products = getProducts();
-    products = products.filter(p => p.id !== productId);
+    products = products.filter(p => p.id !== productId && p.slug !== productId);
     saveProducts(products);
     renderProductsTable();
   }
@@ -599,6 +776,7 @@ function resetDefaultProducts() {
     alert("Products restored to default 7 lines.");
   }
 }
+
 
 /* ==========================================================================
    Public Pages CMS Editor Logic

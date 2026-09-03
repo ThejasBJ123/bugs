@@ -517,7 +517,14 @@ function trackPageView(pageIdentifier = "") {
 function getProducts() {
   const stored = localStorage.getItem("rw_products");
   if (stored) {
-    try { return JSON.parse(stored); } catch (e) { console.error(e); }
+    try { 
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    } catch (e) { 
+      console.error("Error reading rw_products from localStorage:", e); 
+    }
   }
   localStorage.setItem("rw_products", JSON.stringify(DEFAULT_PRODUCTS));
   return DEFAULT_PRODUCTS;
@@ -526,6 +533,37 @@ function getProducts() {
 function saveProducts(products) {
   localStorage.setItem("rw_products", JSON.stringify(products));
 }
+
+function getProductById(idOrSlug) {
+  const products = getProducts();
+  return products.find(p => p.id === idOrSlug || p.slug === idOrSlug) || null;
+}
+
+function addProduct(prod) {
+  const products = getProducts();
+  products.push(prod);
+  saveProducts(products);
+  return prod;
+}
+
+function updateProduct(id, updatedFields) {
+  const products = getProducts();
+  const idx = products.findIndex(p => p.id === id || p.slug === id);
+  if (idx !== -1) {
+    products[idx] = { ...products[idx], ...updatedFields };
+    saveProducts(products);
+    return products[idx];
+  }
+  return null;
+}
+
+function deleteProduct(id) {
+  let products = getProducts();
+  products = products.filter(p => p.id !== id && p.slug !== id);
+  saveProducts(products);
+  return products;
+}
+
 
 function getInquiries() {
   const stored = localStorage.getItem("rw_inquiries");
