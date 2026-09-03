@@ -273,6 +273,27 @@ function getProducts() {
 
 function saveProducts(products) {
   localStorage.setItem("rw_products", JSON.stringify(products));
+  try {
+    fetch('api/products.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(products)
+    }).catch(() => {});
+  } catch (e) {}
+}
+
+function syncServerProducts(callback) {
+  try {
+    fetch('api/products.php')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          localStorage.setItem("rw_products", JSON.stringify(data));
+          if (typeof callback === "function") callback(data);
+        }
+      })
+      .catch(() => {});
+  } catch (e) {}
 }
 
 function getProductById(idOrSlug) {

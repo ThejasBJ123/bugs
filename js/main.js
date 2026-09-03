@@ -13,11 +13,31 @@ document.addEventListener("DOMContentLoaded", () => {
   initContactPageForm();
   applyDynamicSiteContent();
   populateRFQSelect();
+
+  // Sync products from server (for Hostinger or multi-device browsing)
+  if (typeof syncServerProducts === "function") {
+    syncServerProducts(() => {
+      initProductThumbBar();
+      initProductGrid();
+      applyDynamicSiteContent();
+      populateRFQSelect();
+    });
+  }
   
   // Track pageview for Admin analytics
   if (typeof trackPageView === "function") {
     const pageName = document.title ? document.title.split("|")[0].trim() : window.location.pathname;
     trackPageView(pageName);
+  }
+});
+
+// Instant live re-render when admin updates products in another tab
+window.addEventListener("storage", (e) => {
+  if (e.key === "rw_products" || e.key === "rw_site_content" || e.key === "rw_company_info") {
+    initProductThumbBar();
+    initProductGrid();
+    applyDynamicSiteContent();
+    populateRFQSelect();
   }
 });
 
