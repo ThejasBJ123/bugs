@@ -400,8 +400,7 @@ function initProductManager() {
   const imageUrlInput = document.getElementById("prodFormImageUrl");
   const imageFileInput = document.getElementById("prodFormImageFile");
   const dropZone = document.getElementById("prodImageDropzone");
-  const categorySelect = document.getElementById("prodFormCategorySelect");
-  const categoryCustom = document.getElementById("prodFormCategoryCustom");
+  const categoryInput = document.getElementById("prodFormCategory");
 
   // Live Card Preview Elements
   const liveCardTitle = document.getElementById("livePreviewTitle");
@@ -414,8 +413,7 @@ function initProductManager() {
   function updateLivePreview() {
     const name = document.getElementById("prodFormName") ? document.getElementById("prodFormName").value.trim() : "";
     const badge = document.getElementById("prodFormBadge") ? document.getElementById("prodFormBadge").value.trim() : "";
-    let cat = categorySelect ? categorySelect.value : "Feed & Agri";
-    if (cat === "Custom" && categoryCustom && categoryCustom.value.trim()) cat = categoryCustom.value.trim();
+    const cat = categoryInput ? categoryInput.value.trim() : "";
     const cap = document.getElementById("prodFormCapacity") ? document.getElementById("prodFormCapacity").value.trim() : "";
     const gsm = document.getElementById("prodFormGsm") ? document.getElementById("prodFormGsm").value.trim() : "";
     const img = (imageUrlInput && imageUrlInput.value.trim()) ? imageUrlInput.value.trim() : "assets/images/bags.jpg";
@@ -430,13 +428,11 @@ function initProductManager() {
   }
 
   // Bind live preview listeners
-  const formInputs = ["prodFormName", "prodFormBadge", "prodFormCapacity", "prodFormGsm", "prodFormTagline"];
+  const formInputs = ["prodFormName", "prodFormBadge", "prodFormCategory", "prodFormCapacity", "prodFormGsm", "prodFormTagline"];
   formInputs.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener("input", updateLivePreview);
   });
-  if (categorySelect) categorySelect.addEventListener("change", updateLivePreview);
-  if (categoryCustom) categoryCustom.addEventListener("input", updateLivePreview);
 
   // URL Input
   if (imageUrlInput) {
@@ -522,43 +518,27 @@ function initProductManager() {
     pCatFilter.addEventListener("change", renderProductsTable);
   }
 
-  if (categorySelect && categoryCustom) {
-    categorySelect.addEventListener("change", () => {
-      if (categorySelect.value === "Custom") {
-        categoryCustom.style.display = "block";
-        categoryCustom.focus();
-      } else {
-        categoryCustom.style.display = "none";
-      }
-    });
-  }
-
   if (addProductBtn && productModal) {
     addProductBtn.addEventListener("click", () => {
       document.getElementById("productModalTitle").textContent = "Add New Manufacturing Product / Bag Line";
       document.getElementById("prodFormId").value = "";
       document.getElementById("prodFormName").value = "";
-      
-      document.getElementById("prodFormBadge").value = "Premium Quality";
-      document.getElementById("prodFormCategorySelect").value = "Feed & Agri";
-      if (categoryCustom) {
-        categoryCustom.value = "";
-        categoryCustom.style.display = "none";
-      }
-      document.getElementById("prodFormGsm").value = "75 GSM - 120 GSM";
-      document.getElementById("prodFormCapacity").value = "25 kg / 50 kg";
-      document.getElementById("prodFormMaterial").value = "100% Virgin Polypropylene (PP)";
-      document.getElementById("prodFormTagline").value = "Heavy-Duty Precision Woven Packaging Solution.";
+      document.getElementById("prodFormBadge").value = "";
+      if (categoryInput) categoryInput.value = "";
+      document.getElementById("prodFormGsm").value = "";
+      document.getElementById("prodFormCapacity").value = "";
+      document.getElementById("prodFormMaterial").value = "";
+      document.getElementById("prodFormTagline").value = "";
       if (document.getElementById("prodFormFeatures")) {
-        document.getElementById("prodFormFeatures").value = "High drop and burst resistance\nUV stabilized for outdoor warehouse storage\nCustom high-definition flexo/BOPP printing\nFood-grade certified polymer";
+        document.getElementById("prodFormFeatures").value = "";
       }
       if (document.getElementById("prodFormSpecs")) {
-        document.getElementById("prodFormSpecs").value = "Denier: 700D - 1200D\nMesh Count: 10x10 to 14x14\nLamination: BOPP / Extrusion coated\nBottom Stitch: Heavy-duty single/double fold chain stitch";
+        document.getElementById("prodFormSpecs").value = "";
       }
       
       const defaultImg = "assets/images/bags.jpg";
       if (previewImg) previewImg.src = defaultImg;
-      if (imageUrlInput) imageUrlInput.value = defaultImg;
+      if (imageUrlInput) imageUrlInput.value = "";
       
       updateLivePreview();
       productModal.classList.add("active");
@@ -572,11 +552,7 @@ function initProductManager() {
       const existingId = document.getElementById("prodFormId").value;
       const name = document.getElementById("prodFormName").value.trim();
       const badge = document.getElementById("prodFormBadge").value.trim() || name;
-      
-      let category = document.getElementById("prodFormCategorySelect").value;
-      if (category === "Custom" && categoryCustom && categoryCustom.value.trim()) {
-        category = categoryCustom.value.trim();
-      }
+      const category = categoryInput ? categoryInput.value.trim() || "Industrial Packaging" : "Industrial Packaging";
 
       const gsm = document.getElementById("prodFormGsm").value.trim() || "65 - 120 GSM";
       const capacity = document.getElementById("prodFormCapacity").value.trim() || "50 kg";
@@ -786,25 +762,8 @@ function editProductRow(productId) {
   document.getElementById("prodFormName").value = prod.name;
   document.getElementById("prodFormBadge").value = prod.badge || prod.shortName || prod.name;
   
-  const catSelect = document.getElementById("prodFormCategorySelect");
-  const catCustom = document.getElementById("prodFormCategoryCustom");
-  
-  let matchFound = false;
-  if (catSelect) {
-    for (let opt of catSelect.options) {
-      if (opt.value === prod.category) {
-        opt.selected = true;
-        matchFound = true;
-        if (catCustom) catCustom.style.display = "none";
-        break;
-      }
-    }
-    if (!matchFound && catCustom) {
-      catSelect.value = "Custom";
-      catCustom.value = prod.category;
-      catCustom.style.display = "block";
-    }
-  }
+  const catInput = document.getElementById("prodFormCategory");
+  if (catInput) catInput.value = prod.category || "";
 
   document.getElementById("prodFormGsm").value = prod.gsmRange || "70 - 120 GSM";
   document.getElementById("prodFormCapacity").value = prod.capacityRange || "50 kg";
