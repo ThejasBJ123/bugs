@@ -1,0 +1,45 @@
+# ==============================================================================
+# Rayashree Weaving Pvt. Ltd. - Hostinger Web Server Configuration (.htaccess)
+# Optimized for Hostinger Apache / LiteSpeed Web Servers
+# ==============================================================================
+
+# Enable Rewrite Engine
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Force HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Direct 404 to index.html if file doesn't exist
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ index.html [L]
+</IfModule>
+
+# Set Default Character Set to UTF-8
+AddDefaultCharset UTF-8
+
+# Browser Caching & Performance Optimization
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+  ExpiresByType text/html "access plus 1 hour"
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+</IfModule>
+
+# Compression (Gzip / Deflate)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Prevent Direct Browsing of Internal Data Directory
+<FilesMatch "^(inquiries\.json|\.git)">
+  Order allow,deny
+  Deny from all
+</FilesMatch>

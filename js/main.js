@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initProductSpecsModal();
   initProductThumbBar();
   initProductGrid();
+  initContactPageForm();
   applyDynamicSiteContent();
   populateRFQSelect();
   
@@ -36,7 +37,7 @@ function applyDynamicSiteContent() {
   
   const navProductLinks = document.querySelectorAll("a.nav-link[href*='products.html']");
   navProductLinks.forEach(link => {
-    link.textContent = `Products (${prodCount})`;
+    link.textContent = `Products`;
   });
 
   const countBadges = document.querySelectorAll(".products-count-badge, .dynamic-prod-count");
@@ -46,7 +47,7 @@ function applyDynamicSiteContent() {
 
   const countHeadings = document.querySelectorAll(".dynamic-prod-heading");
   countHeadings.forEach(el => {
-    el.textContent = `${prodCount} Specialized Product Categories`;
+    el.textContent = `Specialized Product Categories`;
   });
 
   // 1. Company Contact Details across Topbar, Contact Sections & Footers
@@ -302,6 +303,22 @@ function initRFQModal() {
         priority: "High"
       });
 
+      // Dispatch to Hostinger PHP backend if hosted on server
+      try {
+        fetch('api/send-inquiry.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            clientName: clientName,
+            phone: phone,
+            email: email,
+            product: product,
+            quantity: quantity,
+            specifications: specifications
+          })
+        }).catch(() => {});
+      } catch (e) {}
+
       closeRFQModal();
       rfqForm.reset();
 
@@ -316,6 +333,62 @@ function initRFQModal() {
       }, 800);
     });
   }
+}
+
+function initContactPageForm() {
+  const contactForm = document.getElementById("contactPageForm");
+  if (!contactForm) return;
+
+  contactForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("cName") ? document.getElementById("cName").value.trim() : "";
+    const phone = document.getElementById("cPhone") ? document.getElementById("cPhone").value.trim() : "";
+    const email = document.getElementById("cEmail") ? document.getElementById("cEmail").value.trim() : "";
+    const product = document.getElementById("cProduct") ? document.getElementById("cProduct").value : "General Inquiry";
+    const message = document.getElementById("cMessage") ? document.getElementById("cMessage").value.trim() : "";
+
+    if (!name || !phone) {
+      alert("Please provide your name and phone number.");
+      return;
+    }
+
+    const newInquiry = addInquiry({
+      clientName: name,
+      contactPerson: name,
+      phone: phone,
+      email: email || "N/A",
+      product: product,
+      quantity: "Standard Order",
+      specifications: message || "Direct Inquiry from Contact Page",
+      priority: "High"
+    });
+
+    // Dispatch to Hostinger PHP backend if hosted on server
+    try {
+      fetch('api/send-inquiry.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          clientName: name,
+          phone: phone,
+          email: email,
+          product: product,
+          quantity: "Standard Order",
+          specifications: message
+        })
+      }).catch(() => {});
+    } catch (e) {}
+
+    contactForm.reset();
+    showToast(`Thank you, ${name}! Your inquiry #${newInquiry.id} has been submitted.`);
+
+    setTimeout(() => {
+      if (confirm("Would you like to speak directly with CEO Lakshmi Kanth on WhatsApp?")) {
+        const msg = encodeURIComponent(`Hello Mr. Lakshmi Kanth, I submitted inquiry #${newInquiry.id} on your website regarding ${product}.`);
+        window.open(`https://wa.me/${COMPANY_INFO.whatsappNumber}?text=${msg}`, "_blank");
+      }
+    }, 800);
+  });
 }
 
 function openRFQModal(productName = "") {
