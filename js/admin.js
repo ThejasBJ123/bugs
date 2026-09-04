@@ -781,6 +781,30 @@ function closeProductModal() {
   if (modal) modal.classList.remove("active");
 }
 
+function setFormCategory(val) {
+  const input = document.getElementById("prodFormCategory");
+  if (input) {
+    input.value = val;
+    input.dispatchEvent(new Event("input"));
+  }
+}
+
+function setFormCapacity(val) {
+  const input = document.getElementById("prodFormCapacity");
+  if (input) {
+    input.value = val;
+    input.dispatchEvent(new Event("input"));
+  }
+}
+
+function setFormGsm(val) {
+  const input = document.getElementById("prodFormGsm");
+  if (input) {
+    input.value = val;
+    input.dispatchEvent(new Event("input"));
+  }
+}
+
 function renderProductsTable() {
   const tbody = document.getElementById("productsTableBody");
   if (!tbody) return;
@@ -790,9 +814,33 @@ function renderProductsTable() {
   const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
   const selectedCat = catFilter ? catFilter.value : "All";
 
-  let products = getProducts();
-  if (selectedCat !== "All") {
-    products = products.filter(p => p.category === selectedCat);
+  const allProducts = getProducts();
+
+  // Dynamically populate category dropdown with all categories currently in products
+  if (catFilter) {
+    const currentVal = catFilter.value;
+    const categories = Array.from(new Set(allProducts.map(p => p.category).filter(Boolean))).sort();
+    
+    catFilter.innerHTML = `<option value="All">All Categories (${allProducts.length})</option>`;
+    categories.forEach(cat => {
+      const count = allProducts.filter(p => p.category === cat).length;
+      const opt = document.createElement("option");
+      opt.value = cat;
+      opt.textContent = `${cat} (${count})`;
+      if (cat === currentVal) opt.selected = true;
+      catFilter.appendChild(opt);
+    });
+
+    if (currentVal && (currentVal === "All" || categories.includes(currentVal))) {
+      catFilter.value = currentVal;
+    } else {
+      catFilter.value = "All";
+    }
+  }
+
+  let products = allProducts;
+  if (catFilter && catFilter.value !== "All") {
+    products = products.filter(p => p.category === catFilter.value);
   }
   if (query) {
     products = products.filter(p => 
@@ -803,17 +851,21 @@ function renderProductsTable() {
     );
   }
 
-  const allProducts = getProducts();
   if (allProducts.length === 0) {
     tbody.innerHTML = `
       <tr>
         <td colspan="7" style="text-align: center; padding: 3.5rem 2rem;">
           <div style="font-size: 2.5rem; color: #dfb774; margin-bottom: 0.75rem;"><i class="fa-solid fa-boxes-stacked"></i></div>
           <h4 style="font-size: 1.15rem; color: #032b27; font-weight: 800; margin-bottom: 0.35rem;">No Products in Catalog Yet</h4>
-          <p style="color: #64748b; font-size: 0.875rem; margin-bottom: 1.25rem;">Your catalog is empty. Click "Add New Product" to create and publish your first manufacturing product.</p>
-          <button class="btn btn-gold btn-sm" onclick="document.getElementById('addNewProductBtn').click()">
-            <i class="fa-solid fa-plus"></i> Add New Product Now
-          </button>
+          <p style="color: #64748b; font-size: 0.875rem; margin-bottom: 1.25rem;">Your catalog is currently empty. You can add new custom products from scratch or restore the 7 factory standard product lines.</p>
+          <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+            <button class="btn btn-gold btn-sm" onclick="document.getElementById('addNewProductBtn').click()">
+              <i class="fa-solid fa-plus"></i> Add New Product Now
+            </button>
+            <button class="btn btn-outline btn-sm" onclick="restoreStandardProducts()" style="color: #07524a; border-color: #dfb774; background: #fffcf4;">
+              <i class="fa-solid fa-rotate-left" style="color: #b5832a;"></i> Restore 7 Factory Lines
+            </button>
+          </div>
         </td>
       </tr>
     `;
@@ -825,6 +877,7 @@ function renderProductsTable() {
     return;
   }
 
+  tbody.innerHTML = "";
   products.forEach((p) => {
     const tr = document.createElement("tr");
     const viewLink = `../public/products.html#products`;
@@ -958,6 +1011,7 @@ function deleteProductRow(productId) {
     products = products.filter(p => p.id !== productId && p.slug !== productId);
     saveProducts(products);
     renderProductsTable();
+    showAdminToast("Product removed successfully.");
   }
 }
 
@@ -966,6 +1020,16 @@ function resetDefaultProducts() {
     saveProducts([]);
     renderProductsTable();
     showAdminToast("All products removed from catalog.");
+  }
+}
+
+function restoreStandardProducts() {
+  if (confirm("Restore the 7 factory standard manufacturing product lines (Cattle Feed, Poultry Feed, Cement Valve Bags, Silage Bags, Jute Sacks, Linen Fabrics, FIBC Jumbo Bags)?")) {
+    if (typeof DEFAULT_PRODUCTS !== "undefined") {
+      saveProducts(JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)));
+      renderProductsTable();
+      showAdminToast("7 Factory standard product lines restored successfully!");
+    }
   }
 }
 

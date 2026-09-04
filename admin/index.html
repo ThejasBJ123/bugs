@@ -215,14 +215,12 @@
                 <input type="text" id="adminProductSearch" class="form-control" placeholder="Search products, GSM..." style="padding: 0.45rem 0.75rem 0.45rem 2rem; font-size: 0.825rem;">
                 <i class="fa-solid fa-search" style="position: absolute; left: 0.65rem; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.8rem;"></i>
               </div>
-              <select id="adminProductCategoryFilter" class="form-select" style="padding: 0.45rem 0.75rem; font-size: 0.825rem; width: 160px;">
+              <select id="adminProductCategoryFilter" class="form-select" style="padding: 0.45rem 0.75rem; font-size: 0.825rem; min-width: 150px;">
                 <option value="All">All Categories</option>
-                <option value="Feed & Agri">Feed & Agri</option>
-                <option value="Building & Construction">Cement & Construction</option>
-                <option value="Eco & Natural">Jute & Eco Bags</option>
-                <option value="Textiles">Linen Fabric Textiles</option>
-                <option value="Industrial Bulk">Industrial FIBC Bags</option>
               </select>
+              <button class="btn btn-outline btn-sm" onclick="restoreStandardProducts()" title="Restore the 7 standard factory product lines" style="color: #07524a; border-color: #dfb774; background: #fffcf4;">
+                <i class="fa-solid fa-rotate-left" style="color: #b5832a;"></i> Restore 7 Factory Lines
+              </button>
               <button class="btn btn-outline btn-sm" onclick="resetDefaultProducts()" title="Clear all products from catalog" style="color: #ef4444; border-color: #fca5a5;">
                 <i class="fa-solid fa-trash-can"></i> Clear All Products
               </button>
@@ -809,12 +807,26 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="prodFormCategory">Category <span class="req">*</span></label>
-              <input type="text" id="prodFormCategory" class="form-control" placeholder="e.g. Agricultural Bags, FIBC Bags, Jute Bags, Textiles..." required>
+              <input type="text" id="prodFormCategory" class="form-control" placeholder="e.g. Feed & Agri, Jute Bags, FIBC Bags..." required>
+              <div style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.35rem;">
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #e6f4f1; color: #07524a; border: 1px solid #b2dfdb; border-radius: 4px; cursor: pointer;" onclick="setFormCategory('Feed & Agri')">Feed & Agri</button>
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #e6f4f1; color: #07524a; border: 1px solid #b2dfdb; border-radius: 4px; cursor: pointer;" onclick="setFormCategory('Building & Construction')">Cement & Constr.</button>
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #e6f4f1; color: #07524a; border: 1px solid #b2dfdb; border-radius: 4px; cursor: pointer;" onclick="setFormCategory('Agriculture & Farming')">Agri & Silage</button>
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #e6f4f1; color: #07524a; border: 1px solid #b2dfdb; border-radius: 4px; cursor: pointer;" onclick="setFormCategory('Eco & Natural')">Jute & Eco Bags</button>
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #e6f4f1; color: #07524a; border: 1px solid #b2dfdb; border-radius: 4px; cursor: pointer;" onclick="setFormCategory('Industrial Bulk')">FIBC Jumbo Bags</button>
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #e6f4f1; color: #07524a; border: 1px solid #b2dfdb; border-radius: 4px; cursor: pointer;" onclick="setFormCategory('Textiles')">Linen Textiles</button>
+              </div>
             </div>
 
             <div class="form-group">
               <label class="form-label" for="prodFormCapacity">Standard Capacity / Sizes</label>
               <input type="text" id="prodFormCapacity" class="form-control" placeholder="e.g. 25 kg / 50 kg / 1 Ton">
+              <div style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.35rem;">
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer;" onclick="setFormCapacity('25kg / 50kg')">25kg / 50kg</button>
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer;" onclick="setFormCapacity('50kg Standard')">50kg Standard</button>
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer;" onclick="setFormCapacity('500kg - 2000kg (FIBC)')">500kg - 2000kg</button>
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer;" onclick="setFormCapacity('Custom Bulk Sizing')">Custom Sizing</button>
+              </div>
             </div>
           </div>
 
@@ -822,6 +834,12 @@
             <div class="form-group">
               <label class="form-label" for="prodFormGsm">GSM Weight Range</label>
               <input type="text" id="prodFormGsm" class="form-control" placeholder="e.g. 70 GSM - 120 GSM">
+              <div style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.35rem;">
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer;" onclick="setFormGsm('70 GSM - 95 GSM')">70 - 95 GSM</button>
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer;" onclick="setFormGsm('85 GSM - 120 GSM')">85 - 120 GSM</button>
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer;" onclick="setFormGsm('120 GSM - 220 GSM')">120 - 220 GSM</button>
+                <button type="button" class="btn-sm" style="font-size: 0.7rem; padding: 0.15rem 0.45rem; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer;" onclick="setFormGsm('280 GSM - 450 GSM')">280 - 450 GSM</button>
+              </div>
             </div>
 
             <div class="form-group">
