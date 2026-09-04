@@ -63,6 +63,10 @@ function initNavigation() {
         }
       });
 
+      if (viewId === "viewCompany") {
+        renderCompanyProfile();
+      }
+
       if (pageTitle) {
         const span = btn.querySelector("span");
         if (span) {
@@ -97,6 +101,7 @@ function renderAll() {
   renderMetrics();
   renderInquiriesTable();
   renderProductsTable();
+  renderCompanyProfile();
   loadCmsFormValues();
   renderTrafficAnalytics();
   renderOperationalAnalytics();
@@ -1295,8 +1300,138 @@ function resetDefaultSiteContent() {
    Company Profile Editor Modal Logic
    ========================================================================== */
 
+function renderCompanyProfile() {
+  if (typeof getCompanyInfo !== "function") return;
+  const company = getCompanyInfo();
+  const products = typeof getProducts === "function" ? getProducts() : [];
+
+  // Update Header Banner
+  const headerLogo = document.getElementById("compViewHeaderLogo");
+  const headerName = document.getElementById("compViewHeaderLegalName");
+  const headerCeo = document.getElementById("compViewHeaderCeo");
+
+  if (headerLogo && (company.logo || company.logoWhite)) {
+    headerLogo.src = resolveAssetPath(company.logo || company.logoWhite);
+  }
+  if (headerName) headerName.textContent = company.name || "RAYASHREE WEAVING PVT. LTD.";
+  if (headerCeo) headerCeo.textContent = company.ceo || "Lakshmi Kanth";
+
+  // Update Corporate Details
+  const elLegal = document.getElementById("compViewLegalName");
+  const elBrand = document.getElementById("compViewBrandName");
+  const elCeo = document.getElementById("compViewCeo");
+  const elPhoneLink = document.getElementById("compViewPhoneLink");
+  const elWaLink = document.getElementById("compViewWaLink");
+  const elEmailLink = document.getElementById("compViewEmailLink");
+  const elHours = document.getElementById("compViewHours");
+  const elAddress = document.getElementById("compViewAddress");
+
+  if (elLegal) elLegal.textContent = company.name || "RAYASHREE WEAVING PVT. LTD.";
+  if (elBrand) elBrand.textContent = company.brandName || "Rayashree Weaving";
+  if (elCeo) elCeo.textContent = company.ceo || "Lakshmi Kanth";
+
+  const cleanPhone = company.phone || "+91 9108713258";
+  const numOnly = (company.whatsappNumber || cleanPhone).replace(/[^0-9]/g, "");
+
+  if (elPhoneLink) {
+    elPhoneLink.textContent = cleanPhone;
+    elPhoneLink.href = `tel:${numOnly}`;
+  }
+  if (elWaLink) {
+    elWaLink.href = `https://wa.me/${numOnly}`;
+  }
+  if (elEmailLink) {
+    elEmailLink.textContent = company.email || "rayashreewpvtltd@gmail.com";
+    elEmailLink.href = `mailto:${company.email || "rayashreewpvtltd@gmail.com"}`;
+  }
+  if (elHours) elHours.textContent = company.hours || "Mon - Sat: 8:30 AM - 7:30 PM (IST)";
+  if (elAddress) elAddress.textContent = company.address || "No. 09 Survey No. 77/3, Hosahalli, Kannali, Kodigenahalli post, Yeshwanthpura Hobli, Bangalore North, Bangalore - 560112, Karnataka, India";
+
+  // Render Dynamic Manufacturing Scope
+  const prodCountEl = document.getElementById("compViewProductCount");
+  if (prodCountEl) prodCountEl.textContent = products.length;
+
+  const scopeList = document.getElementById("compViewProductScopeList");
+  if (scopeList) {
+    scopeList.innerHTML = "";
+    if (products.length === 0) {
+      scopeList.innerHTML = `
+        <div style="text-align: center; padding: 2rem 1rem; color: #64748b; background: #ffffff; border-radius: 8px; border: 1px dashed #cbd5e1;">
+          <i class="fa-solid fa-boxes-stacked text-gold" style="font-size: 1.75rem; margin-bottom: 0.5rem; display: block;"></i>
+          <div style="font-weight: 700; color: #032b27; margin-bottom: 0.25rem;">No Products in Catalog</div>
+          <p style="font-size: 0.8rem; margin-bottom: 0.75rem;">Add products in the Product Catalog to automatically populate the company's active manufacturing lines.</p>
+          <button class="btn btn-gold btn-sm" onclick="document.getElementById('btnNavProducts').click()">
+            <i class="fa-solid fa-plus"></i> Add Products Now
+          </button>
+        </div>
+      `;
+    } else {
+      products.forEach((p, idx) => {
+        const item = document.createElement("div");
+        item.style.background = "#ffffff";
+        item.style.padding = "0.75rem 0.9rem";
+        item.style.borderRadius = "8px";
+        item.style.border = "1px solid #e2e8f0";
+        item.style.display = "flex";
+        item.style.alignItems = "center";
+        item.style.justifyContent = "space-between";
+        item.style.gap = "0.75rem";
+
+        item.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 0.75rem; min-width: 0;">
+            <img src="${resolveAssetPath(p.image)}" alt="${p.name}" style="width: 42px; height: 36px; object-fit: cover; border-radius: 6px; border: 1px solid #dfb774; flex-shrink: 0;" onerror="this.src='../assets/images/bags.jpg'">
+            <div style="min-width: 0;">
+              <div style="font-weight: 700; color: #032b27; font-size: 0.875rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                ${idx + 1}. ${p.name}
+              </div>
+              <div style="font-size: 0.75rem; color: #64748b; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <span style="color: #07524a; font-weight: 600;">${p.category || 'General'}</span>
+                <span>•</span>
+                <span>${p.capacityRange || '50 kg'}</span>
+                <span>•</span>
+                <span>${p.gsmRange || 'Standard'}</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="editProductRow('${p.id}'); document.getElementById('btnNavProducts').click();" style="padding: 0.2rem 0.5rem; font-size: 0.725rem; flex-shrink: 0;" title="Edit in Catalog">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+        `;
+        scopeList.appendChild(item);
+      });
+    }
+  }
+}
+
 function initCompanyEditor() {
   const form = document.getElementById("companyEditForm");
+  const logoFileInput = document.getElementById("compEditLogoFile");
+  const logoUrlInput = document.getElementById("compEditLogoUrl");
+  const logoPreview = document.getElementById("compEditLogoPreview");
+
+  if (logoFileInput) {
+    logoFileInput.addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        try {
+          const compressed = await compressImageFile(file, 600, 300, 0.9);
+          if (logoPreview) logoPreview.src = compressed;
+          if (logoUrlInput) logoUrlInput.value = compressed;
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    });
+  }
+
+  if (logoUrlInput) {
+    logoUrlInput.addEventListener("input", (e) => {
+      if (logoPreview && e.target.value.trim()) {
+        logoPreview.src = resolveAssetPath(e.target.value.trim());
+      }
+    });
+  }
+
   if (form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -1319,8 +1454,10 @@ function initCompanyEditor() {
 
       saveCompanyInfo(company);
       closeCompanyModal();
+      renderCompanyProfile();
       loadCmsFormValues();
-      showAdminToast("Company profile & branding updated across all public pages!");
+      renderMetrics();
+      showAdminToast("Company credentials updated and applied live across all pages!");
     });
   }
 }
@@ -1337,7 +1474,7 @@ function openCompanyModal() {
   if (document.getElementById("compEditHours")) document.getElementById("compEditHours").value = company.hours || "Mon - Sat: 8:30 AM - 7:30 PM (IST)";
   if (document.getElementById("compEditAddress")) document.getElementById("compEditAddress").value = company.address || "";
 
-  const currentLogo = company.logo || company.logoWhite || "../assets/logo-white.svg";
+  const currentLogo = company.logo || company.logoWhite || "../assets/logo.png";
   if (document.getElementById("compEditLogoUrl")) document.getElementById("compEditLogoUrl").value = currentLogo;
   const preview = document.getElementById("compEditLogoPreview");
   if (preview) preview.src = resolveAssetPath(currentLogo);
@@ -1359,6 +1496,7 @@ window.deleteProductRow = deleteProductRow;
 window.resetDefaultProducts = resetDefaultProducts;
 window.openCompanyModal = openCompanyModal;
 window.closeCompanyModal = closeCompanyModal;
+window.renderCompanyProfile = renderCompanyProfile;
 window.saveAllSitePages = saveAllSitePages;
 window.resetDefaultSiteContent = resetDefaultSiteContent;
 window.initLogoUploader = initLogoUploader;
