@@ -214,6 +214,24 @@ function renderInquiriesTable() {
     return matchesStatus && matchesSearch;
   });
 
+  if (inquiries.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align: center; padding: 3.5rem 2rem;">
+          <div style="font-size: 2.75rem; color: #dfb774; margin-bottom: 0.75rem;"><i class="fa-solid fa-inbox"></i></div>
+          <h4 style="font-size: 1.15rem; color: #032b27; font-weight: 800; margin-bottom: 0.35rem;">No Customer Inquiries Yet</h4>
+          <p style="color: #64748b; font-size: 0.875rem; max-width: 500px; margin: 0 auto 1.25rem;">
+            Real customer quote requests and RFQs submitted on the website or via WhatsApp will automatically appear here in real-time.
+          </p>
+          <a href="../index.html" target="_blank" class="btn btn-outline btn-sm">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Test Quote Form on Public Site
+          </a>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
   if (filtered.length === 0) {
     tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 2.5rem; color: #64748b;">No inquiries found matching current filters.</td></tr>`;
     return;

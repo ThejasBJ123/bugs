@@ -87,6 +87,9 @@
         <a href="../index.html" target="_blank" class="btn btn-outline btn-sm" title="View Public Website in new tab" style="color: var(--primary-800); border-color: var(--dark-300);">
           <i class="fa-solid fa-globe" style="color: var(--gold-600);"></i> View Public Site
         </a>
+        <button onclick="clearAllInquiries()" class="btn btn-outline btn-sm" title="Clear all inquiry records">
+          <i class="fa-solid fa-trash-can" style="color: #ef4444;"></i> Clear Inquiries
+        </button>
         <button id="exportCsvBtn" class="btn btn-outline btn-sm">
           <i class="fa-solid fa-file-csv"></i> Export CSV
         </button>
@@ -107,7 +110,7 @@
         <div class="metric-card">
           <div class="metric-data">
             <h4>Total Inquiries</h4>
-            <div class="metric-number" id="metricTotalInquiries">5</div>
+            <div class="metric-number" id="metricTotalInquiries">0</div>
           </div>
           <div class="metric-icon-box icon-emerald">
             <i class="fa-solid fa-layer-group"></i>
@@ -117,7 +120,7 @@
         <div class="metric-card">
           <div class="metric-data">
             <h4>New RFQs</h4>
-            <div class="metric-number" id="metricNewInquiries" style="color: #2563eb;">1</div>
+            <div class="metric-number" id="metricNewInquiries" style="color: #2563eb;">0</div>
           </div>
           <div class="metric-icon-box icon-blue">
             <i class="fa-solid fa-envelope-open-text"></i>
@@ -127,7 +130,7 @@
         <div class="metric-card">
           <div class="metric-data">
             <h4>Quotes Sent</h4>
-            <div class="metric-number" id="metricQuoted" style="color: #16a34a;">2</div>
+            <div class="metric-number" id="metricQuoted" style="color: #16a34a;">0</div>
           </div>
           <div class="metric-icon-box icon-gold">
             <i class="fa-solid fa-hand-holding-dollar"></i>
@@ -137,7 +140,7 @@
         <div class="metric-card">
           <div class="metric-data">
             <h4>Orders Placed</h4>
-            <div class="metric-number" id="metricClosed" style="color: #9333ea;">1</div>
+            <div class="metric-number" id="metricClosed" style="color: #7c3aed;">0</div>
           </div>
           <div class="metric-icon-box icon-purple">
             <i class="fa-solid fa-truck-ramp-box"></i>

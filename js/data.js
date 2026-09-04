@@ -208,78 +208,7 @@ const DEFAULT_PRODUCTS = [
   }
 ];
 
-const DEFAULT_INQUIRIES = [
-  {
-    id: "RFQ-1082",
-    date: "2026-08-29 14:30",
-    clientName: "Karnataka Milk Producers Co-op",
-    contactPerson: "Dr. Suresh Gowda",
-    phone: "+91 98450 12874",
-    email: "procurement@karnatakamilk.org",
-    product: "Cattle Feed Woven Sacks",
-    quantity: "25,000 Pcs",
-    specifications: "50kg Capacity, 85 GSM, Anti-slip diamond weave, 4-color BOPP print",
-    status: "New",
-    priority: "High",
-    notes: "Urgent delivery required for upcoming quarter batch. Sample requested."
-  },
-  {
-    id: "RFQ-1081",
-    date: "2026-08-28 11:15",
-    clientName: "Southern Agro Feeds Ltd.",
-    contactPerson: "Rajesh Varma",
-    phone: "+91 94480 33219",
-    email: "r.varma@southernagro.in",
-    product: "Poultry Feed Bags",
-    quantity: "50,000 Pcs",
-    specifications: "25kg and 50kg, 90 GSM, High gloss BOPP lamination with D-cut handle",
-    status: "Quoted",
-    priority: "Medium",
-    notes: "Quotation sent via email. Follow up scheduled for Monday."
-  },
-  {
-    id: "RFQ-1080",
-    date: "2026-08-27 16:45",
-    clientName: "Deccan Cements & Infrastructure",
-    contactPerson: "Manjunath Swamy",
-    phone: "+91 97312 88402",
-    email: "purchases@deccancement.com",
-    product: "Block Bottom Cement Bags",
-    quantity: "100,000 Pcs",
-    specifications: "50kg Block bottom valve bags, micro-perforated, 75 GSM",
-    status: "Order Placed",
-    priority: "High",
-    notes: "Advance PO received. Production scheduled on Loom line 3."
-  },
-  {
-    id: "RFQ-1079",
-    date: "2026-08-26 09:20",
-    clientName: "Malnad Coffee Exporters",
-    contactPerson: "Anand Hegde",
-    phone: "+91 94801 55621",
-    email: "anand@malnadexport.com",
-    product: "Eco-Friendly Jute & Burlap Sacks",
-    quantity: "15,000 Pcs",
-    specifications: "60kg Arabica Coffee export spec, Hydrocarbon-free, 3-stripe green edge",
-    status: "Quoted",
-    priority: "Medium",
-    notes: "Shared lab certificate of food grade compliance."
-  },
-  {
-    id: "RFQ-1078",
-    date: "2026-08-25 18:00",
-    clientName: "Apex Minerals & Chemicals",
-    contactPerson: "Vikram Singhania",
-    phone: "+91 98860 41290",
-    email: "vikram@apexminerals.com",
-    product: "Industrial FIBC Jumbo Bags & Liners",
-    quantity: "3,500 Pcs",
-    specifications: "1 Ton SWL, 4 Corner cross loop, Discharge Spout with 80 micron PE liner",
-    status: "Under Review",
-    priority: "High",
-    notes: "Evaluating technical drawing for chemical grade liner fit."
-  }
-];
+const DEFAULT_INQUIRIES = [];
 
 const TESTIMONIALS = [
   {
@@ -555,17 +484,29 @@ function getInquiries() {
   if (stored !== null) {
     try { 
       const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+      if (Array.isArray(parsed)) {
+        // Filter out legacy demo entries if present
+        const filtered = parsed.filter(i => !["RFQ-1082", "RFQ-1081", "RFQ-1080", "RFQ-1079", "RFQ-1078"].includes(i.id));
+        if (filtered.length !== parsed.length) {
+          localStorage.setItem("rw_inquiries", JSON.stringify(filtered));
+        }
+        return filtered;
       }
     } catch (e) { console.error(e); }
   }
-  localStorage.setItem("rw_inquiries", JSON.stringify(DEFAULT_INQUIRIES));
-  return DEFAULT_INQUIRIES;
+  return [];
 }
 
 function saveInquiries(inquiries) {
   localStorage.setItem("rw_inquiries", JSON.stringify(inquiries));
+}
+
+function clearAllInquiries() {
+  if (confirm("Clear all inquiries? Only new incoming customer inquiries will be recorded.")) {
+    saveInquiries([]);
+    if (typeof renderAll === "function") renderAll();
+    if (typeof showAdminToast === "function") showAdminToast("Inquiries cleared. Ready for real customer submissions.");
+  }
 }
 
 function addInquiry(inquiryData) {
