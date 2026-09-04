@@ -1284,6 +1284,10 @@ function saveAllSitePages() {
   saveSiteContent(content);
   saveCompanyInfo(company);
 
+  renderCompanyProfile();
+  renderMetrics();
+  renderOperationalAnalytics();
+
   showAdminToast("All public website pages, branding & contacts updated live!");
 }
 
@@ -1292,6 +1296,9 @@ function resetDefaultSiteContent() {
     localStorage.removeItem("rw_site_content");
     localStorage.removeItem("rw_company_info");
     loadCmsFormValues();
+    renderCompanyProfile();
+    renderMetrics();
+    renderOperationalAnalytics();
     showAdminToast("Public pages content restored to defaults.");
   }
 }
