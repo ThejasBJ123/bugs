@@ -1298,4 +1298,6 @@ window.closeCompanyModal = closeCompanyModal;
 window.saveAllSitePages = saveAllSitePages;
 window.resetDefaultSiteContent = resetDefaultSiteContent;
 window.initLogoUploader = initLogoUploader;
+window.clearAllInquiries = typeof clearAllInquiries === "function" ? clearAllInquiries : () => {};
+window.resetTrafficAnalytics = typeof resetTrafficAnalytics === "function" ? resetTrafficAnalytics : () => {};
 

@@ -38,26 +38,29 @@ body.admin-body {
 }
 
 .sidebar-brand {
-  padding: 1.25rem 1.25rem;
+  padding: 1.25rem 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  justify-content: center;
 }
 
 .sidebar-brand a {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   background: #ffffff;
-  padding: 0.35rem 0.75rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   width: 100%;
+  min-height: 52px;
 }
 
 .sidebar-brand img {
-  height: 38px;
+  max-height: 42px;
   max-width: 100%;
+  width: auto;
   object-fit: contain;
 }
 

@@ -330,22 +330,19 @@ const DEFAULT_TRAFFIC_DATA = {
 };
 
 function getViewAnalytics() {
+  // One-time automated purge of stale mock counts
+  if (localStorage.getItem("rw_traffic_reset_v3") !== "true") {
+    localStorage.setItem("rw_traffic_reset_v3", "true");
+    localStorage.setItem("rw_traffic_analytics", JSON.stringify(DEFAULT_TRAFFIC_DATA));
+    return { ...DEFAULT_TRAFFIC_DATA };
+  }
   const stored = localStorage.getItem("rw_traffic_analytics");
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      // Migrate / reset if it had the old 1482 mock base
-      if (parsed.totalViews >= 1482 && parsed.recentVisitors && parsed.recentVisitors.some(r => r.location === "Bangalore, IN" && r.source === "Direct / Organic Search")) {
-        const resetData = {
-          totalViews: Math.max(0, parsed.totalViews - 1482),
-          uniqueVisitors: Math.max(0, parsed.uniqueVisitors - 642),
-          todayViews: Math.max(0, parsed.todayViews - 184),
-          lastUpdatedDate: new Date().toISOString().slice(0, 10),
-          pageBreakdown: {},
-          recentVisitors: []
-        };
-        localStorage.setItem("rw_traffic_analytics", JSON.stringify(resetData));
-        return resetData;
+      if (parsed.totalViews >= 1000) {
+        localStorage.setItem("rw_traffic_analytics", JSON.stringify(DEFAULT_TRAFFIC_DATA));
+        return { ...DEFAULT_TRAFFIC_DATA };
       }
       return parsed;
     } catch (e) { console.error(e); }
@@ -355,6 +352,14 @@ function getViewAnalytics() {
 
 function saveViewAnalytics(data) {
   localStorage.setItem("rw_traffic_analytics", JSON.stringify(data));
+}
+
+function resetTrafficAnalytics() {
+  if (confirm("Reset website traffic and pageview counters to 0?")) {
+    saveViewAnalytics({ ...DEFAULT_TRAFFIC_DATA });
+    if (typeof renderAll === "function") renderAll();
+    if (typeof showAdminToast === "function") showAdminToast("Traffic statistics reset to 0.");
+  }
 }
 
 function trackPageView(pageIdentifier = "") {
