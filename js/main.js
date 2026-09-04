@@ -363,15 +363,31 @@ function initRFQModal() {
       closeRFQModal();
       rfqForm.reset();
 
-      showToast(`Thank you, ${clientName}! RFQ #${newInquiry.id} submitted. Our CEO Lakshmi Kanth will contact you shortly.`);
+      showToast(`Redirecting to WhatsApp with your quote request...`);
 
-      // Optional direct WhatsApp option prompt
+      // Directly redirect to WhatsApp with full structured details
+      const waNumber = (typeof COMPANY_INFO !== 'undefined' && COMPANY_INFO.whatsappNumber) ? COMPANY_INFO.whatsappNumber : "919108713258";
+      const lines = [
+        `*Rayashree Weaving - Quotation Request*`,
+        ``,
+        `📦 *Product:* ${product}`,
+        `📊 *Quantity:* ${quantity || "Custom Requirement"}`,
+        `📝 *Specifications / Details:* ${specifications || "Standard Factory Specs"}`,
+        ``,
+        `👤 *Client Details:*`,
+        `• *Name / Company:* ${clientName}`,
+        `• *Phone:* ${phone}`,
+        `• *Email:* ${email || "N/A"}`,
+        `• *RFQ Reference:* #${newInquiry.id}`,
+        ``,
+        `Please provide best factory pricing and availability.`
+      ];
+      const msg = encodeURIComponent(lines.join("\n"));
+      const waUrl = `https://wa.me/${waNumber}?text=${msg}`;
+
       setTimeout(() => {
-        if (confirm("Would you like to open WhatsApp now to speak directly with CEO Lakshmi Kanth about this quote?")) {
-          const msg = encodeURIComponent(`Hello Mr. Lakshmi Kanth, I have submitted RFQ #${newInquiry.id} on your website for ${product} (Qty: ${quantity}). Please share best pricing.`);
-          window.open(`https://wa.me/${COMPANY_INFO.whatsappNumber}?text=${msg}`, "_blank");
-        }
-      }, 800);
+        window.open(waUrl, "_blank");
+      }, 350);
     });
   }
 }
@@ -422,14 +438,30 @@ function initContactPageForm() {
     } catch (e) {}
 
     contactForm.reset();
-    showToast(`Thank you, ${name}! Your inquiry #${newInquiry.id} has been submitted.`);
+    showToast(`Redirecting to WhatsApp with your inquiry...`);
+
+    // Directly redirect to WhatsApp with full structured details
+    const waNumber = (typeof COMPANY_INFO !== 'undefined' && COMPANY_INFO.whatsappNumber) ? COMPANY_INFO.whatsappNumber : "919108713258";
+    const lines = [
+      `*Rayashree Weaving - Website Inquiry*`,
+      ``,
+      `📦 *Product / Requirement:* ${product}`,
+      `📝 *Message / Details:* ${message || "Direct Inquiry from Contact Page"}`,
+      ``,
+      `👤 *Client Details:*`,
+      `• *Name:* ${name}`,
+      `• *Phone:* ${phone}`,
+      `• *Email:* ${email || "N/A"}`,
+      `• *Inquiry Reference:* #${newInquiry.id}`,
+      ``,
+      `Please get in touch regarding this requirement.`
+    ];
+    const msg = encodeURIComponent(lines.join("\n"));
+    const waUrl = `https://wa.me/${waNumber}?text=${msg}`;
 
     setTimeout(() => {
-      if (confirm("Would you like to speak directly with CEO Lakshmi Kanth on WhatsApp?")) {
-        const msg = encodeURIComponent(`Hello Mr. Lakshmi Kanth, I submitted inquiry #${newInquiry.id} on your website regarding ${product}.`);
-        window.open(`https://wa.me/${COMPANY_INFO.whatsappNumber}?text=${msg}`, "_blank");
-      }
-    }, 800);
+      window.open(waUrl, "_blank");
+    }, 350);
   });
 }
 
@@ -759,7 +791,7 @@ function openProductSpecsModal(productId) {
       <button class="btn btn-gold btn-lg" onclick="closeProductSpecsModal(); openRFQModal('${prod.name}');" style="flex: 1.5;">
         <i class="fa-solid fa-calculator"></i> Request Direct Factory Quote
       </button>
-      <a href="https://wa.me/919108713258?text=Hello%20CEO%20Lakshmi%20Kanth,%20I%20am%20interested%20in%20${encodeURIComponent(prod.name)}." target="_blank" class="btn btn-primary" style="flex: 1;">
+      <a href="https://wa.me/919108713258?text=${encodeURIComponent(`Hello Mr. Lakshmi Kanth (Rayashree Weaving),\n\nI am inquiring about *${prod.name}*.\n• *Category:* ${prod.category || 'Industrial Packaging'}\n• *Capacity / Load:* ${prod.capacityRange || 'Custom'}\n• *GSM Weight:* ${prod.gsmRange || 'Standard'}\n• *Material:* ${prod.material || '100% Virgin Polymer'}\n\nPlease provide pricing and minimum order quantity.`)}" target="_blank" class="btn btn-primary" style="flex: 1;">
         <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
       </a>
     </div>
