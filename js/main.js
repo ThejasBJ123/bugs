@@ -620,19 +620,19 @@ function initProductGrid() {
           
           <div class="product-specs-preview">
             <div class="spec-preview-item">
-              <span class="spec-preview-label">${typeof t === "function" ? t("card_spec_capacity") : "Capacity / Load:"}</span>
+              <span class="spec-preview-label">Capacity / Load:</span>
               <span class="spec-preview-val">${prod.capacityRange || "Custom Sizing"}</span>
             </div>
             <div class="spec-preview-item">
-              <span class="spec-preview-label">${typeof t === "function" ? t("card_spec_gsm") : "GSM Weight:"}</span>
+              <span class="spec-preview-label">GSM Weight:</span>
               <span class="spec-preview-val">${prod.gsmRange || "50 - 250 GSM"}</span>
             </div>
           </div>
 
           <div class="product-card-footer">
-            <button class="btn btn-outline btn-sm" onclick="openProductSpecsModal('${prod.id}')" style="flex: 1;"><i class="fa-solid fa-circle-info"></i> ${typeof t === "function" ? t("btn_view_specs") : "View Specs"}</button>
+            <button class="btn btn-outline btn-sm" onclick="openProductSpecsModal('${prod.id}')" style="flex: 1;"><i class="fa-solid fa-circle-info"></i> View Specs</button>
             <button class="btn btn-gold btn-sm" onclick="openRFQModal('${prod.name}')" style="flex: 1.2;">
-              <i class="fa-solid fa-paper-plane"></i> ${typeof t === "function" ? t("btn_quick_quote") : "Quick Quote"}
+              <i class="fa-solid fa-paper-plane"></i> Quick Quote
             </button>
           </div>
         </div>
