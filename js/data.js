@@ -321,37 +321,36 @@ function saveSiteContent(content) {
    ========================================================================== */
 
 const DEFAULT_TRAFFIC_DATA = {
-  totalViews: 1482,
-  uniqueVisitors: 642,
-  todayViews: 184,
+  totalViews: 0,
+  uniqueVisitors: 0,
+  todayViews: 0,
   lastUpdatedDate: new Date().toISOString().slice(0, 10),
-  pageBreakdown: {
-    "Home (index.html)": 548,
-    "Products Catalog (products.html)": 312,
-    "Cattle Feed Sacks": 182,
-    "Poultry Feed Bags": 146,
-    "Cement Valve Bags": 118,
-    "Silage Bags": 64,
-    "Jute Sacks": 42,
-    "Linen Fabric": 38,
-    "FIBC Jumbo Bags": 32
-  },
-  recentVisitors: [
-    { time: "Just now", page: "Home (index.html)", source: "Direct / Organic Search", location: "Bangalore, IN" },
-    { time: "4 mins ago", page: "Cattle Feed Woven Sacks", source: "WhatsApp Share", location: "Mysore, IN" },
-    { time: "18 mins ago", page: "Cement Packaging Bags", source: "Google Search", location: "Hyderabad, IN" },
-    { time: "42 mins ago", page: "Poultry Feed Bags", source: "Direct Referral", location: "Hosur, IN" },
-    { time: "1 hr ago", page: "Products Catalog", source: "Direct / Organic Search", location: "Bangalore, IN" }
-  ]
+  pageBreakdown: {},
+  recentVisitors: []
 };
 
 function getViewAnalytics() {
   const stored = localStorage.getItem("rw_traffic_analytics");
   if (stored) {
-    try { return JSON.parse(stored); } catch (e) { console.error(e); }
+    try {
+      const parsed = JSON.parse(stored);
+      // Migrate / reset if it had the old 1482 mock base
+      if (parsed.totalViews >= 1482 && parsed.recentVisitors && parsed.recentVisitors.some(r => r.location === "Bangalore, IN" && r.source === "Direct / Organic Search")) {
+        const resetData = {
+          totalViews: Math.max(0, parsed.totalViews - 1482),
+          uniqueVisitors: Math.max(0, parsed.uniqueVisitors - 642),
+          todayViews: Math.max(0, parsed.todayViews - 184),
+          lastUpdatedDate: new Date().toISOString().slice(0, 10),
+          pageBreakdown: {},
+          recentVisitors: []
+        };
+        localStorage.setItem("rw_traffic_analytics", JSON.stringify(resetData));
+        return resetData;
+      }
+      return parsed;
+    } catch (e) { console.error(e); }
   }
-  localStorage.setItem("rw_traffic_analytics", JSON.stringify(DEFAULT_TRAFFIC_DATA));
-  return DEFAULT_TRAFFIC_DATA;
+  return { ...DEFAULT_TRAFFIC_DATA };
 }
 
 function saveViewAnalytics(data) {

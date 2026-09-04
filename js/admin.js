@@ -108,7 +108,7 @@ function renderAll() {
 
 function renderMetrics() {
   const inquiries = getInquiries();
-  const traffic = typeof getViewAnalytics === "function" ? getViewAnalytics() : { totalViews: 1482, todayViews: 184, uniqueVisitors: 642 };
+  const traffic = typeof getViewAnalytics === "function" ? getViewAnalytics() : { totalViews: 0, todayViews: 0, uniqueVisitors: 0 };
   
   const totalCount = inquiries.length;
   const newCount = inquiries.filter(i => i.status === "New").length;
@@ -126,8 +126,8 @@ function renderMetrics() {
   if (elNew) elNew.textContent = newCount;
   if (elQuoted) elQuoted.textContent = quotedCount;
   if (elClosed) elClosed.textContent = closedCount;
-  if (elPublicViews) elPublicViews.textContent = Number(traffic.totalViews || 1482).toLocaleString();
-  if (elTodayViews) elTodayViews.textContent = Number(traffic.todayViews || 184).toLocaleString();
+  if (elPublicViews) elPublicViews.textContent = Number(traffic.totalViews || 0).toLocaleString();
+  if (elTodayViews) elTodayViews.textContent = Number(traffic.todayViews || 0).toLocaleString();
 }
 
 function renderTrafficAnalytics() {
@@ -139,58 +139,76 @@ function renderTrafficAnalytics() {
   const statToday = document.getElementById("statTrafficToday");
   const statUnique = document.getElementById("statTrafficUnique");
 
-  if (statTotal) statTotal.textContent = Number(traffic.totalViews || 1482).toLocaleString();
-  if (statToday) statToday.textContent = Number(traffic.todayViews || 184).toLocaleString();
-  if (statUnique) statUnique.textContent = Number(traffic.uniqueVisitors || 642).toLocaleString();
+  if (statTotal) statTotal.textContent = Number(traffic.totalViews || 0).toLocaleString();
+  if (statToday) statToday.textContent = Number(traffic.todayViews || 0).toLocaleString();
+  if (statUnique) statUnique.textContent = Number(traffic.uniqueVisitors || 0).toLocaleString();
 
   // Render Page Breakdown Progress Bars
   const breakdownContainer = document.getElementById("trafficBreakdownList");
-  if (breakdownContainer && traffic.pageBreakdown) {
+  if (breakdownContainer) {
     breakdownContainer.innerHTML = "";
-    const entries = Object.entries(traffic.pageBreakdown);
-    const maxVal = Math.max(...entries.map(e => e[1]), 1);
-
-    entries.forEach(([pageName, count], idx) => {
-      const pct = Math.round((count / (traffic.totalViews || 1)) * 100);
-      const barWidth = Math.max(Math.round((count / maxVal) * 100), 5);
-      
-      const colors = ["#07524a", "#b5832a", "#2563eb", "#10b981", "#7c3aed", "#d97706", "#0284c7", "#059669"];
-      const barColor = colors[idx % colors.length];
-
-      const item = document.createElement("div");
-      item.innerHTML = `
-        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem;">
-          <span style="color: #032b27;"><i class="fa-solid fa-file-lines" style="color: ${barColor}; margin-right: 0.35rem;"></i> ${pageName}</span>
-          <strong style="color: #0f172a;">${count.toLocaleString()} views (${pct}%)</strong>
-        </div>
-        <div style="height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
-          <div style="width: ${barWidth}%; height: 100%; background: ${barColor}; border-radius: 4px; transition: width 0.4s ease;"></div>
+    const entries = traffic.pageBreakdown ? Object.entries(traffic.pageBreakdown) : [];
+    
+    if (entries.length === 0 || traffic.totalViews === 0) {
+      breakdownContainer.innerHTML = `
+        <div style="padding: 2rem 1rem; text-align: center; color: #64748b; background: #f8fafc; border-radius: 8px;">
+          <i class="fa-solid fa-chart-line text-gold" style="font-size: 1.75rem; margin-bottom: 0.5rem; display: block;"></i>
+          <div style="font-weight: 700; color: #032b27; margin-bottom: 0.25rem;">Live Traffic Tracking Ready</div>
+          <div style="font-size: 0.8rem;">Pageview breakdown by URL will record automatically as visitors browse the website.</div>
         </div>
       `;
-      breakdownContainer.appendChild(item);
-    });
+    } else {
+      const maxVal = Math.max(...entries.map(e => e[1]), 1);
+      entries.forEach(([pageName, count], idx) => {
+        const pct = Math.round((count / (traffic.totalViews || 1)) * 100);
+        const barWidth = Math.max(Math.round((count / maxVal) * 100), 5);
+        
+        const colors = ["#07524a", "#b5832a", "#2563eb", "#10b981", "#7c3aed", "#d97706", "#0284c7", "#059669"];
+        const barColor = colors[idx % colors.length];
+
+        const item = document.createElement("div");
+        item.innerHTML = `
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem;">
+            <span style="color: #032b27;"><i class="fa-solid fa-file-lines" style="color: ${barColor}; margin-right: 0.35rem;"></i> ${pageName}</span>
+            <strong style="color: #0f172a;">${count.toLocaleString()} views (${pct}%)</strong>
+          </div>
+          <div style="height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
+            <div style="width: ${barWidth}%; height: 100%; background: ${barColor}; border-radius: 4px; transition: width 0.4s ease;"></div>
+          </div>
+        `;
+        breakdownContainer.appendChild(item);
+      });
+    }
   }
 
   // Render Recent Visitors Stream
   const streamContainer = document.getElementById("trafficRecentStream");
-  if (streamContainer && traffic.recentVisitors) {
+  if (streamContainer) {
     streamContainer.innerHTML = "";
-    traffic.recentVisitors.forEach(v => {
-      const row = document.createElement("div");
-      row.style.paddingBottom = "0.5rem";
-      row.style.borderBottom = "1px solid #e2e8f0";
-      row.innerHTML = `
-        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; color: #07524a;">
-          <span>${v.page}</span>
-          <span style="color: #64748b; font-weight: normal; font-size: 0.725rem;">${v.time}</span>
-        </div>
-        <div style="font-size: 0.75rem; color: #64748b; display: flex; justify-content: space-between; margin-top: 2px;">
-          <span><i class="fa-solid fa-location-dot" style="color: #dfb774;"></i> ${v.location}</span>
-          <span style="color: #2563eb;">${v.source}</span>
+    if (!traffic.recentVisitors || traffic.recentVisitors.length === 0) {
+      streamContainer.innerHTML = `
+        <div style="padding: 1.5rem 1rem; text-align: center; color: #64748b; font-size: 0.8rem;">
+          <i class="fa-solid fa-signal" style="color: #10b981; margin-right: 0.35rem;"></i> Active. Ready to log incoming visitors.
         </div>
       `;
-      streamContainer.appendChild(row);
-    });
+    } else {
+      traffic.recentVisitors.forEach(v => {
+        const row = document.createElement("div");
+        row.style.paddingBottom = "0.5rem";
+        row.style.borderBottom = "1px solid #e2e8f0";
+        row.innerHTML = `
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; color: #07524a;">
+            <span>${v.page}</span>
+            <span style="color: #64748b; font-weight: normal; font-size: 0.725rem;">${v.time}</span>
+          </div>
+          <div style="font-size: 0.75rem; color: #64748b; display: flex; justify-content: space-between; margin-top: 2px;">
+            <span><i class="fa-solid fa-location-dot" style="color: #dfb774;"></i> ${v.location || 'India'}</span>
+            <span style="color: #2563eb;">${v.source || 'Direct'}</span>
+          </div>
+        `;
+        streamContainer.appendChild(row);
+      });
+    }
   }
 }
 
