@@ -437,69 +437,6 @@
     <i class="fa-brands fa-whatsapp"></i>
   </a>
 
-  <!-- Interactive RFQ Modal -->
-  <div class="modal-backdrop" id="rfqModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3><i class="fa-solid fa-calculator text-gold"></i> Request Direct Manufacturing Quote</h3>
-        <button class="modal-close-btn modal-close-trigger" onclick="closeRFQModal()" aria-label="Close modal">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="rfqForm">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="rfqName">Your Name / Company <span class="req">*</span></label>
-              <input type="text" id="rfqName" class="form-control" placeholder="e.g. Amrutha Dairy Ltd." required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="rfqPhone">Phone / WhatsApp Number <span class="req">*</span></label>
-              <input type="tel" id="rfqPhone" class="form-control" placeholder="+91 98765 43210" required>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="rfqEmail">Email Address</label>
-              <input type="email" id="rfqEmail" class="form-control" placeholder="procurement@company.com">
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="rfqProduct">Select Product Line <span class="req">*</span></label>
-              <select id="rfqProduct" class="form-select" required>
-                <option value="Cattle Feed Woven Sacks">Cattle Feed Woven Sacks</option>
-                <option value="Poultry Feed Bags">Poultry Feed Bags</option>
-                <option value="Cement & Construction Bags">Cement & Construction Bags</option>
-                <option value="Agricultural Silage & Tube Bags">Silage Bags</option>
-                <option value="Eco-Friendly Jute & Burlap Sacks">Jute Sacks</option>
-                <option value="Linen Fabric & Industrial Textiles">Linen Fabric</option>
-                <option value="Industrial FIBC Jumbo Bags & Liners">FIBC Jumbo Bags & Liners</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="rfqQuantity">Estimated Order Quantity</label>
-            <input type="text" id="rfqQuantity" class="form-control" placeholder="e.g. 25,000 Bags or 5,000 Meters">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="rfqSpecs">Custom Sizing / GSM / Print Specifications</label>
-            <textarea id="rfqSpecs" class="form-control" rows="3" placeholder="Specify dimensions (e.g. 24x38 inch), GSM (e.g. 85 GSM), Liner requirement, or printing colors..."></textarea>
-          </div>
-
-          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-            <button type="submit" class="btn btn-gold" style="flex: 1;">
-              <i class="fa-solid fa-paper-plane"></i> Submit Quote Request
-            </button>
-            <button type="button" class="btn btn-outline modal-close-trigger" onclick="closeRFQModal()">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 
   <!-- JavaScript Scripts -->
   <script src="js/data.js?v=2.4"></script>

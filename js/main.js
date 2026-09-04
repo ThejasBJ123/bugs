@@ -466,27 +466,24 @@ function initContactPageForm() {
 }
 
 function openRFQModal(productName = "") {
-  const modal = document.getElementById("rfqModal");
-  if (!modal) return;
-
-  populateRFQSelect();
-
-  const select = document.getElementById("rfqProduct");
-  if (select && productName) {
-    for (let opt of select.options) {
-      if (opt.text.toLowerCase().includes(productName.toLowerCase()) || opt.value.toLowerCase().includes(productName.toLowerCase())) {
-        opt.selected = true;
-        break;
-      }
+  const waNumber = (typeof COMPANY_INFO !== 'undefined' && COMPANY_INFO.whatsappNumber) ? COMPANY_INFO.whatsappNumber : "919108713258";
+  
+  let text = "";
+  if (productName && typeof productName === 'string' && productName.trim()) {
+    const products = (typeof getProducts === 'function') ? getProducts() : [];
+    const prod = products.find(p => (p.name && p.name.toLowerCase() === productName.toLowerCase()) || p.id === productName);
+    
+    if (prod) {
+      text = `Hello Mr. Lakshmi Kanth (Rayashree Weaving),\n\nI would like to request a direct factory quotation and specifications for:\n📦 *Product:* ${prod.name}\n📂 *Category:* ${prod.category || 'Industrial Packaging'}\n⚖️ *Capacity / Load:* ${prod.capacityRange || 'Custom'}\n🧵 *GSM Weight:* ${prod.gsmRange || 'Standard'}\n\nPlease share current factory pricing, minimum order quantity, and delivery timeline.`;
+    } else {
+      text = `Hello Mr. Lakshmi Kanth (Rayashree Weaving),\n\nI would like to request a quotation for *${productName.trim()}*.\n\nPlease share current factory pricing and delivery timeline.`;
     }
+  } else {
+    text = `Hello Mr. Lakshmi Kanth (Rayashree Weaving),\n\nI would like to request a direct factory quotation for bulk industrial woven packaging & sacks.\n\nPlease share your product catalog and pricing.`;
   }
 
-  modal.classList.add("active");
-  document.body.style.overflow = "hidden";
-
-  if (!window.location.hash.includes("quote")) {
-    history.pushState({ modalOpen: true }, "", "#quote");
-  }
+  const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
+  window.open(waUrl, "_blank");
 }
 
 function closeRFQModal() {
@@ -494,10 +491,6 @@ function closeRFQModal() {
   if (modal) {
     modal.classList.remove("active");
     document.body.style.overflow = "";
-    
-    if (window.location.hash === "#quote") {
-      history.replaceState(null, "", window.location.pathname + window.location.search);
-    }
   }
 }
 

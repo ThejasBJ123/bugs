@@ -260,86 +260,8 @@
 
   <a href="https://wa.me/919108713258" target="_blank" class="floating-whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
 
-  <!-- RFQ Modal -->
-  <div class="modal-backdrop" id="rfqModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3><i class="fa-solid fa-calculator text-gold"></i> Request Direct Manufacturing Quote</h3>
-        <button class="modal-close-btn modal-close-trigger" onclick="closeRFQModal()"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="modal-body">
-        <form id="rfqForm">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="rfqName">Your Name / Company <span class="req">*</span></label>
-              <input type="text" id="rfqName" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="rfqPhone">Phone / WhatsApp <span class="req">*</span></label>
-              <input type="tel" id="rfqPhone" class="form-control" required>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="rfqEmail">Email Address</label>
-              <input type="email" id="rfqEmail" class="form-control">
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="rfqProduct">Selected Product <span class="req">*</span></label>
-              <select id="rfqProduct" class="form-select" required>
-                <option value="Cattle Feed Woven Sacks">Cattle Feed Woven Sacks</option>
-                <option value="Poultry Feed Bags">Poultry Feed Bags</option>
-                <option value="Cement & Construction Bags">Cement & Construction Bags</option>
-                <option value="Agricultural Silage & Tube Bags">Silage Bags</option>
-                <option value="Eco-Friendly Jute & Burlap Sacks">Jute Sacks</option>
-                <option value="Linen Fabric & Industrial Textiles">Linen Fabric</option>
-                <option value="Industrial FIBC Jumbo Bags & Liners">FIBC Jumbo Bags & Liners</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="rfqQuantity">Estimated Quantity</label>
-            <input type="text" id="rfqQuantity" class="form-control" placeholder="e.g. 20,000 Bags">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="rfqSpecs">Custom Specs / Dimensions / Notes</label>
-            <textarea id="rfqSpecs" class="form-control" rows="3"></textarea>
-          </div>
-          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-            <button type="submit" class="btn btn-gold" style="flex: 1;">Submit Quote Request</button>
-            <button type="button" class="btn btn-outline modal-close-trigger" onclick="closeRFQModal()">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <script src="../js/data.js"></script>
   <script src="../js/i18n.js"></script>
   <script src="../js/main.js"></script>
-  <script>
-    document.getElementById("contactPageForm")?.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const name = document.getElementById("cName").value.trim();
-      const phone = document.getElementById("cPhone").value.trim();
-      const email = document.getElementById("cEmail").value.trim();
-      const prod = document.getElementById("cProduct").value;
-      const msg = document.getElementById("cMessage").value.trim();
-
-      const newInq = addInquiry({
-        clientName: name,
-        contactPerson: name,
-        phone: phone,
-        email: email || "N/A",
-        product: prod,
-        quantity: "Custom Inquiry",
-        specifications: msg || "Contact Form Inquiry",
-        priority: "High"
-      });
-
-      showToast(`Thank you, ${name}! Your message has been logged as #${newInq.id}. CEO Lakshmi Kanth will contact you shortly.`);
-      e.target.reset();
-    });
-  </script>
 </body>
 </html>
