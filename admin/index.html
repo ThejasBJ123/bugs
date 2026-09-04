@@ -518,19 +518,22 @@
           <!-- Tabs for Different Public Pages -->
           <div style="display: flex; gap: 0.5rem; border-bottom: 2px solid #e2e8f0; margin-bottom: 1.75rem; flex-wrap: wrap;">
             <button class="cms-tab-btn active" data-cms-tab="cmsHome" style="padding: 0.75rem 1.25rem; font-weight: 700; border-bottom: 3px solid #032b27; color: #032b27; background: transparent; border-top: none; border-left: none; border-right: none; cursor: pointer;">
-              <i class="fa-solid fa-house"></i> Home Page (index.html)
+              <i class="fa-solid fa-house"></i> Home Page
+            </button>
+            <button class="cms-tab-btn" data-cms-tab="cmsProducts" style="padding: 0.75rem 1.25rem; font-weight: 600; color: #64748b; background: transparent; border: none; cursor: pointer;">
+              <i class="fa-solid fa-cubes-stacked"></i> Products Page
             </button>
             <button class="cms-tab-btn" data-cms-tab="cmsAbout" style="padding: 0.75rem 1.25rem; font-weight: 600; color: #64748b; background: transparent; border: none; cursor: pointer;">
-              <i class="fa-solid fa-building"></i> About Us (about.html)
+              <i class="fa-solid fa-building"></i> About Us
             </button>
             <button class="cms-tab-btn" data-cms-tab="cmsInfra" style="padding: 0.75rem 1.25rem; font-weight: 600; color: #64748b; background: transparent; border: none; cursor: pointer;">
-              <i class="fa-solid fa-industry"></i> Infrastructure (infrastructure.html)
+              <i class="fa-solid fa-industry"></i> Infrastructure
             </button>
             <button class="cms-tab-btn" data-cms-tab="cmsContact" style="padding: 0.75rem 1.25rem; font-weight: 600; color: #64748b; background: transparent; border: none; cursor: pointer;">
-              <i class="fa-solid fa-address-book"></i> Contact & Footer Info
+              <i class="fa-solid fa-address-book"></i> Contact & Footer
             </button>
-            <button class="cms-tab-btn" data-cms-tab="cmsLanguages" style="padding: 0.75rem 1.25rem; font-weight: 700; color: #b5832a; background: transparent; border: none; cursor: pointer;">
-              <i class="fa-solid fa-language"></i> Language Customizer (ಕನ್ನಡ / हिंदी / EN)
+            <button class="cms-tab-btn" data-cms-tab="cmsBranding" style="padding: 0.75rem 1.25rem; font-weight: 700; color: #b5832a; background: transparent; border: none; cursor: pointer;">
+              <i class="fa-solid fa-palette"></i> Logo & Branding
             </button>
           </div>
 
@@ -575,7 +578,28 @@
             </div>
           </div>
 
-          <!-- CMS TAB 2: ABOUT US -->
+          <!-- CMS TAB 2: PRODUCTS PAGE -->
+          <div class="cms-tab-content" id="cmsProducts" style="display: none;">
+            <h4 style="color: #07524a; font-weight: 800; margin-bottom: 1rem;">Products Catalog Page (products.html)</h4>
+            <div class="form-group">
+              <label class="form-label">Products Page Main Title</label>
+              <input type="text" id="cmsProductsHeroTitle" class="form-control" placeholder="e.g. Complete Manufacturing Portfolio">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Products Page Subtitle</label>
+              <textarea id="cmsProductsHeroSubtitle" class="form-control" rows="2" placeholder="e.g. Explore our full range of heavy-duty HDPE/PP sacks, AD*STAR cement bags..."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Custom Sizing Banner Title</label>
+              <input type="text" id="cmsProductsCustomTitle" class="form-control" placeholder="e.g. Need Bespoke Sizing, GSM or Liner Fit?">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Custom Sizing Banner Description</label>
+              <textarea id="cmsProductsCustomDesc" class="form-control" rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- CMS TAB 3: ABOUT US -->
           <div class="cms-tab-content" id="cmsAbout" style="display: none;">
             <h4 style="color: #07524a; font-weight: 800; margin-bottom: 1rem;">About Us Page Content</h4>
             <div class="form-group">
@@ -596,7 +620,7 @@
             </div>
           </div>
 
-          <!-- CMS TAB 3: INFRASTRUCTURE -->
+          <!-- CMS TAB 4: INFRASTRUCTURE -->
           <div class="cms-tab-content" id="cmsInfra" style="display: none;">
             <h4 style="color: #07524a; font-weight: 800; margin-bottom: 1rem;">Factory Infrastructure & Machinery</h4>
             <div class="form-group">
@@ -627,7 +651,7 @@
             </div>
           </div>
 
-          <!-- CMS TAB 4: CONTACT & COMPANY -->
+          <!-- CMS TAB 5: CONTACT & COMPANY -->
           <div class="cms-tab-content" id="cmsContact" style="display: none;">
             <h4 style="color: #07524a; font-weight: 800; margin-bottom: 1rem;">Corporate Contact & Global Footer Details</h4>
             <div class="form-row">
@@ -656,81 +680,35 @@
             </div>
           </div>
 
-          <!-- CMS TAB 5: LANGUAGE CUSTOMIZER (KANNADA, HINDI, ENGLISH) -->
-          <div class="cms-tab-content" id="cmsLanguages" style="display: none;">
-            <div style="background: #fef9ee; border: 1.5px solid #dfb774; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
-              <h4 style="color: #032b27; font-weight: 800; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.5rem;">
-                <i class="fa-solid fa-language text-gold"></i> Multilingual Customizer (ಕನ್ನಡ • हिंदी • English)
-              </h4>
-              <p style="font-size: 0.85rem; color: #64748b; margin: 0;">
-                Customize the translations for Kannada, Hindi, and English to match your exact regional terminology and client preferences.
-              </p>
+          <!-- CMS TAB 6: LOGO & BRANDING -->
+          <div class="cms-tab-content" id="cmsBranding" style="display: none;">
+            <h4 style="color: #07524a; font-weight: 800; margin-bottom: 1rem;">Company Logo & Visual Identity</h4>
+            <div style="background: #f8fafc; border: 1.5px solid #dfb774; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: center;">
+                <div>
+                  <label class="form-label" style="font-weight: 700;">Current Logo Preview</label>
+                  <div style="background: #032b27; padding: 1.25rem; border-radius: 10px; display: flex; align-items: center; justify-content: center; height: 90px; border: 1px solid rgba(223,183,116,0.3);">
+                    <img id="cmsBrandLogoPreview" src="../assets/logo-white.svg" alt="Brand Logo Preview" style="max-height: 60px; max-width: 100%; object-fit: contain;">
+                  </div>
+                </div>
+                <div>
+                  <label class="form-label" style="font-weight: 700;">Upload New Logo Image</label>
+                  <input type="file" id="cmsBrandLogoFile" accept="image/*" class="form-control" style="margin-bottom: 0.6rem;">
+                  <label class="form-label" style="font-size: 0.8rem; color: #64748b;">Or Logo Image URL / Path</label>
+                  <input type="text" id="cmsBrandLogoUrl" class="form-control" placeholder="e.g. assets/logo-white.svg">
+                </div>
+              </div>
             </div>
-
-            <!-- Kannada (KN) Customization -->
-            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem; margin-bottom: 1.5rem;">
-              <h5 style="color: #07524a; font-weight: 800; font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                <span style="background: #dfb774; color: #032b27; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.8rem;">KN</span>
-                ಕನ್ನಡ ಭಾಷೆಯ ಪಠ್ಯಗಳು (Kannada Content)
-              </h5>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">ಕನ್ನಡ ಮುಖ್ಯಾಂಶ (Hero Title)</label>
-                  <input type="text" id="langKnHeroTitle" class="form-control" placeholder="ಉತ್ತಮ ಗುಣಮಟ್ಟದ ನೇಯ್ದ ಪ್ಯಾಕೇಜಿಂಗ್ ಮತ್ತು ಕೈಗಾರಿಕಾ ಬಟ್ಟೆಗಳು">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">ಕನ್ನಡ ಟ್ಯಾಗ್ ಲೈನ್ (Hero Tag)</label>
-                  <input type="text" id="langKnHeroTag" class="form-control" placeholder="ಬೆಂಗಳೂರಿನ ಪ್ರಮುಖ ನೇಯ್ಗೆ ಮತ್ತು ಚೀಲಗಳ ತಯಾರಿಕಾ ಕಾರ್ಖಾನೆ">
-                </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Brand Display Name</label>
+                <input type="text" id="cmsBrandName" class="form-control" placeholder="Rayashree Weaving">
               </div>
               <div class="form-group">
-                <label class="form-label">ಕನ್ನಡ ವಿವರಣೆ (Hero Subtitle)</label>
-                <textarea id="langKnHeroSubtitle" class="form-control" rows="2"></textarea>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">ಉಲ್ಲೇಖ ಬಟನ್ (Quote Button)</label>
-                  <input type="text" id="langKnBtnQuote" class="form-control" placeholder="ಉಲ್ಲೇಖ ಪಡೆಯಿರಿ">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">ಉತ್ಪನ್ನಗಳು ಶೀರ್ಷಿಕೆ (Products Nav)</label>
-                  <input type="text" id="langKnNavProducts" class="form-control" placeholder="ಉತ್ಪನ್ನಗಳು">
-                </div>
+                <label class="form-label">Brand Tagline</label>
+                <input type="text" id="cmsBrandTagline" class="form-control" placeholder="Precision Woven Solutions • Global Quality Packaging">
               </div>
             </div>
-
-            <!-- Hindi (HI) Customization -->
-            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem; margin-bottom: 1.5rem;">
-              <h5 style="color: #07524a; font-weight: 800; font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                <span style="background: #07524a; color: #fff; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.8rem;">HI</span>
-                हिंदी भाषा सामग्री (Hindi Content)
-              </h5>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">हिंदी मुख्य शीर्षक (Hero Title)</label>
-                  <input type="text" id="langHiHeroTitle" class="form-control" placeholder="प्रीमियम वोवन पैकेजिंग और औद्योगिक फैब्रिक समाधान">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">हिंदी टैगलाइन (Hero Tag)</label>
-                  <input type="text" id="langHiHeroTag" class="form-control" placeholder="बैंगलोर की अग्रणी बुनाई और बैग निर्माता कंपनी">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">हिंदी विवरण (Hero Subtitle)</label>
-                <textarea id="langHiHeroSubtitle" class="form-control" rows="2"></textarea>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">कोटेशन बटन (Quote Button)</label>
-                  <input type="text" id="langHiBtnQuote" class="form-control" placeholder="कोटेशन प्राप्त करें">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">उत्पाद लिंक (Products Nav)</label>
-                  <input type="text" id="langHiNavProducts" class="form-control" placeholder="उत्पाद">
-                </div>
-              </div>
-            </div>
-
           </div>
 
           <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 1rem;">
@@ -916,13 +894,28 @@
 
   <!-- Company Profile Edit Modal -->
   <div class="modal-backdrop" id="companyEditModal">
-    <div class="modal-card" style="max-width: 540px;">
+    <div class="modal-card" style="max-width: 580px;">
       <div class="modal-header">
-        <h3>Edit Company Credentials & Contacts</h3>
+        <h3><i class="fa-solid fa-building text-gold"></i> Edit Company Credentials & Branding</h3>
         <button class="modal-close-btn modal-close-trigger" onclick="closeCompanyModal()"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modal-body modal-body-compact">
         <form id="companyEditForm">
+          
+          <!-- Logo Section in Company Modal -->
+          <div style="background: #f8fafc; border: 1.5px solid #dfb774; border-radius: 10px; padding: 0.85rem; margin-bottom: 1rem;">
+            <label class="form-label" style="font-weight: 700; color: #032b27; margin-bottom: 0.35rem;">Company Logo / Brand Identity</label>
+            <div style="display: grid; grid-template-columns: 110px 1fr; gap: 0.85rem; align-items: center;">
+              <div style="background: #032b27; padding: 0.5rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; height: 60px;">
+                <img id="compEditLogoPreview" src="../assets/logo-white.svg" alt="Company Logo" style="max-height: 44px; max-width: 100%; object-fit: contain;">
+              </div>
+              <div>
+                <input type="file" id="compEditLogoFile" accept="image/*" class="form-control" style="font-size: 0.75rem; padding: 0.35rem 0.5rem; margin-bottom: 0.35rem;">
+                <input type="text" id="compEditLogoUrl" class="form-control" placeholder="Or logo image URL / path" style="font-size: 0.75rem; padding: 0.35rem 0.5rem;">
+              </div>
+            </div>
+          </div>
+
           <div class="form-group">
             <label class="form-label" for="compEditName">Company Legal Name</label>
             <input type="text" id="compEditName" class="form-control" value="RAYASHREE WEAVING PVT. LTD.">

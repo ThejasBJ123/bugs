@@ -30,13 +30,14 @@ let searchQuery = "";
 let activeInquiryId = null;
 
 function initDashboard() {
-  initNavigation();
-  initInquiryModal();
-  initExportCSV();
-  initProductManager();
-  initCmsEditor();
-  initCompanyEditor();
-  renderAll();
+  try { initNavigation(); } catch (e) { console.error("initNavigation error:", e); }
+  try { initInquiryModal(); } catch (e) { console.error("initInquiryModal error:", e); }
+  try { initExportCSV(); } catch (e) { console.error("initExportCSV error:", e); }
+  try { initProductManager(); } catch (e) { console.error("initProductManager error:", e); }
+  try { initCmsEditor(); } catch (e) { console.error("initCmsEditor error:", e); }
+  try { initCompanyEditor(); } catch (e) { console.error("initCompanyEditor error:", e); }
+  try { initLogoUploader(); } catch (e) { console.error("initLogoUploader error:", e); }
+  try { renderAll(); } catch (e) { console.error("renderAll error:", e); }
 }
 
 /* ==========================================================================
@@ -839,6 +840,80 @@ function resetDefaultProducts() {
 
 
 /* ==========================================================================
+   Logo & Branding Uploader Logic
+   ========================================================================== */
+
+function initLogoUploader() {
+  // CMS Branding Tab Logo
+  const cmsLogoFile = document.getElementById("cmsBrandLogoFile");
+  const cmsLogoUrl = document.getElementById("cmsBrandLogoUrl");
+  const cmsLogoPreview = document.getElementById("cmsBrandLogoPreview");
+
+  // Company Modal Logo
+  const compLogoFile = document.getElementById("compEditLogoFile");
+  const compLogoUrl = document.getElementById("compEditLogoUrl");
+  const compLogoPreview = document.getElementById("compEditLogoPreview");
+
+  async function handleLogoUpload(file, urlInput, previewImg, otherUrlInput, otherPreviewImg) {
+    if (!file || !file.type.startsWith("image/")) {
+      showAdminToast("Please select a valid image file (PNG, SVG, JPG).");
+      return;
+    }
+    try {
+      if (previewImg) previewImg.style.opacity = "0.5";
+      const compressed = await compressImageFile(file, 600, 300, 0.9);
+      if (previewImg) {
+        previewImg.src = compressed;
+        previewImg.style.opacity = "1";
+      }
+      if (urlInput) urlInput.value = compressed;
+      if (otherUrlInput) otherUrlInput.value = compressed;
+      if (otherPreviewImg) otherPreviewImg.src = compressed;
+      showAdminToast("Logo loaded! Click Save to apply across all pages.");
+    } catch (e) {
+      console.error("Logo upload error:", e);
+      if (previewImg) previewImg.style.opacity = "1";
+    }
+  }
+
+  if (cmsLogoFile) {
+    cmsLogoFile.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) handleLogoUpload(file, cmsLogoUrl, cmsLogoPreview, compLogoUrl, compLogoPreview);
+    });
+  }
+
+  if (cmsLogoUrl) {
+    cmsLogoUrl.addEventListener("input", (e) => {
+      const val = e.target.value.trim();
+      if (val) {
+        if (cmsLogoPreview) cmsLogoPreview.src = val;
+        if (compLogoUrl) compLogoUrl.value = val;
+        if (compLogoPreview) compLogoPreview.src = val;
+      }
+    });
+  }
+
+  if (compLogoFile) {
+    compLogoFile.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) handleLogoUpload(file, compLogoUrl, compLogoPreview, cmsLogoUrl, cmsLogoPreview);
+    });
+  }
+
+  if (compLogoUrl) {
+    compLogoUrl.addEventListener("input", (e) => {
+      const val = e.target.value.trim();
+      if (val) {
+        if (compLogoPreview) compLogoPreview.src = val;
+        if (cmsLogoUrl) cmsLogoUrl.value = val;
+        if (cmsLogoPreview) cmsLogoPreview.src = val;
+      }
+    });
+  }
+}
+
+/* ==========================================================================
    Public Pages CMS Editor Logic
    ========================================================================== */
 
@@ -871,55 +946,70 @@ function initCmsEditor() {
 function loadCmsFormValues() {
   const content = getSiteContent();
   const company = getCompanyInfo();
-  const trans = typeof getStoredTranslations === "function" ? getStoredTranslations() : null;
 
-  // Home
-  if (document.getElementById("cmsHomeHeroTag")) document.getElementById("cmsHomeHeroTag").value = content.home.heroTag || "";
-  if (document.getElementById("cmsHomeHeroTitle")) document.getElementById("cmsHomeHeroTitle").value = content.home.heroTitle || "";
-  if (document.getElementById("cmsHomeHeroSubtitle")) document.getElementById("cmsHomeHeroSubtitle").value = content.home.heroSubtitle || "";
-  if (document.getElementById("cmsHomeStat1Val")) document.getElementById("cmsHomeStat1Val").value = content.home.stat1Val || "";
-  if (document.getElementById("cmsHomeStat1Label")) document.getElementById("cmsHomeStat1Label").value = content.home.stat1Label || "";
-  if (document.getElementById("cmsHomeStat2Val")) document.getElementById("cmsHomeStat2Val").value = content.home.stat2Val || "";
-  if (document.getElementById("cmsHomeStat2Label")) document.getElementById("cmsHomeStat2Label").value = content.home.stat2Label || "";
-  if (document.getElementById("cmsHomeStat3Val")) document.getElementById("cmsHomeStat3Val").value = content.home.stat3Val || "";
-  if (document.getElementById("cmsHomeStat3Label")) document.getElementById("cmsHomeStat3Label").value = content.home.stat3Label || "";
-  if (document.getElementById("cmsHomeStat4Val")) document.getElementById("cmsHomeStat4Val").value = content.home.stat4Val || "";
-  if (document.getElementById("cmsHomeStat4Label")) document.getElementById("cmsHomeStat4Label").value = content.home.stat4Label || "";
+  // 1. Home Page CMS
+  if (content && content.home) {
+    if (document.getElementById("cmsHomeHeroTag")) document.getElementById("cmsHomeHeroTag").value = content.home.heroTag || "";
+    if (document.getElementById("cmsHomeHeroTitle")) document.getElementById("cmsHomeHeroTitle").value = content.home.heroTitle || "";
+    if (document.getElementById("cmsHomeHeroSubtitle")) document.getElementById("cmsHomeHeroSubtitle").value = content.home.heroSubtitle || "";
+    if (document.getElementById("cmsHomeStat1Val")) document.getElementById("cmsHomeStat1Val").value = content.home.stat1Val || "";
+    if (document.getElementById("cmsHomeStat1Label")) document.getElementById("cmsHomeStat1Label").value = content.home.stat1Label || "";
+    if (document.getElementById("cmsHomeStat2Val")) document.getElementById("cmsHomeStat2Val").value = content.home.stat2Val || "";
+    if (document.getElementById("cmsHomeStat2Label")) document.getElementById("cmsHomeStat2Label").value = content.home.stat2Label || "";
+    if (document.getElementById("cmsHomeStat3Val")) document.getElementById("cmsHomeStat3Val").value = content.home.stat3Val || "";
+    if (document.getElementById("cmsHomeStat3Label")) document.getElementById("cmsHomeStat3Label").value = content.home.stat3Label || "";
+    if (document.getElementById("cmsHomeStat4Val")) document.getElementById("cmsHomeStat4Val").value = content.home.stat4Val || "";
+    if (document.getElementById("cmsHomeStat4Label")) document.getElementById("cmsHomeStat4Label").value = content.home.stat4Label || "";
+  }
 
-  // About
-  if (document.getElementById("cmsAboutHeading")) document.getElementById("cmsAboutHeading").value = content.about.heading || "";
-  if (document.getElementById("cmsAboutSubheading")) document.getElementById("cmsAboutSubheading").value = content.about.subheading || "";
-  if (document.getElementById("cmsAboutCeoMessage")) document.getElementById("cmsAboutCeoMessage").value = content.about.ceoMessage || "";
-  if (document.getElementById("cmsAboutCoreVision")) document.getElementById("cmsAboutCoreVision").value = content.about.coreVision || "";
+  // 2. Products Page CMS
+  if (content && content.products) {
+    if (document.getElementById("cmsProductsHeroTitle")) document.getElementById("cmsProductsHeroTitle").value = content.products.heroTitle || "Complete Manufacturing Portfolio";
+    if (document.getElementById("cmsProductsHeroSubtitle")) document.getElementById("cmsProductsHeroSubtitle").value = content.products.heroSubtitle || "";
+    if (document.getElementById("cmsProductsCustomTitle")) document.getElementById("cmsProductsCustomTitle").value = content.products.customTitle || "Need Bespoke Sizing, GSM or Liner Fit?";
+    if (document.getElementById("cmsProductsCustomDesc")) document.getElementById("cmsProductsCustomDesc").value = content.products.customDesc || "";
+  }
 
-  // Infra
-  if (document.getElementById("cmsInfraHeading")) document.getElementById("cmsInfraHeading").value = content.infrastructure.heading || "";
-  if (document.getElementById("cmsInfraSubheading")) document.getElementById("cmsInfraSubheading").value = content.infrastructure.subheading || "";
-  if (document.getElementById("cmsInfraLoomsCount")) document.getElementById("cmsInfraLoomsCount").value = content.infrastructure.loomsCount || "";
-  if (document.getElementById("cmsInfraExtrusion")) document.getElementById("cmsInfraExtrusion").value = content.infrastructure.extrusionCapacity || "";
-  if (document.getElementById("cmsInfraPrinting")) document.getElementById("cmsInfraPrinting").value = content.infrastructure.printingTech || "";
-  if (document.getElementById("cmsInfraQuality")) document.getElementById("cmsInfraQuality").value = content.infrastructure.qualityStandards || "";
+  // 3. About Us CMS
+  if (content && content.about) {
+    if (document.getElementById("cmsAboutHeading")) document.getElementById("cmsAboutHeading").value = content.about.heading || "";
+    if (document.getElementById("cmsAboutSubheading")) document.getElementById("cmsAboutSubheading").value = content.about.subheading || "";
+    if (document.getElementById("cmsAboutCeoMessage")) document.getElementById("cmsAboutCeoMessage").value = content.about.ceoMessage || "";
+    if (document.getElementById("cmsAboutCoreVision")) document.getElementById("cmsAboutCoreVision").value = content.about.coreVision || "";
+  }
 
-  // Contact
-  if (document.getElementById("cmsContactCeoName")) document.getElementById("cmsContactCeoName").value = company.ceo || "Lakshmi Kanth";
-  if (document.getElementById("cmsContactPhone")) document.getElementById("cmsContactPhone").value = company.phone || "+91 9108713258";
-  if (document.getElementById("cmsContactEmail")) document.getElementById("cmsContactEmail").value = company.email || "rayashreewpvtltd@gmail.com";
-  if (document.getElementById("cmsContactHours")) document.getElementById("cmsContactHours").value = company.hours || "Mon - Sat: 8:30 AM - 7:30 PM (IST)";
-  if (document.getElementById("cmsContactAddress")) document.getElementById("cmsContactAddress").value = company.address || "";
+  // 4. Infrastructure CMS
+  if (content && content.infrastructure) {
+    if (document.getElementById("cmsInfraHeading")) document.getElementById("cmsInfraHeading").value = content.infrastructure.heading || "";
+    if (document.getElementById("cmsInfraSubheading")) document.getElementById("cmsInfraSubheading").value = content.infrastructure.subheading || "";
+    if (document.getElementById("cmsInfraLoomsCount")) document.getElementById("cmsInfraLoomsCount").value = content.infrastructure.loomsCount || "";
+    if (document.getElementById("cmsInfraExtrusion")) document.getElementById("cmsInfraExtrusion").value = content.infrastructure.extrusionCapacity || "";
+    if (document.getElementById("cmsInfraPrinting")) document.getElementById("cmsInfraPrinting").value = content.infrastructure.printingTech || "";
+    if (document.getElementById("cmsInfraQuality")) document.getElementById("cmsInfraQuality").value = content.infrastructure.qualityStandards || "";
+  }
 
-  // Languages & Translations
-  if (trans) {
-    if (document.getElementById("langKnHeroTitle")) document.getElementById("langKnHeroTitle").value = trans.kn.hero_title || "";
-    if (document.getElementById("langKnHeroTag")) document.getElementById("langKnHeroTag").value = trans.kn.hero_tag || "";
-    if (document.getElementById("langKnHeroSubtitle")) document.getElementById("langKnHeroSubtitle").value = trans.kn.hero_subtitle || "";
-    if (document.getElementById("langKnBtnQuote")) document.getElementById("langKnBtnQuote").value = trans.kn.btn_request_quote || "";
-    if (document.getElementById("langKnNavProducts")) document.getElementById("langKnNavProducts").value = trans.kn.nav_products || "";
+  // 5. Contact & Footer CMS
+  if (company) {
+    if (document.getElementById("cmsContactCeoName")) document.getElementById("cmsContactCeoName").value = company.ceo || "Lakshmi Kanth";
+    if (document.getElementById("cmsContactPhone")) document.getElementById("cmsContactPhone").value = company.phone || "+91 9108713258";
+    if (document.getElementById("cmsContactEmail")) document.getElementById("cmsContactEmail").value = company.email || "rayashreewpvtltd@gmail.com";
+    if (document.getElementById("cmsContactHours")) document.getElementById("cmsContactHours").value = company.hours || "Mon - Sat: 8:30 AM - 7:30 PM (IST)";
+    if (document.getElementById("cmsContactAddress")) document.getElementById("cmsContactAddress").value = company.address || "";
+  }
 
-    if (document.getElementById("langHiHeroTitle")) document.getElementById("langHiHeroTitle").value = trans.hi.hero_title || "";
-    if (document.getElementById("langHiHeroTag")) document.getElementById("langHiHeroTag").value = trans.hi.hero_tag || "";
-    if (document.getElementById("langHiHeroSubtitle")) document.getElementById("langHiHeroSubtitle").value = trans.hi.hero_subtitle || "";
-    if (document.getElementById("langHiBtnQuote")) document.getElementById("langHiBtnQuote").value = trans.hi.btn_request_quote || "";
-    if (document.getElementById("langHiNavProducts")) document.getElementById("langHiNavProducts").value = trans.hi.nav_products || "";
+  // 6. Logo & Visual Branding CMS
+  if (company) {
+    const currentLogo = company.logo || company.logoWhite || "../assets/logo-white.svg";
+    if (document.getElementById("cmsBrandLogoUrl")) document.getElementById("cmsBrandLogoUrl").value = currentLogo;
+    if (document.getElementById("cmsBrandName")) document.getElementById("cmsBrandName").value = company.brandName || company.name || "Rayashree Weaving";
+    if (document.getElementById("cmsBrandTagline")) document.getElementById("cmsBrandTagline").value = company.tagline || "";
+    
+    const preview = document.getElementById("cmsBrandLogoPreview");
+    if (preview) preview.src = resolveAssetPath(currentLogo);
+
+    const compPreview = document.getElementById("compEditLogoPreview");
+    if (compPreview) compPreview.src = resolveAssetPath(currentLogo);
+    if (document.getElementById("compEditLogoUrl")) document.getElementById("compEditLogoUrl").value = currentLogo;
   }
 }
 
@@ -929,78 +1019,80 @@ function saveAllSitePages() {
 
   // Home
   content.home = {
-    heroTag: document.getElementById("cmsHomeHeroTag").value.trim(),
-    heroTitle: document.getElementById("cmsHomeHeroTitle").value.trim(),
-    heroSubtitle: document.getElementById("cmsHomeHeroSubtitle").value.trim(),
-    stat1Val: document.getElementById("cmsHomeStat1Val").value.trim(),
-    stat1Label: document.getElementById("cmsHomeStat1Label").value.trim(),
-    stat2Val: document.getElementById("cmsHomeStat2Val").value.trim(),
-    stat2Label: document.getElementById("cmsHomeStat2Label").value.trim(),
-    stat3Val: document.getElementById("cmsHomeStat3Val").value.trim(),
-    stat3Label: document.getElementById("cmsHomeStat3Label").value.trim(),
-    stat4Val: document.getElementById("cmsHomeStat4Val").value.trim(),
-    stat4Label: document.getElementById("cmsHomeStat4Label").value.trim(),
+    heroTag: document.getElementById("cmsHomeHeroTag") ? document.getElementById("cmsHomeHeroTag").value.trim() : (content.home.heroTag || ""),
+    heroTitle: document.getElementById("cmsHomeHeroTitle") ? document.getElementById("cmsHomeHeroTitle").value.trim() : (content.home.heroTitle || ""),
+    heroSubtitle: document.getElementById("cmsHomeHeroSubtitle") ? document.getElementById("cmsHomeHeroSubtitle").value.trim() : (content.home.heroSubtitle || ""),
+    stat1Val: document.getElementById("cmsHomeStat1Val") ? document.getElementById("cmsHomeStat1Val").value.trim() : "5M+ Sacks",
+    stat1Label: document.getElementById("cmsHomeStat1Label") ? document.getElementById("cmsHomeStat1Label").value.trim() : "Monthly Production Capacity",
+    stat2Val: document.getElementById("cmsHomeStat2Val") ? document.getElementById("cmsHomeStat2Val").value.trim() : "48+ Looms",
+    stat2Label: document.getElementById("cmsHomeStat2Label") ? document.getElementById("cmsHomeStat2Label").value.trim() : "High-Speed Circular Looms",
+    stat3Val: document.getElementById("cmsHomeStat3Val") ? document.getElementById("cmsHomeStat3Val").value.trim() : "350 MT",
+    stat3Label: document.getElementById("cmsHomeStat3Label") ? document.getElementById("cmsHomeStat3Label").value.trim() : "Extrusion Tape Line",
+    stat4Val: document.getElementById("cmsHomeStat4Val") ? document.getElementById("cmsHomeStat4Val").value.trim() : "100%",
+    stat4Label: document.getElementById("cmsHomeStat4Label") ? document.getElementById("cmsHomeStat4Label").value.trim() : "Virgin Polymer & Lab Tested"
+  };
+
+  // Products
+  content.products = {
+    heroTitle: document.getElementById("cmsProductsHeroTitle") ? document.getElementById("cmsProductsHeroTitle").value.trim() : "Complete Manufacturing Portfolio",
+    heroSubtitle: document.getElementById("cmsProductsHeroSubtitle") ? document.getElementById("cmsProductsHeroSubtitle").value.trim() : "Explore our full range of heavy-duty HDPE/PP sacks, AD*STAR cement bags, silage tubes, jute packaging, linen fabrics, and 2-ton FIBC containers.",
+    customTitle: document.getElementById("cmsProductsCustomTitle") ? document.getElementById("cmsProductsCustomTitle").value.trim() : "Need Bespoke Sizing, GSM or Liner Fit?",
+    customDesc: document.getElementById("cmsProductsCustomDesc") ? document.getElementById("cmsProductsCustomDesc").value.trim() : "At Rayashree Weaving, we customize every parameter to match your packing machinery and logistics constraints."
   };
 
   // About
   content.about = {
-    heading: document.getElementById("cmsAboutHeading").value.trim(),
-    subheading: document.getElementById("cmsAboutSubheading").value.trim(),
-    ceoMessage: document.getElementById("cmsAboutCeoMessage").value.trim(),
-    coreVision: document.getElementById("cmsAboutCoreVision").value.trim(),
+    heading: document.getElementById("cmsAboutHeading") ? document.getElementById("cmsAboutHeading").value.trim() : (content.about.heading || ""),
+    subheading: document.getElementById("cmsAboutSubheading") ? document.getElementById("cmsAboutSubheading").value.trim() : (content.about.subheading || ""),
+    ceoMessage: document.getElementById("cmsAboutCeoMessage") ? document.getElementById("cmsAboutCeoMessage").value.trim() : (content.about.ceoMessage || ""),
+    coreVision: document.getElementById("cmsAboutCoreVision") ? document.getElementById("cmsAboutCoreVision").value.trim() : (content.about.coreVision || "")
   };
 
   // Infra
   content.infrastructure = {
-    heading: document.getElementById("cmsInfraHeading").value.trim(),
-    subheading: document.getElementById("cmsInfraSubheading").value.trim(),
-    loomsCount: document.getElementById("cmsInfraLoomsCount").value.trim(),
-    extrusionCapacity: document.getElementById("cmsInfraExtrusion").value.trim(),
-    printingTech: document.getElementById("cmsInfraPrinting").value.trim(),
-    qualityStandards: document.getElementById("cmsInfraQuality").value.trim(),
+    heading: document.getElementById("cmsInfraHeading") ? document.getElementById("cmsInfraHeading").value.trim() : (content.infrastructure.heading || ""),
+    subheading: document.getElementById("cmsInfraSubheading") ? document.getElementById("cmsInfraSubheading").value.trim() : (content.infrastructure.subheading || ""),
+    loomsCount: document.getElementById("cmsInfraLoomsCount") ? document.getElementById("cmsInfraLoomsCount").value.trim() : "48+ High-Speed Looms",
+    extrusionCapacity: document.getElementById("cmsInfraExtrusion") ? document.getElementById("cmsInfraExtrusion").value.trim() : "350 Metric Tons / Month",
+    printingTech: document.getElementById("cmsInfraPrinting") ? document.getElementById("cmsInfraPrinting").value.trim() : "8-Color High-Definition Flexo & Rotogravure BOPP Printing",
+    qualityStandards: document.getElementById("cmsInfraQuality") ? document.getElementById("cmsInfraQuality").value.trim() : "Tensile, UV weathering, Drop test, Burst factor tested to IS 14887:2014"
   };
 
   // Company & Contact
-  const phone = document.getElementById("cmsContactPhone").value.trim();
-  company.ceo = document.getElementById("cmsContactCeoName").value.trim();
-  company.phone = phone;
-  company.whatsappNumber = phone.replace(/[^0-9]/g, "");
-  company.email = document.getElementById("cmsContactEmail").value.trim();
-  company.hours = document.getElementById("cmsContactHours").value.trim();
-  company.address = document.getElementById("cmsContactAddress").value.trim();
+  if (document.getElementById("cmsContactPhone")) {
+    const phone = document.getElementById("cmsContactPhone").value.trim();
+    company.phone = phone;
+    company.whatsappNumber = phone.replace(/[^0-9]/g, "");
+  }
+  if (document.getElementById("cmsContactCeoName")) company.ceo = document.getElementById("cmsContactCeoName").value.trim();
+  if (document.getElementById("cmsContactEmail")) company.email = document.getElementById("cmsContactEmail").value.trim();
+  if (document.getElementById("cmsContactHours")) company.hours = document.getElementById("cmsContactHours").value.trim();
+  if (document.getElementById("cmsContactAddress")) company.address = document.getElementById("cmsContactAddress").value.trim();
+
+  // Branding & Logo
+  const logoUrl = document.getElementById("cmsBrandLogoUrl") ? document.getElementById("cmsBrandLogoUrl").value.trim() : "";
+  if (logoUrl) {
+    company.logo = logoUrl;
+    company.logoWhite = logoUrl;
+  }
+  if (document.getElementById("cmsBrandName")) {
+    company.brandName = document.getElementById("cmsBrandName").value.trim();
+    company.name = company.brandName || company.name;
+  }
+  if (document.getElementById("cmsBrandTagline")) company.tagline = document.getElementById("cmsBrandTagline").value.trim();
 
   saveSiteContent(content);
   saveCompanyInfo(company);
 
-  // Multilingual Translations Save
-  if (typeof getStoredTranslations === "function" && typeof saveStoredTranslations === "function") {
-    const trans = getStoredTranslations();
-    if (document.getElementById("langKnHeroTitle")) {
-      trans.kn.hero_title = document.getElementById("langKnHeroTitle").value.trim() || trans.kn.hero_title;
-      trans.kn.hero_tag = document.getElementById("langKnHeroTag").value.trim() || trans.kn.hero_tag;
-      trans.kn.hero_subtitle = document.getElementById("langKnHeroSubtitle").value.trim() || trans.kn.hero_subtitle;
-      trans.kn.btn_request_quote = document.getElementById("langKnBtnQuote").value.trim() || trans.kn.btn_request_quote;
-      trans.kn.nav_products = document.getElementById("langKnNavProducts").value.trim() || trans.kn.nav_products;
-    }
-    if (document.getElementById("langHiHeroTitle")) {
-      trans.hi.hero_title = document.getElementById("langHiHeroTitle").value.trim() || trans.hi.hero_title;
-      trans.hi.hero_tag = document.getElementById("langHiHeroTag").value.trim() || trans.hi.hero_tag;
-      trans.hi.hero_subtitle = document.getElementById("langHiHeroSubtitle").value.trim() || trans.hi.hero_subtitle;
-      trans.hi.btn_request_quote = document.getElementById("langHiBtnQuote").value.trim() || trans.hi.btn_request_quote;
-      trans.hi.nav_products = document.getElementById("langHiNavProducts").value.trim() || trans.hi.nav_products;
-    }
-    saveStoredTranslations(trans);
-  }
-
-  alert("Success! All public pages and language translations (English, Kannada, Hindi) have been updated and published.");
+  showAdminToast("All public website pages, branding & contacts updated live!");
 }
 
 function resetDefaultSiteContent() {
-  if (confirm("Reset all public pages content back to factory defaults?")) {
+  if (confirm("Reset all public pages content and branding back to factory defaults?")) {
     localStorage.removeItem("rw_site_content");
     localStorage.removeItem("rw_company_info");
     loadCmsFormValues();
-    alert("Public pages content restored to defaults.");
+    showAdminToast("Public pages content restored to defaults.");
   }
 }
 
@@ -1024,10 +1116,16 @@ function initCompanyEditor() {
       company.hours = document.getElementById("compEditHours").value.trim();
       company.address = document.getElementById("compEditAddress").value.trim();
 
+      const logoUrl = document.getElementById("compEditLogoUrl") ? document.getElementById("compEditLogoUrl").value.trim() : "";
+      if (logoUrl) {
+        company.logo = logoUrl;
+        company.logoWhite = logoUrl;
+      }
+
       saveCompanyInfo(company);
       closeCompanyModal();
       loadCmsFormValues();
-      alert("Company profile & contact credentials updated across all public pages!");
+      showAdminToast("Company profile & branding updated across all public pages!");
     });
   }
 }
@@ -1043,6 +1141,11 @@ function openCompanyModal() {
   if (document.getElementById("compEditEmail")) document.getElementById("compEditEmail").value = company.email || "rayashreewpvtltd@gmail.com";
   if (document.getElementById("compEditHours")) document.getElementById("compEditHours").value = company.hours || "Mon - Sat: 8:30 AM - 7:30 PM (IST)";
   if (document.getElementById("compEditAddress")) document.getElementById("compEditAddress").value = company.address || "";
+
+  const currentLogo = company.logo || company.logoWhite || "../assets/logo-white.svg";
+  if (document.getElementById("compEditLogoUrl")) document.getElementById("compEditLogoUrl").value = currentLogo;
+  const preview = document.getElementById("compEditLogoPreview");
+  if (preview) preview.src = resolveAssetPath(currentLogo);
 
   modal.classList.add("active");
 }
@@ -1063,3 +1166,5 @@ window.openCompanyModal = openCompanyModal;
 window.closeCompanyModal = closeCompanyModal;
 window.saveAllSitePages = saveAllSitePages;
 window.resetDefaultSiteContent = resetDefaultSiteContent;
+window.initLogoUploader = initLogoUploader;
+

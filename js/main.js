@@ -71,6 +71,15 @@ function applyDynamicSiteContent() {
   const content = getSiteContent();
   const products = typeof getProducts === "function" ? getProducts() : [];
 
+  // 1. Dynamic Logo & Brand Identity Replacement
+  if (company && (company.logo || company.logoWhite)) {
+    const customLogo = company.logo || company.logoWhite;
+    const brandLogoImgs = document.querySelectorAll(".brand-logo img, .footer-brand img, .header-brand img, .nav-brand img");
+    brandLogoImgs.forEach(img => {
+      img.src = resolveAssetPath(customLogo);
+    });
+  }
+
   // Update dynamic product count across headers and nav links
   const prodCount = products.length;
   
@@ -89,7 +98,7 @@ function applyDynamicSiteContent() {
     el.textContent = `Specialized Product Categories`;
   });
 
-  // 1. Company Contact Details across Topbar, Contact Sections & Footers
+  // 2. Company Contact Details across Topbar, Contact Sections & Footers
   const phoneLinks = document.querySelectorAll("a[href^='tel:']");
   phoneLinks.forEach(a => {
     a.href = `tel:${company.whatsappNumber || '919108713258'}`;
@@ -122,7 +131,7 @@ function applyDynamicSiteContent() {
     }
   });
 
-  // 2. Home Page Hero & Stats (if on index.html)
+  // 3. Home Page Hero & Stats (if on index.html)
   if (content && content.home) {
     const heroTag = document.querySelector(".hero-tag");
     if (heroTag && content.home.heroTag) heroTag.textContent = content.home.heroTag;
@@ -160,6 +169,39 @@ function applyDynamicSiteContent() {
         if (lbl) lbl.textContent = content.home.stat4Label;
       }
     }
+  }
+
+  // 4. Products Page Dynamic Content (if on products.html)
+  if (content && content.products && window.location.pathname.includes("products.html")) {
+    const h1 = document.querySelector("h1");
+    if (h1 && content.products.heroTitle) h1.textContent = content.products.heroTitle;
+    
+    const heroP = document.querySelector("h1 + p");
+    if (heroP && content.products.heroSubtitle) heroP.textContent = content.products.heroSubtitle;
+  }
+
+  // 5. About Us Page Dynamic Content (if on about.html)
+  if (content && content.about && window.location.pathname.includes("about.html")) {
+    const h2Hero = document.querySelector(".section-tag-emerald + h2");
+    if (h2Hero && content.about.heading) h2Hero.textContent = content.about.heading;
+
+    const ceoQuote = document.querySelector(".executive-grid p");
+    if (ceoQuote && content.about.ceoMessage) ceoQuote.textContent = `"${content.about.ceoMessage}"`;
+  }
+
+  // 6. Infrastructure Page Dynamic Content (if on infrastructure.html)
+  if (content && content.infrastructure && window.location.pathname.includes("infrastructure.html")) {
+    const h1 = document.querySelector("h1");
+    if (h1 && content.infrastructure.heading) h1.textContent = content.infrastructure.heading;
+
+    const heroP = document.querySelector("h1 + p");
+    if (heroP && content.infrastructure.subheading) heroP.textContent = content.infrastructure.subheading;
+  }
+
+  // 7. Contact Page Dynamic Content (if on contact.html)
+  if (company && window.location.pathname.includes("contact.html")) {
+    const ceoNameEl = document.querySelector(".fa-user-tie ~ div > div:first-child");
+    if (ceoNameEl && company.ceo) ceoNameEl.textContent = company.ceo;
   }
 }
 
