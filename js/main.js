@@ -2,6 +2,24 @@
  * Rayashree Weaving Pvt. Ltd. - Master Client Script
  */
 
+function resolveAssetPath(path) {
+  if (!path) {
+    const isSub = window.location.pathname.includes('/public/') || window.location.pathname.includes('/admin/');
+    return isSub ? '../assets/images/bags.jpg' : 'assets/images/bags.jpg';
+  }
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
+    return path;
+  }
+  const isSub = window.location.pathname.includes('/public/') || window.location.pathname.includes('/admin/');
+  if (isSub && !path.startsWith('../') && !path.startsWith('/')) {
+    return '../' + path;
+  }
+  if (!isSub && path.startsWith('../')) {
+    return path.replace(/^\.\.\//, '');
+  }
+  return path;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   try { initPreloader(); } catch (e) { console.error("initPreloader error:", e); }
   try { initNavbar(); } catch (e) { console.error("initNavbar error:", e); }
@@ -126,8 +144,8 @@ function applyDynamicSiteContent() {
       if (content.home.stat2Val) {
         const num = statCards[1].querySelector(".stat-number");
         const lbl = statCards[1].querySelector(".stat-label");
-        if (num) num.textContent = `${prodCount} Lines`;
-        if (lbl) lbl.textContent = content.home.stat2Label || "Core Industrial Products";
+        if (num) num.textContent = content.home.stat2Val || "48+ Looms";
+        if (lbl) lbl.textContent = content.home.stat2Label || "High-Speed Circular Looms";
       }
       if (content.home.stat3Val) {
         const num = statCards[2].querySelector(".stat-number");
@@ -175,9 +193,10 @@ function initNavbar() {
     });
 
     // Add Staff Portal link to mobile menu if not present
-    if (!navMenu.querySelector("a[href='admin.html']")) {
+    if (!navMenu.querySelector("a[href*='admin']")) {
       const adminLink = document.createElement("a");
-      adminLink.href = "admin.html";
+      const isSub = window.location.pathname.includes('/public/') || window.location.pathname.includes('/admin/');
+      adminLink.href = window.location.pathname.includes('/admin/') ? "index.html" : (isSub ? "../admin/index.html" : "admin/index.html");
       adminLink.className = "nav-link";
       adminLink.style.borderColor = "var(--gold-400)";
       adminLink.style.color = "var(--gold-600)";
@@ -326,7 +345,8 @@ function initRFQModal() {
 
       // Dispatch to Hostinger PHP backend if hosted on server
       try {
-        fetch('api/send-inquiry.php', {
+        const apiEndpoint = (typeof getApiEndpoint === 'function' ? getApiEndpoint('api/send-inquiry.php') : ((window.location.pathname.includes('/public/') || window.location.pathname.includes('/admin/')) ? '../api/send-inquiry.php' : 'api/send-inquiry.php'));
+        fetch(apiEndpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -386,7 +406,8 @@ function initContactPageForm() {
 
     // Dispatch to Hostinger PHP backend if hosted on server
     try {
-      fetch('api/send-inquiry.php', {
+      const apiEndpoint = (typeof getApiEndpoint === 'function' ? getApiEndpoint('api/send-inquiry.php') : ((window.location.pathname.includes('/public/') || window.location.pathname.includes('/admin/')) ? '../api/send-inquiry.php' : 'api/send-inquiry.php'));
+      fetch(apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -490,7 +511,7 @@ function initProductThumbBar() {
 
     item.innerHTML = `
       <a href="${linkTarget}" style="text-decoration: none; color: inherit; display: block;">
-        <img src="${prod.image}" alt="${prod.name}" style="width: 100%; height: 75px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 0.4rem;" onerror="this.src='assets/images/bags.jpg'">
+        <img src="${resolveAssetPath(prod.image)}" alt="${prod.name}" style="width: 100%; height: 75px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 0.4rem;" onerror="this.src='${resolveAssetPath('assets/images/bags.jpg')}'">
         <strong style="font-size: 0.8rem; color: var(--primary-900); display: block; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
           ${prod.shortName || prod.name}
         </strong>
@@ -521,7 +542,7 @@ function initProductGrid() {
         <p style="color: var(--dark-600); max-width: 500px; margin: 0 auto 1.5rem auto;">
           Add your manufacturing bag lines and custom specifications in the Staff Admin Portal to display them live here.
         </p>
-        <a href="admin.html" class="btn btn-gold">
+        <a href="${(window.location.pathname.includes('/public/') ? '../admin/index.html' : 'admin/index.html')}" class="btn btn-gold">
           <i class="fa-solid fa-plus"></i> Go to Admin Portal to Add Products
         </a>
       </div>
@@ -529,36 +550,41 @@ function initProductGrid() {
     return;
   }
 
-  if (filterBar) filterBar.style.display = "flex";
+  // Extract unique categories
+  const categories = [...new Set(products.map(p => p.category ? p.category.trim() : "").filter(Boolean))];
 
-  // Dynamically populate Filter Buttons
   if (filterBar) {
-    filterBar.innerHTML = "";
-    
-    // "All Products" button
-    const allBtn = document.createElement("button");
-    allBtn.className = "filter-btn active";
-    allBtn.setAttribute("data-filter", "All");
-    allBtn.textContent = `All Products (${products.length})`;
-    filterBar.appendChild(allBtn);
+    if (categories.length <= 1) {
+      filterBar.style.display = "none";
+    } else {
+      filterBar.style.display = "flex";
+      filterBar.innerHTML = "";
 
-    // Individual Product Filter Buttons
-    products.forEach((prod) => {
-      const btn = document.createElement("button");
-      btn.className = "filter-btn";
-      btn.setAttribute("data-filter", prod.id);
-      btn.textContent = prod.shortName || prod.name;
-      filterBar.appendChild(btn);
-    });
+      // "All Products" button
+      const allBtn = document.createElement("button");
+      allBtn.className = "filter-btn active";
+      allBtn.setAttribute("data-filter", "All");
+      allBtn.textContent = `All Products (${products.length})`;
+      filterBar.appendChild(allBtn);
 
-    const filterBtns = filterBar.querySelectorAll(".filter-btn");
-    filterBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        filterBtns.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        renderGrid(btn.getAttribute("data-filter"));
+      // Category Filter Buttons
+      categories.forEach((cat) => {
+        const btn = document.createElement("button");
+        btn.className = "filter-btn";
+        btn.setAttribute("data-filter", cat);
+        btn.textContent = cat;
+        filterBar.appendChild(btn);
       });
-    });
+
+      const filterBtns = filterBar.querySelectorAll(".filter-btn");
+      filterBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          filterBtns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderGrid(btn.getAttribute("data-filter"));
+        });
+      });
+    }
   }
 
   function renderGrid(filterKey = "All") {
@@ -568,12 +594,9 @@ function initProductGrid() {
       ? products 
       : products.filter(p => {
           const key = filterKey.toLowerCase().trim();
-          return p.id.toLowerCase() === key || 
-                 p.slug.toLowerCase() === key || 
-                 (p.shortName && p.shortName.toLowerCase() === key) || 
-                 (p.shortName && p.shortName.toLowerCase().includes(key)) ||
-                 p.name.toLowerCase().includes(key) || 
-                 (p.category && p.category.toLowerCase().includes(key));
+          return (p.category && p.category.toLowerCase().trim() === key) ||
+                 (p.category && p.category.toLowerCase().includes(key)) ||
+                 (p.name && p.name.toLowerCase().includes(key));
         });
 
     if (filtered.length === 0) {
@@ -587,7 +610,7 @@ function initProductGrid() {
 
       card.innerHTML = `
         <div class="product-card-img" onclick="openProductSpecsModal('${prod.id}')" style="cursor: pointer;">
-          <img src="${prod.image}" alt="${prod.name}" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+          <img src="${resolveAssetPath(prod.image)}" alt="${prod.name}" loading="lazy" onerror="this.src='${resolveAssetPath('assets/images/bags.jpg')}'">
           <span class="product-badge">${prod.shortName || prod.badge || prod.name}</span>
         </div>
         <div class="product-card-body">
@@ -692,7 +715,7 @@ function openProductSpecsModal(productId) {
     <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 1.75rem; margin-bottom: 1.5rem; align-items: start;">
       <div>
         <div style="border-radius: 12px; overflow: hidden; border: 2px solid var(--gold-300); box-shadow: var(--shadow-md); margin-bottom: 1rem;">
-          <img src="${prod.image}" alt="${prod.name}" style="width: 100%; height: 260px; object-fit: cover; display: block;" onerror="this.src='assets/images/bags.jpg'">
+          <img src="${resolveAssetPath(prod.image)}" alt="${prod.name}" style="width: 100%; height: 260px; object-fit: cover; display: block;" onerror="this.src='${resolveAssetPath('assets/images/bags.jpg')}'">
         </div>
         <div style="background: var(--dark-50); border: 1px solid var(--dark-200); border-radius: 10px; padding: 1rem;">
           <div style="font-size: 0.8rem; font-weight: 700; color: var(--gold-700); text-transform: uppercase; margin-bottom: 0.25rem;">Category</div>

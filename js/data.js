@@ -262,7 +262,22 @@ function getProducts() {
     try { 
       const parsed = JSON.parse(stored);
       if (Array.isArray(parsed)) {
-        return parsed;
+        const cleaned = parsed.filter(p => {
+          if (!p || typeof p !== "object") return false;
+          const name = String(p.name || "").trim().toLowerCase();
+          const id = String(p.id || "").trim().toLowerCase();
+          const badge = String(p.badge || "").trim().toLowerCase();
+          const shortName = String(p.shortName || "").trim().toLowerCase();
+          if (name === "best" || id === "best" || badge === "best" || shortName === "best") {
+            return false;
+          }
+          return true;
+        });
+
+        if (cleaned.length !== parsed.length) {
+          localStorage.setItem("rw_products", JSON.stringify(cleaned));
+        }
+        return cleaned;
       }
     } catch (e) { 
       console.error("Error reading rw_products from localStorage:", e); 
@@ -271,10 +286,15 @@ function getProducts() {
   return [];
 }
 
+function getApiEndpoint(endpoint) {
+  const isSubfolder = window.location.pathname.includes('/public/') || window.location.pathname.includes('/admin/');
+  return (isSubfolder ? '../' : '') + endpoint;
+}
+
 function saveProducts(products) {
   localStorage.setItem("rw_products", JSON.stringify(products));
   try {
-    fetch('api/products.php', {
+    fetch(getApiEndpoint('api/products.php'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(products)
@@ -284,7 +304,7 @@ function saveProducts(products) {
 
 function syncServerProducts(callback) {
   try {
-    fetch('api/products.php')
+    fetch(getApiEndpoint('api/products.php'))
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {

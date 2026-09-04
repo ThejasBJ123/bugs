@@ -3,6 +3,24 @@
  * Executive Management, Lead CRM, Product Catalog & Public Pages CMS
  */
 
+function resolveAssetPath(path) {
+  if (!path) {
+    const isSub = window.location.pathname.includes('/public/') || window.location.pathname.includes('/admin/');
+    return isSub ? '../assets/images/bags.jpg' : 'assets/images/bags.jpg';
+  }
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
+    return path;
+  }
+  const isSub = window.location.pathname.includes('/public/') || window.location.pathname.includes('/admin/');
+  if (isSub && !path.startsWith('../') && !path.startsWith('/')) {
+    return '../' + path;
+  }
+  if (!isSub && path.startsWith('../')) {
+    return path.replace(/^\.\.\//, '');
+  }
+  return path;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initDashboard();
 });
@@ -423,8 +441,8 @@ function initProductManager() {
     if (liveCardCategory) liveCardCategory.textContent = cat || "Category";
     if (liveCardCapacity) liveCardCapacity.textContent = cap || "25 kg / 50 kg";
     if (liveCardGsm) liveCardGsm.textContent = gsm || "70 - 120 GSM";
-    if (liveCardImg) liveCardImg.src = img;
-    if (previewImg) previewImg.src = img;
+    if (liveCardImg) liveCardImg.src = resolveAssetPath(img);
+    if (previewImg) previewImg.src = resolveAssetPath(img);
   }
 
   // Bind live preview listeners
@@ -537,7 +555,7 @@ function initProductManager() {
       }
       
       const defaultImg = "assets/images/bags.jpg";
-      if (previewImg) previewImg.src = defaultImg;
+      if (previewImg) previewImg.src = resolveAssetPath(defaultImg);
       if (imageUrlInput) imageUrlInput.value = "";
       
       updateLivePreview();
@@ -677,11 +695,11 @@ function renderProductsTable() {
 
   products.forEach((p) => {
     const tr = document.createElement("tr");
-    const viewLink = `products.html#products`;
+    const viewLink = `../public/products.html#products`;
 
     tr.innerHTML = `
       <td>
-        <img src="${p.image}" alt="${p.name}" style="width: 58px; height: 50px; object-fit: cover; border-radius: 8px; border: 1.5px solid #dfb774; box-shadow: 0 2px 5px rgba(0,0,0,0.08);" onerror="this.src='assets/images/bags.jpg'">
+        <img src="${resolveAssetPath(p.image)}" alt="${p.name}" style="width: 58px; height: 50px; object-fit: cover; border-radius: 8px; border: 1.5px solid #dfb774; box-shadow: 0 2px 5px rgba(0,0,0,0.08);" onerror="this.src='../assets/images/bags.jpg'">
       </td>
       <td>
         <div style="font-weight: 700; color: #032b27;">${p.name}</div>
@@ -781,7 +799,7 @@ function editProductRow(productId) {
   const imgPath = prod.image || "assets/images/bags.jpg";
   const previewImg = document.getElementById("prodImagePreview");
   const imageUrlInput = document.getElementById("prodFormImageUrl");
-  if (previewImg) previewImg.src = imgPath;
+  if (previewImg) previewImg.src = resolveAssetPath(imgPath);
   if (imageUrlInput) imageUrlInput.value = imgPath;
 
   // Update Live preview
@@ -797,7 +815,7 @@ function editProductRow(productId) {
   if (liveCardCategory) liveCardCategory.textContent = prod.category;
   if (liveCardCapacity) liveCardCapacity.textContent = prod.capacityRange;
   if (liveCardGsm) liveCardGsm.textContent = prod.gsmRange;
-  if (liveCardImg) liveCardImg.src = imgPath;
+  if (liveCardImg) liveCardImg.src = resolveAssetPath(imgPath);
 
   modal.classList.add("active");
 }
