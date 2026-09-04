@@ -330,21 +330,28 @@ const DEFAULT_TRAFFIC_DATA = {
 };
 
 function getViewAnalytics() {
-  // One-time automated purge of stale mock counts
-  if (localStorage.getItem("rw_traffic_reset_v3") !== "true") {
-    localStorage.setItem("rw_traffic_reset_v3", "true");
+  // Automated purge of legacy mock data & old keys
+  if (localStorage.getItem("rw_traffic_clean_v5") !== "true") {
+    localStorage.setItem("rw_traffic_clean_v5", "true");
+    localStorage.removeItem("rw_traffic_reset_v3");
+    localStorage.removeItem("rw_traffic_reset_v4");
+    localStorage.removeItem("rw_page_views");
     localStorage.setItem("rw_traffic_analytics", JSON.stringify(DEFAULT_TRAFFIC_DATA));
     return { ...DEFAULT_TRAFFIC_DATA };
   }
+
   const stored = localStorage.getItem("rw_traffic_analytics");
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      if (parsed.totalViews >= 1000) {
-        localStorage.setItem("rw_traffic_analytics", JSON.stringify(DEFAULT_TRAFFIC_DATA));
-        return { ...DEFAULT_TRAFFIC_DATA };
+      // If legacy mock dummy counts are detected (e.g. > 100 or dummy breakdown keys)
+      if (parsed && typeof parsed === "object") {
+        if (parsed.totalViews >= 100 || (parsed.pageBreakdown && (parsed.pageBreakdown["Home (index.html)"] >= 100 || parsed.pageBreakdown["Cattle Feed (cattle-feed.html)"]))) {
+          localStorage.setItem("rw_traffic_analytics", JSON.stringify(DEFAULT_TRAFFIC_DATA));
+          return { ...DEFAULT_TRAFFIC_DATA };
+        }
+        return parsed;
       }
-      return parsed;
     } catch (e) { console.error(e); }
   }
   return { ...DEFAULT_TRAFFIC_DATA };
@@ -355,14 +362,18 @@ function saveViewAnalytics(data) {
 }
 
 function resetTrafficAnalytics() {
-  if (confirm("Reset website traffic and pageview counters to 0?")) {
+  if (confirm("Are you sure you want to reset all website traffic and visitor analytics to 0?")) {
     saveViewAnalytics({ ...DEFAULT_TRAFFIC_DATA });
-    if (typeof renderAll === "function") renderAll();
-    if (typeof showAdminToast === "function") showAdminToast("Traffic statistics reset to 0.");
+    if (typeof renderMetrics === "function") renderMetrics();
+    if (typeof renderTrafficAnalytics === "function") renderTrafficAnalytics();
+    if (typeof showAdminToast === "function") showAdminToast("Website traffic and visitor analytics reset to 0.");
   }
 }
 
 function trackPageView(pageIdentifier = "") {
+  // Skip logging when navigating inside Admin portal
+  if (window.location.pathname.includes("/admin/")) return;
+
   const data = getViewAnalytics();
   const today = new Date().toISOString().slice(0, 10);
 
@@ -380,9 +391,27 @@ function trackPageView(pageIdentifier = "") {
     data.uniqueVisitors = (data.uniqueVisitors || 0) + 1;
   }
 
-  if (pageIdentifier) {
+  const page = pageIdentifier || (document.title ? document.title.split("|")[0].trim() : "Home");
+  if (page) {
     data.pageBreakdown = data.pageBreakdown || {};
-    data.pageBreakdown[pageIdentifier] = (data.pageBreakdown[pageIdentifier] || 0) + 1;
+    data.pageBreakdown[page] = (data.pageBreakdown[page] || 0) + 1;
+  }
+
+  // Add to recent visitors stream
+  data.recentVisitors = data.recentVisitors || [];
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const ref = document.referrer ? (document.referrer.includes("whatsapp") ? "WhatsApp Share" : (document.referrer.includes("google") ? "Google Search" : "Referral Link")) : "Direct / Organic";
+  
+  data.recentVisitors.unshift({
+    page: page,
+    time: `Just now (${timeStr})`,
+    location: "Bangalore, IN",
+    source: ref
+  });
+
+  if (data.recentVisitors.length > 8) {
+    data.recentVisitors = data.recentVisitors.slice(0, 8);
   }
 
   saveViewAnalytics(data);

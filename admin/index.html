@@ -361,7 +361,13 @@
                   Live pageviews, visitor reach, and traffic distribution across public pages.
                 </p>
               </div>
-              <div style="display: flex; gap: 1rem; align-items: center;">
+              <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+                <button class="btn btn-outline btn-sm" onclick="renderAll(); showAdminToast('Analytics data refreshed.');" style="color: #07524a; border-color: #dfb774; background: #fffcf4;">
+                  <i class="fa-solid fa-rotate" style="color: #b5832a;"></i> Refresh
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="resetTrafficAnalytics()" style="color: #ef4444; border-color: #fca5a5;">
+                  <i class="fa-solid fa-trash-can"></i> Reset Traffic Data
+                </button>
                 <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 0.4rem 0.85rem; border-radius: 8px; font-size: 0.85rem; font-weight: 700; color: #16a34a;">
                   <i class="fa-solid fa-signal"></i> Tracking Active
                 </div>
@@ -945,8 +951,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="../js/data.js?v=2.2"></script>
-  <script src="../js/i18n.js?v=2.2"></script>
-  <script src="../js/admin.js?v=2.2"></script>
+  <script src="../js/data.js?v=3.5"></script>
+  <script src="../js/i18n.js?v=3.5"></script>
+  <script src="../js/admin.js?v=3.5"></script>
 </body>
 </html>
