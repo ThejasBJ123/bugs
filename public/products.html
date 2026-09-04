@@ -99,6 +99,9 @@
       </div>
 
       <!-- Products Grid -->
+      <div class="mobile-swipe-hint">
+        <i class="fa-solid fa-arrows-left-right"></i> Swipe products horizontally
+      </div>
       <div class="products-grid" id="productShowcaseGrid">
         <!-- Rendered by js/main.js -->
       </div>
@@ -108,10 +111,10 @@
   <!-- Technical Customization Banner -->
   <section class="section-padding" style="background: var(--white); border-top: 1px solid var(--dark-200);">
     <div class="container">
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; align-items: center;">
         <div>
           <span class="section-tag section-tag-emerald">Custom Manufacturing</span>
-          <h2 style="font-size: 2.2rem; font-weight: 800; color: var(--primary-900); margin-bottom: 1rem;">
+          <h2 style="font-size: 2rem; font-weight: 800; color: var(--primary-900); margin-bottom: 1rem;">
             Need Bespoke Sizing, GSM or Liner Fit?
           </h2>
           <p style="color: var(--dark-600); line-height: 1.7; margin-bottom: 1.5rem;">
@@ -125,22 +128,25 @@
               <i class="fa-solid fa-circle-check text-emerald"></i> Food-Grade Virgin Polymer & Hydrocarbon-Free Jute
             </li>
             <li style="display: flex; align-items: center; gap: 0.75rem; color: var(--dark-800); font-weight: 600;">
-              <i class="fa-solid fa-circle-check text-emerald"></i> Automated High-Speed Bag Conversion & Palletizing
+              <i class="fa-solid fa-circle-check text-emerald"></i> Micro-Perforation for Fast Dust-Free Cement Bagging
             </li>
           </ul>
-
-          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <button class="btn btn-gold" onclick="openRFQModal()">
-              <i class="fa-solid fa-file-invoice"></i> Request Custom Specs Quote
-            </button>
-            <a href="https://wa.me/919108713258" target="_blank" class="btn btn-primary">
-              <i class="fa-brands fa-whatsapp"></i> Chat with CEO Lakshmi Kanth
-            </a>
-          </div>
         </div>
 
-        <div style="border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-xl); border: 2px solid var(--gold-300);">
-          <img src="assets/images/hero-factory.jpg" alt="Rayashree Manufacturing Facility">
+        <div style="background: var(--primary-900); padding: 2.5rem; border-radius: var(--radius-lg); color: var(--white); text-align: center;">
+          <i class="fa-solid fa-industry text-gold" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+          <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem; color: var(--white);">5 Million Monthly Bag Capacity</h3>
+          <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.5rem;">
+            Direct bulk container shipping across South India and international ports from our Bangalore North manufacturing hub.
+          </p>
+          <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+            <button class="btn btn-gold" onclick="openRFQModal()">
+              <i class="fa-brands fa-whatsapp"></i> Get Instant Quote
+            </button>
+            <a href="https://wa.me/919108713258" target="_blank" class="btn btn-primary">
+              <i class="fa-solid fa-phone"></i> Call Factory
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -151,56 +157,28 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <img src="../assets/logo-white.svg" alt="Rayashree Weaving Pvt. Ltd." style="height: 48px; margin-bottom: 1rem;">
+          <img src="../assets/logo-white.svg" alt="Rayashree Weaving" style="height: 48px; margin-bottom: 1rem;">
           <p>
-            Premier manufacturers of HDPE / PP Woven Sacks, FIBC Bags, PE Liners, Container Liners, Jute, and Linen Fabrics in Bangalore.
+            Precision heavy-duty HDPE / PP woven sacks, FIBC jumbo bags, and industrial textiles manufactured in Bangalore, India.
           </p>
         </div>
-
         <div>
-          <h4 class="footer-title">Product Catalog</h4>
+          <h4 class="footer-title">Quick Links</h4>
           <div class="footer-links">
-            <a href="products.html">All Manufacturing Lines</a>
-            <a href="products.html">PP & HDPE Woven Sacks</a>
-            <a href="products.html">BOPP Laminated Sacks</a>
-            <a href="products.html">FIBC Bulk Jumbo Bags</a>
-            <a href="products.html">Natural Eco Jute Bags</a>
-            <a href="products.html">Silage & Tube Bags</a>
-            <a href="products.html">Technical Linen Textiles</a>
+            <a href="../index.html">Home</a>
+            <a href="products.html">Product Lines</a>
+            <a href="infrastructure.html">Plant & Machinery</a>
+            <a href="about.html">About Company</a>
+            <a href="contact.html">Contact Us</a>
           </div>
         </div>
-
         <div>
-          <h4 class="footer-title">Company</h4>
-          <div class="footer-links">
-            <a href="about.html">About Rayashree Weaving</a>
-            <a href="infrastructure.html">Factory Infrastructure</a>
-            <a href="contact.html">Plant Location & Contact</a>
-            <a href="../admin/index.html">Staff Admin Portal</a>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="footer-title">Bangalore Facility</h4>
-          <div class="footer-contact-item">
-            <i class="fa-solid fa-user-tie"></i>
-            <span><strong>Lakshmi Kanth</strong> (Company CEO)</span>
-          </div>
-          <div class="footer-contact-item">
-            <i class="fa-solid fa-phone"></i>
-            <span><a href="tel:+919108713258">+91 9108713258</a></span>
-          </div>
-          <div class="footer-contact-item">
-            <i class="fa-solid fa-envelope"></i>
-            <span><a href="mailto:rayashreewpvtltd@gmail.com">rayashreewpvtltd@gmail.com</a></span>
-          </div>
-          <div class="footer-contact-item">
-            <i class="fa-solid fa-location-dot"></i>
-            <span>Hosahalli, Kannali, Bangalore North - 560112</span>
-          </div>
+          <h4 class="footer-title">Contact Office</h4>
+          <div class="footer-contact-item"><i class="fa-solid fa-phone"></i> <span><a href="tel:+919108713258">+91 9108713258</a></span></div>
+          <div class="footer-contact-item"><i class="fa-solid fa-envelope"></i> <span><a href="mailto:rayashreewpvtltd@gmail.com">rayashreewpvtltd@gmail.com</a></span></div>
+          <div class="footer-contact-item"><i class="fa-solid fa-location-dot"></i> <span>Bangalore North, Karnataka - 560112</span></div>
         </div>
       </div>
-
       <div class="footer-bottom">
         <div>&copy; 2026 Rayashree Weaving Pvt. Ltd. All rights reserved.</div>
         <div style="color: var(--gold-400); font-weight: 600;">Manufactured in Bangalore, Karnataka, India</div>
@@ -212,6 +190,26 @@
   <a href="https://wa.me/919108713258" target="_blank" class="floating-whatsapp">
     <i class="fa-brands fa-whatsapp"></i>
   </a>
+
+  <!-- Modern App-Style Bottom Quick Action Bar on Mobile -->
+  <div class="mobile-bottom-bar" id="mobileBottomBar">
+    <a href="tel:+919108713258" class="mobile-bar-action" title="Call Factory CEO">
+      <i class="fa-solid fa-phone-volume"></i>
+      <span>Call CEO</span>
+    </a>
+    <a href="https://wa.me/919108713258?text=Hello%20Mr.%20Lakshmi%20Kanth,%20I%20would%20like%20to%20request%20a%20quote%20for%20woven%20sacks." target="_blank" class="mobile-bar-action mobile-bar-whatsapp" title="WhatsApp Quote">
+      <i class="fa-brands fa-whatsapp"></i>
+      <span>WhatsApp</span>
+    </a>
+    <a href="javascript:openRFQModal()" class="mobile-bar-action mobile-bar-quote" title="Get Quick Quote">
+      <i class="fa-solid fa-bolt text-gold"></i>
+      <span>Fast Quote</span>
+    </a>
+    <a href="../index.html" class="mobile-bar-action" title="Home">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </a>
+  </div>
 
 
   <script src="../js/data.js?v=2.4"></script>

@@ -201,6 +201,9 @@
       </div>
 
       <!-- All Products Grid with Images (Populated Dynamically by js/main.js) -->
+      <div class="mobile-swipe-hint">
+        <i class="fa-solid fa-arrows-left-right"></i> Swipe products horizontally
+      </div>
       <div class="products-grid" id="productShowcaseGrid">
         <!-- Rendered dynamically from Admin Catalog -->
       </div>
@@ -224,7 +227,7 @@
         </p>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+      <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
         <div class="feature-card">
           <div class="feature-icon-wrapper">
             <i class="fa-solid fa-shield-virus"></i>
@@ -334,7 +337,7 @@
         <h2 class="section-title">What Our Packaging Partners Say</h2>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+      <div class="testimonials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
         <div style="background: var(--white); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--dark-200); position: relative;">
           <div style="color: var(--gold-500); font-size: 2rem; margin-bottom: 1rem;"><i class="fa-solid fa-quote-left"></i></div>
           <p style="font-size: 0.95rem; color: var(--dark-700); line-height: 1.7; margin-bottom: 1.5rem;">
@@ -436,6 +439,26 @@
   <a href="https://wa.me/919108713258?text=Hello%20Mr.%20Lakshmi%20Kanth,%20I%20am%20visiting%20the%20Rayashree%20Weaving%20website%20and%20would%20like%20to%20inquire%20about%20your%20products." target="_blank" class="floating-whatsapp" title="Chat on WhatsApp with CEO Lakshmi Kanth">
     <i class="fa-brands fa-whatsapp"></i>
   </a>
+
+  <!-- Modern App-Style Bottom Quick Action Bar on Mobile -->
+  <div class="mobile-bottom-bar" id="mobileBottomBar">
+    <a href="tel:+919108713258" class="mobile-bar-action" title="Call Factory CEO">
+      <i class="fa-solid fa-phone-volume"></i>
+      <span>Call CEO</span>
+    </a>
+    <a href="https://wa.me/919108713258?text=Hello%20Mr.%20Lakshmi%20Kanth,%20I%20would%20like%20to%20request%20a%20quote%20for%20woven%20sacks." target="_blank" class="mobile-bar-action mobile-bar-whatsapp" title="WhatsApp Quote">
+      <i class="fa-brands fa-whatsapp"></i>
+      <span>WhatsApp</span>
+    </a>
+    <a href="javascript:openRFQModal()" class="mobile-bar-action mobile-bar-quote" title="Get Quick Quote">
+      <i class="fa-solid fa-bolt text-gold"></i>
+      <span>Fast Quote</span>
+    </a>
+    <a href="public/products.html" class="mobile-bar-action" title="Browse Products">
+      <i class="fa-solid fa-boxes-stacked"></i>
+      <span>Catalog</span>
+    </a>
+  </div>
 
 
   <!-- JavaScript Scripts -->

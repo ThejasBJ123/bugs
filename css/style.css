@@ -1324,14 +1324,14 @@ ul, ol {
   }
 
   .stats-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-    padding: 1rem;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.6rem !important;
+    padding: 0.85rem !important;
   }
 
   .stat-item {
     text-align: center;
-    padding: 0.5rem;
+    padding: 0.4rem !important;
   }
 
   .stat-item::after {
@@ -1339,11 +1339,11 @@ ul, ol {
   }
 
   .stat-number {
-    font-size: 1.5rem !important;
+    font-size: 1.4rem !important;
   }
 
   .stat-label {
-    font-size: 0.75rem !important;
+    font-size: 0.725rem !important;
   }
 
   /* Horizontal Filter Bar for Touch */
@@ -1353,8 +1353,8 @@ ul, ol {
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch;
     gap: 0.5rem !important;
-    padding: 0.5rem 0.25rem 0.85rem !important;
-    margin-bottom: 1.5rem !important;
+    padding: 0.5rem 0.25rem 0.6rem !important;
+    margin-bottom: 0.75rem !important;
     scrollbar-width: none;
   }
 
@@ -1365,31 +1365,155 @@ ul, ol {
   .filter-btn {
     white-space: nowrap !important;
     flex-shrink: 0 !important;
-    padding: 0.5rem 1rem !important;
-    font-size: 0.825rem !important;
+    padding: 0.45rem 0.85rem !important;
+    font-size: 0.8rem !important;
   }
 
-  /* Products Grid */
+  /* Mobile Swipe Hint Pill */
+  .mobile-swipe-hint {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gold-700);
+    background: rgba(223, 183, 116, 0.12);
+    border: 1px solid rgba(223, 183, 116, 0.25);
+    border-radius: 20px;
+    padding: 0.3rem 0.85rem;
+    margin: 0 auto 0.85rem auto;
+    width: fit-content;
+  }
+
+  /* Products Horizontal Snap Carousel on Mobile (Massively reduces vertical length) */
   .products-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1.5rem !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 1rem !important;
+    padding: 0.5rem 0.25rem 1rem 0.25rem !important;
+    scrollbar-width: none !important;
+  }
+
+  .products-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .products-grid .product-card {
+    flex: 0 0 280px !important;
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 82vw !important;
+    scroll-snap-align: start !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
   .product-card-img {
-    height: 210px !important;
+    height: 165px !important;
   }
 
   .product-card-body {
-    padding: 1.25rem !important;
+    padding: 1rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
   }
 
-  .product-card-footer {
-    flex-direction: column !important;
+  .product-title {
+    font-size: 1.05rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .product-tagline {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0.6rem !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .product-specs-preview {
+    margin-bottom: 0.75rem !important;
+    padding: 0.5rem !important;
     gap: 0.5rem !important;
   }
 
+  .spec-preview-item {
+    font-size: 0.75rem !important;
+  }
+
+  .product-card-footer {
+    flex-direction: row !important;
+    gap: 0.4rem !important;
+    margin-top: auto !important;
+  }
+
   .product-card-footer .btn {
-    width: 100% !important;
+    width: auto !important;
+    flex: 1 !important;
+    padding: 0.45rem 0.5rem !important;
+    font-size: 0.75rem !important;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Why Choose Us Features 2x2 Compact Grid on Mobile */
+  .features-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  .features-grid .feature-card {
+    padding: 1rem !important;
+  }
+
+  .features-grid .feature-icon-wrapper {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .features-grid .feature-title {
+    font-size: 0.875rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+
+  .features-grid .feature-desc {
+    font-size: 0.75rem !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Testimonials Horizontal Swipe Track on Mobile */
+  .testimonials-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 1rem !important;
+    padding: 0.25rem 0.25rem 0.75rem !important;
+    scrollbar-width: none !important;
+  }
+
+  .testimonials-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .testimonials-grid > div {
+    flex: 0 0 290px !important;
+    min-width: 290px !important;
+    scroll-snap-align: start !important;
+    padding: 1.25rem !important;
   }
 
   /* Specs Tables - Smooth Horizontal Scroll */
@@ -1413,30 +1537,83 @@ ul, ol {
 
   /* Executive & Feature Banners */
   .executive-banner {
-    padding: 1.5rem 1.25rem !important;
+    padding: 1.25rem 1rem !important;
   }
 
   .executive-content h2 {
-    font-size: 1.4rem !important;
+    font-size: 1.35rem !important;
   }
 
   /* Footer */
   .footer-grid {
     grid-template-columns: 1fr !important;
-    gap: 2rem !important;
+    gap: 1.75rem !important;
   }
 
   .footer-brand p {
     max-width: 100% !important;
   }
 
-  /* Enhanced Mobile Floating WhatsApp & RFQ */
+  /* Mobile App-Style Bottom Bar & Spacing */
+  body {
+    padding-bottom: 65px !important;
+  }
+
+  .mobile-bottom-bar {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(3, 43, 39, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(223, 183, 116, 0.3);
+    z-index: 999;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 0.5rem;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.35);
+  }
+
+  .mobile-bar-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #e2e8f0;
+    font-size: 0.675rem;
+    font-weight: 600;
+    gap: 0.2rem;
+    flex: 1;
+    padding: 0.35rem 0;
+    transition: all 0.2s;
+  }
+
+  .mobile-bar-action i {
+    font-size: 1.15rem;
+    color: var(--gold-400);
+  }
+
+  .mobile-bar-action.mobile-bar-whatsapp i {
+    color: #25D366;
+    font-size: 1.25rem;
+  }
+
+  .mobile-bar-action:active {
+    transform: scale(0.95);
+    color: var(--gold-300);
+  }
+
+  /* Enhanced Mobile Floating WhatsApp */
   .floating-whatsapp {
-    bottom: 1.25rem !important;
-    right: 1.15rem !important;
-    width: 56px !important;
-    height: 56px !important;
-    font-size: 1.85rem !important;
+    bottom: 4.85rem !important;
+    right: 1rem !important;
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 1.65rem !important;
     box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5) !important;
   }
 
@@ -1446,10 +1623,6 @@ ul, ol {
 }
 
 @media (max-width: 480px) {
-  .stats-grid {
-    grid-template-columns: 1fr !important;
-  }
-
   .hero-trust-badges {
     flex-direction: column !important;
     align-items: flex-start !important;
