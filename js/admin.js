@@ -99,6 +99,7 @@ function renderAll() {
   renderProductsTable();
   loadCmsFormValues();
   renderTrafficAnalytics();
+  renderOperationalAnalytics();
 }
 
 /* ==========================================================================
@@ -190,6 +191,100 @@ function renderTrafficAnalytics() {
       `;
       streamContainer.appendChild(row);
     });
+  }
+}
+
+function renderOperationalAnalytics() {
+  const inquiries = getInquiries();
+  const content = getSiteContent();
+  const totalCount = inquiries.length;
+  const reviewCount = inquiries.filter(i => i.status === "Under Review").length;
+  const quotedCount = inquiries.filter(i => i.status === "Quoted").length;
+  const closedCount = inquiries.filter(i => i.status === "Order Placed").length;
+
+  // 1. Conversion Funnel Real Data
+  const elIngestedVal = document.getElementById("funnelIngestedVal");
+  const elIngestedSub = document.getElementById("funnelIngestedSub");
+  const elReviewVal = document.getElementById("funnelReviewVal");
+  const elReviewSub = document.getElementById("funnelReviewSub");
+  const elQuotedVal = document.getElementById("funnelQuotedVal");
+  const elQuotedSub = document.getElementById("funnelQuotedSub");
+  const elClosedVal = document.getElementById("funnelClosedVal");
+  const elClosedSub = document.getElementById("funnelClosedSub");
+
+  if (elIngestedVal) elIngestedVal.textContent = totalCount;
+  if (elIngestedSub) elIngestedSub.textContent = totalCount > 0 ? "100% Inquiries Logged" : "0 Received Yet";
+
+  const reviewPct = totalCount > 0 ? Math.round((reviewCount / totalCount) * 100) : 0;
+  if (elReviewVal) elReviewVal.textContent = reviewCount;
+  if (elReviewSub) elReviewSub.textContent = totalCount > 0 ? `${reviewPct}% In Review` : "GSM & Sizing Check";
+
+  const quotedPct = totalCount > 0 ? Math.round((quotedCount / totalCount) * 100) : 0;
+  if (elQuotedVal) elQuotedVal.textContent = quotedCount;
+  if (elQuotedSub) elQuotedSub.textContent = totalCount > 0 ? `${quotedPct}% Quotes Dispatched` : "Pricing Dispatched";
+
+  const closedPct = totalCount > 0 ? Math.round((closedCount / totalCount) * 100) : 0;
+  if (elClosedVal) elClosedVal.textContent = closedCount;
+  if (elClosedSub) elClosedSub.textContent = totalCount > 0 ? `${closedPct}% In Production` : "Production Scheduled";
+
+  // 2. Real Product Demand Distribution
+  const demandContainer = document.getElementById("productDemandDistribution");
+  if (demandContainer) {
+    demandContainer.innerHTML = "";
+    if (totalCount === 0) {
+      demandContainer.innerHTML = `
+        <div style="text-align: center; padding: 2rem 1rem; color: #64748b;">
+          <i class="fa-solid fa-chart-pie" style="font-size: 2rem; color: #dfb774; margin-bottom: 0.5rem; display: block;"></i>
+          <div style="font-weight: 700; color: #032b27; margin-bottom: 0.25rem;">No Inquiries Recorded Yet</div>
+          <div style="font-size: 0.8rem;">Real customer inquiry demand by product line will automatically chart here as RFQs arrive.</div>
+        </div>
+      `;
+    } else {
+      const productCounts = {};
+      inquiries.forEach(i => {
+        const prod = i.product || "General Packaging";
+        productCounts[prod] = (productCounts[prod] || 0) + 1;
+      });
+
+      const entries = Object.entries(productCounts).sort((a, b) => b[1] - a[1]);
+      const colors = [
+        "linear-gradient(90deg, #07524a, #0d8a7d)",
+        "linear-gradient(90deg, #b5832a, #dfb774)",
+        "linear-gradient(90deg, #2563eb, #60a5fa)",
+        "linear-gradient(90deg, #10b981, #34d399)",
+        "linear-gradient(90deg, #7c3aed, #a78bfa)"
+      ];
+
+      entries.forEach(([prodName, count], idx) => {
+        const pct = Math.round((count / totalCount) * 100);
+        const color = colors[idx % colors.length];
+
+        const item = document.createElement("div");
+        item.innerHTML = `
+          <div style="display: flex; justify-content: space-between; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.35rem;">
+            <span style="color: #032b27;"><i class="fa-solid fa-box text-gold" style="margin-right: 0.35rem;"></i> ${prodName}</span>
+            <strong style="color: #032b27;">${count} RFQ (${pct}%)</strong>
+          </div>
+          <div style="height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden;">
+            <div style="width: ${pct}%; height: 100%; background: ${color}; transition: width 0.4s ease;"></div>
+          </div>
+        `;
+        demandContainer.appendChild(item);
+      });
+    }
+  }
+
+  // 3. Dynamic Plant Operations & Capacity from CMS
+  if (content && content.infrastructure) {
+    const elLooms = document.getElementById("opsLoomsCount");
+    const elExtrusion = document.getElementById("opsExtrusion");
+    const elOutput = document.getElementById("opsMonthlyOutput");
+    const elQuality = document.getElementById("opsQualityCompliance");
+
+    if (elLooms && content.infrastructure.loomsCount) elLooms.textContent = content.infrastructure.loomsCount;
+    if (elExtrusion && content.infrastructure.extrusionCapacity) elExtrusion.textContent = content.infrastructure.extrusionCapacity;
+    if (elOutput && content.home && content.home.stat1Val) elOutput.textContent = `${content.home.stat1Val} / Month`;
+    if (elQuality) elQuality.innerHTML = `<i class="fa-solid fa-check"></i> ${content.infrastructure.qualityStandards || "ISO 9001:2015"}`;
   }
 }
 

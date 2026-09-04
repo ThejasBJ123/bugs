@@ -276,49 +276,11 @@
             <!-- Inquiries by Product Line -->
             <div style="background: #f8fafc; padding: 1.75rem; border-radius: 14px; border: 1px solid #e2e8f0;">
               <h4 style="font-weight: 800; margin-bottom: 1.25rem; color: #07524a; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
-                <i class="fa-solid fa-chart-simple text-gold"></i> Product Inquiry Demand Distribution
+                <i class="fa-solid fa-chart-simple text-gold"></i> Live Product Inquiry Demand Distribution
               </h4>
 
-              <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <div>
-                  <div style="display: flex; justify-content: space-between; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.35rem;">
-                    <span>1. Cattle Feed & Poultry Feed Sacks</span>
-                    <strong style="color: #032b27;">42% (High Demand)</strong>
-                  </div>
-                  <div style="height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden;">
-                    <div style="width: 42%; height: 100%; background: linear-gradient(90deg, #07524a, #0d8a7d);"></div>
-                  </div>
-                </div>
-
-                <div>
-                  <div style="display: flex; justify-content: space-between; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.35rem;">
-                    <span>2. Cement & Construction Bags (AD*STAR)</span>
-                    <strong style="color: #032b27;">28% (Steady)</strong>
-                  </div>
-                  <div style="height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden;">
-                    <div style="width: 28%; height: 100%; background: linear-gradient(90deg, #b5832a, #dfb774);"></div>
-                  </div>
-                </div>
-
-                <div>
-                  <div style="display: flex; justify-content: space-between; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.35rem;">
-                    <span>3. Industrial FIBC Jumbo Bags & Liners</span>
-                    <strong style="color: #032b27;">18% (Bulk Heavy)</strong>
-                  </div>
-                  <div style="height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden;">
-                    <div style="width: 18%; height: 100%; background: linear-gradient(90deg, #2563eb, #60a5fa);"></div>
-                  </div>
-                </div>
-
-                <div>
-                  <div style="display: flex; justify-content: space-between; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.35rem;">
-                    <span>4. Silage Bags, Jute Sacks & Linen Fabric</span>
-                    <strong style="color: #032b27;">12% (Export & Agri)</strong>
-                  </div>
-                  <div style="height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden;">
-                    <div style="width: 12%; height: 100%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
-                  </div>
-                </div>
+              <div id="productDemandDistribution" style="display: flex; flex-direction: column; gap: 1rem;">
+                <!-- Dynamically populated from real inquiries by js/admin.js -->
               </div>
             </div>
 
@@ -331,17 +293,17 @@
               <div style="display: flex; flex-direction: column; gap: 0.9rem; font-size: 0.9rem;">
                 <div style="display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px dashed #cbd5e1;">
                   <span style="color: #64748b;">Active Circular Looms:</span>
-                  <strong style="color: #07524a;">48 / 52 Looms (92.3%)</strong>
+                  <strong id="opsLoomsCount" style="color: #07524a;">48+ High-Speed Looms</strong>
                 </div>
 
                 <div style="display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px dashed #cbd5e1;">
                   <span style="color: #64748b;">Polymer Tape Extrusion:</span>
-                  <strong style="color: #032b27;">350 Metric Tons / Month</strong>
+                  <strong id="opsExtrusion" style="color: #032b27;">350 Metric Tons / Month</strong>
                 </div>
 
                 <div style="display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px dashed #cbd5e1;">
                   <span style="color: #64748b;">Monthly Finished Output:</span>
-                  <strong style="color: #b5832a;">5,000,000+ Sacks</strong>
+                  <strong id="opsMonthlyOutput" style="color: #b5832a;">5,000,000+ Sacks</strong>
                 </div>
 
                 <div style="display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px dashed #cbd5e1;">
@@ -351,7 +313,7 @@
 
                 <div style="display: flex; justify-content: space-between;">
                   <span style="color: #64748b;">Quality Compliance:</span>
-                  <strong style="color: #16a34a;"><i class="fa-solid fa-check"></i> ISO 9001:2015</strong>
+                  <strong id="opsQualityCompliance" style="color: #16a34a;"><i class="fa-solid fa-check"></i> ISO 9001:2015</strong>
                 </div>
               </div>
             </div>
@@ -361,31 +323,31 @@
           <!-- Pipeline Funnel -->
           <div style="background: linear-gradient(135deg, #032b27, #07524a); color: #fff; padding: 1.75rem; border-radius: 14px; border: 1px solid #dfb774; margin-bottom: 2rem;">
             <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 1rem; color: #dfb774;">
-              Lead & Order Conversion Workflow
+              Live Customer Inquiry & Order Conversion Funnel
             </h4>
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center;">
               <div style="background: rgba(255,255,255,0.08); padding: 1.25rem; border-radius: 10px;">
-                <div style="font-size: 1.75rem; font-weight: 800; color: #60a5fa;">100%</div>
+                <div id="funnelIngestedVal" style="font-size: 1.75rem; font-weight: 800; color: #60a5fa;">0</div>
                 <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">Inquiries Ingested</div>
-                <div style="font-size: 0.75rem; color: #cbd5e1; margin-top: 0.2rem;">From website & WhatsApp</div>
+                <div id="funnelIngestedSub" style="font-size: 0.75rem; color: #cbd5e1; margin-top: 0.2rem;">From website & WhatsApp</div>
               </div>
 
               <div style="background: rgba(255,255,255,0.08); padding: 1.25rem; border-radius: 10px;">
-                <div style="font-size: 1.75rem; font-weight: 800; color: #fde047;">94%</div>
-                <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">Specs Verified</div>
-                <div style="font-size: 0.75rem; color: #cbd5e1; margin-top: 0.2rem;">GSM & sizing confirmed</div>
+                <div id="funnelReviewVal" style="font-size: 1.75rem; font-weight: 800; color: #fde047;">0</div>
+                <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">Under Review</div>
+                <div id="funnelReviewSub" style="font-size: 0.75rem; color: #cbd5e1; margin-top: 0.2rem;">GSM & sizing verification</div>
               </div>
 
               <div style="background: rgba(255,255,255,0.08); padding: 1.25rem; border-radius: 10px;">
-                <div style="font-size: 1.75rem; font-weight: 800; color: #4ade80;">82%</div>
-                <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">Quotations Dispatched</div>
-                <div style="font-size: 0.75rem; color: #cbd5e1; margin-top: 0.2rem;">Within 4 business hours</div>
+                <div id="funnelQuotedVal" style="font-size: 1.75rem; font-weight: 800; color: #4ade80;">0</div>
+                <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">Quotations Sent</div>
+                <div id="funnelQuotedSub" style="font-size: 0.75rem; color: #cbd5e1; margin-top: 0.2rem;">Pricing dispatched to client</div>
               </div>
 
               <div style="background: rgba(255,255,255,0.08); padding: 1.25rem; border-radius: 10px;">
-                <div style="font-size: 1.75rem; font-weight: 800; color: #dfb774;">68%</div>
-                <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">Purchase Orders Closed</div>
-                <div style="font-size: 0.75rem; color: #cbd5e1; margin-top: 0.2rem;">Production scheduled</div>
+                <div id="funnelClosedVal" style="font-size: 1.75rem; font-weight: 800; color: #dfb774;">0</div>
+                <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">Orders In Production</div>
+                <div id="funnelClosedSub" style="font-size: 0.75rem; color: #cbd5e1; margin-top: 0.2rem;">PO accepted & scheduled</div>
               </div>
             </div>
           </div>
