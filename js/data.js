@@ -314,7 +314,16 @@ const INFRASTRUCTURE_STATS = [
 function getCompanyInfo() {
   const stored = localStorage.getItem("rw_company_info");
   if (stored) {
-    try { return { ...COMPANY_INFO, ...JSON.parse(stored) }; } catch (e) { console.error(e); }
+    try {
+      const parsed = JSON.parse(stored);
+      if (!parsed.logo || parsed.logo.endsWith('.svg')) {
+        parsed.logo = "assets/logo.png";
+      }
+      if (!parsed.logoWhite || parsed.logoWhite.endsWith('.svg')) {
+        parsed.logoWhite = "assets/logo.png";
+      }
+      return { ...COMPANY_INFO, ...parsed };
+    } catch (e) { console.error(e); }
   }
   return COMPANY_INFO;
 }
