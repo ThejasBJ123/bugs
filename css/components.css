@@ -57,7 +57,7 @@
 .modal-header h3 {
   font-size: 1.35rem;
   font-weight: 800;
-  color: var(--white);
+  color: #ffffff !important;
 }
 
 .modal-close-btn {

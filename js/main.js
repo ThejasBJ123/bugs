@@ -729,7 +729,7 @@ function initProductSpecsModal() {
     modal.innerHTML = `
       <div class="modal-card" style="max-width: 780px; max-height: 90vh; overflow-y: auto;">
         <div class="modal-header">
-          <h3 id="specsModalTitle" style="color: var(--primary-900); display: flex; align-items: center; gap: 0.5rem;">
+          <h3 id="specsModalTitle" style="color: #ffffff; display: flex; align-items: center; gap: 0.5rem;">
             <i class="fa-solid fa-box-open text-gold"></i> Product Specifications
           </h3>
           <button class="modal-close-btn" onclick="closeProductSpecsModal()"><i class="fa-solid fa-xmark"></i></button>
