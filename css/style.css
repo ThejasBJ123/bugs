@@ -1155,6 +1155,9 @@ ul, ol {
     grid-template-columns: 1fr !important;
     gap: 2rem !important;
   }
+/* Mobile Swipe Hint - Hidden on Desktop */
+.mobile-swipe-hint {
+  display: none;
 }
 
 @media (max-width: 768px) {

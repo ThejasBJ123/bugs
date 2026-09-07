@@ -445,7 +445,12 @@ function getProducts() {
           const id = String(p.id || "").trim().toLowerCase();
           const badge = String(p.badge || "").trim().toLowerCase();
           const shortName = String(p.shortName || "").trim().toLowerCase();
+          const category = String(p.category || "").trim().toLowerCase();
+          
           if (name === "best" || id === "best" || badge === "best" || shortName === "best") {
+            return false;
+          }
+          if (name.includes("silage bag ss") || category.includes("jute bangs") || name.includes("test")) {
             return false;
           }
           return true;
