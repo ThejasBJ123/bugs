@@ -1022,6 +1022,213 @@ window.initFeedbackModal = initFeedbackModal;
 window.openFeedbackModal = openFeedbackModal;
 window.closeFeedbackModal = closeFeedbackModal;
 
+/* ==========================================================================
+   Packaging Specification & GSM Estimator Calculator
+   ========================================================================== */
+
+const specDatabase = {
+  cattle_feed: {
+    '25kg': { gsm: '65 - 75 GSM', denier: '750 Denier', mesh: '10 x 10', liner: 'Optional PE Liner', burst: 'High Drop Endurance (1.5m)' },
+    '50kg': { gsm: '80 - 95 GSM', denier: '850 Denier', mesh: '10 x 10', liner: '25-Micron Loose PE Liner', burst: 'Zero-Burst Stack Rating' },
+    '1000kg': { gsm: '160 - 180 GSM', denier: '1200 Denier', mesh: '14 x 14', liner: '80-Micron Form-Fit Liner', burst: 'SWL 1,000 kg (5:1 Safety)' }
+  },
+  cement: {
+    '25kg': { gsm: '70 - 80 GSM', denier: '800 Denier', mesh: '10 x 10', liner: 'Micro-Perforated Air Escape', burst: 'Zero Dust Leakage' },
+    '50kg': { gsm: '85 - 100 GSM', denier: '900 Denier', mesh: '12 x 12', liner: 'Block Bottom Valve / Vent', burst: 'High Impact Drop Rating' },
+    '1000kg': { gsm: '175 - 200 GSM', denier: '1400 Denier', mesh: '14 x 14', liner: 'Dust-Proof PE Seam Seal', burst: 'SWL 1,500 kg (6:1 Safety)' }
+  },
+  bopp_retail: {
+    '25kg': { gsm: '60 GSM + 18u BOPP', denier: '700 Denier', mesh: '10 x 10', liner: 'Single Layer High Gloss', burst: '8-Color Photo Print' },
+    '50kg': { gsm: '75 GSM + 20u BOPP', denier: '850 Denier', mesh: '10 x 10', liner: 'Extrusion Laminated BOPP', burst: 'Scuff & Moisture Fortified' },
+    '1000kg': { gsm: '160 GSM + Heavy BOPP', denier: '1100 Denier', mesh: '12 x 12', liner: 'Heavy-Duty Laminated', burst: 'High Shelf Presence' }
+  },
+  fibc_jumbo: {
+    '25kg': { gsm: '120 GSM Fabric', denier: '1000 Denier', mesh: '12 x 12', liner: 'Integrated Corner Loops', burst: 'Mini-Bulk Duty' },
+    '50kg': { gsm: '140 GSM Fabric', denier: '1100 Denier', mesh: '12 x 12', liner: 'Double Loop Reinforced', burst: 'SWL 250 kg Heavy Duty' },
+    '1000kg': { gsm: '180 - 220 GSM U-Panel', denier: '1500 Denier', mesh: '14 x 14', liner: 'Tubular PE Form-Fit', burst: 'SWL 2,000 kg (6:1 Safety)' }
+  },
+  jute_silage: {
+    '25kg': { gsm: '250 GSM Eco Jute', denier: 'Natural Jute Fibre', mesh: 'Porter x Shot 8x9', liner: '100% Biodegradable', burst: 'Natural Breathable Weave' },
+    '50kg': { gsm: '300 GSM Heavy Jute', denier: 'Food-Grade Hydrocarbon-Free', mesh: 'Porter x Shot 9x10', liner: 'Hydrocarbon-Free Treated', burst: 'Export Grade Grain Rated' },
+    '1000kg': { gsm: 'Silage Jumbo Tube Bag', denier: 'UV Treated Multi-Layer', mesh: 'Air Barrier Weave', burst: 'Hermetic Fermentation Seal' }
+  }
+};
+
+function calculatePackagingSpec() {
+  const commEl = document.getElementById("estimatorCommodity");
+  const capEl = document.getElementById("estimatorCapacity");
+  if (!commEl || !capEl) return;
+
+  const comm = commEl.value || "cattle_feed";
+  const cap = capEl.value || "50kg";
+
+  const data = (specDatabase[comm] && specDatabase[comm][cap]) || specDatabase["cattle_feed"]["50kg"];
+
+  const gsmEl = document.getElementById("specResultGSM");
+  const denierEl = document.getElementById("specResultDenier");
+  const meshEl = document.getElementById("specResultMesh");
+  const linerEl = document.getElementById("specResultLiner");
+  const burstEl = document.getElementById("specResultBurst");
+
+  if (gsmEl) gsmEl.textContent = data.gsm;
+  if (denierEl) denierEl.textContent = data.denier;
+  if (meshEl) meshEl.textContent = data.mesh;
+  if (linerEl) linerEl.textContent = data.liner;
+  if (burstEl) burstEl.textContent = data.burst;
+}
+
+function applyEstimatorToQuote() {
+  const commEl = document.getElementById("estimatorCommodity");
+  const capEl = document.getElementById("estimatorCapacity");
+  const gsmEl = document.getElementById("specResultGSM");
+
+  const commName = commEl ? commEl.options[commEl.selectedIndex].text : "Custom Packaging";
+  const capName = capEl ? capEl.options[capEl.selectedIndex].text : "Standard";
+  const gsmVal = gsmEl ? gsmEl.textContent : "";
+
+  openRFQModal();
+
+  setTimeout(() => {
+    const specInput = document.getElementById("rfqSpecs");
+    if (specInput) {
+      specInput.value = `Estimated Requirement: ${commName} (${capName} capacity, Spec: ${gsmVal}). Please provide official factory quote and lead time.`;
+    }
+  }, 150);
+}
+
+/* ==========================================================================
+   4-Step Manufacturing Process & Technology Showcase Switcher
+   ========================================================================== */
+
+const processStepsData = {
+  1: {
+    title: "1. Polymer Tape Extrusion & UV Stabilizing",
+    subtitle: "High-Speed Monofilament & Flat Tape Extrusion Plant",
+    desc: "100% prime virgin polypropylene (PP) and high-density polyethylene (HDPE) granules are fused and extruded into high-tenacity flat tapes. Infused with 2,000+ hours UV masterbatch stabilizers for weather durability.",
+    metric1: "350 MT / Month",
+    label1: "Extrusion Capacity",
+    metric2: "600 - 1500",
+    label2: "Tape Denier Range",
+    metric3: "100% Virgin",
+    label3: "Polymer Quality",
+    metric4: "2,000+ Hours",
+    label4: "UV Weather Resistance",
+    icon: "fa-solid fa-industry"
+  },
+  2: {
+    title: "2. Circular Looms Weaving",
+    subtitle: "48+ High-Speed Circular Weaving Looms Operating 24/7",
+    desc: "Precision circular weaving looms convert extruded tapes into continuous tubular fabric rolls without side seams. Engineered for zero drop-burst rates under extreme stacking loads.",
+    metric1: "48+ Looms",
+    label1: "Active Production Line",
+    metric2: "5 Million+",
+    label2: "Monthly Bag Production",
+    metric3: "Seamless",
+    label3: "Tubular Weave Type",
+    metric4: "10x10 to 14x14",
+    label4: "Mesh Density Range",
+    icon: "fa-solid fa-border-all"
+  },
+  3: {
+    title: "3. BOPP Lamination & 8-Color Printing",
+    subtitle: "HD Rotogravure & Flexographic Printing Machinery",
+    desc: "Apply photographic Biaxially Oriented Polypropylene (BOPP) films with up to 8-color high-definition printing. Delivers moisture protection and crisp retail branding.",
+    metric1: "Up to 8 Colors",
+    label1: "Rotogravure HD Print",
+    metric2: "High Gloss",
+    label2: "BOPP Film Finish",
+    metric3: "100% Moisture Lock",
+    label3: "Lamination Barrier",
+    metric4: "Scuff Proof",
+    label4: "Surface Protection",
+    icon: "fa-solid fa-palette"
+  },
+  4: {
+    title: "4. Automated Conversion & Quality Control Lab",
+    subtitle: "Precision Cutting, Liner Insertion & Drop Endurance Lab",
+    desc: "Automated bag conversion lines execute precision heat/cold cutting, valve stitching, and PE inner liner insertion. Every batch undergoes drop endurance and tensile strength testing in our ISO laboratory.",
+    metric1: "ISO Standard",
+    label1: "Lab Quality Audit",
+    metric2: "1.8 Meter",
+    label2: "Drop Endurance Rating",
+    metric3: "PE Liners",
+    label3: "Automatic Liner Insertion",
+    metric4: "99.8%",
+    label4: "Quality Pass Rate",
+    icon: "fa-solid fa-vial-circle-check"
+  }
+};
+
+function selectProcessStep(stepNum) {
+  const data = processStepsData[stepNum];
+  if (!data) return;
+
+  // Update tabs
+  document.querySelectorAll(".process-tab-btn").forEach((btn, index) => {
+    if (index + 1 === stepNum) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
+
+  // Update content
+  const titleEl = document.getElementById("processStepTitle");
+  const subEl = document.getElementById("processStepSub");
+  const descEl = document.getElementById("processStepDesc");
+  const iconEl = document.getElementById("processStepIcon");
+
+  if (titleEl) titleEl.textContent = data.title;
+  if (subEl) subEl.textContent = data.subtitle;
+  if (descEl) descEl.textContent = data.desc;
+  if (iconEl) iconEl.className = `${data.icon} text-gold`;
+
+  const m1 = document.getElementById("processM1");
+  const l1 = document.getElementById("processL1");
+  const m2 = document.getElementById("processM2");
+  const l2 = document.getElementById("processL2");
+  const m3 = document.getElementById("processM3");
+  const l3 = document.getElementById("processL3");
+  const m4 = document.getElementById("processM4");
+  const l4 = document.getElementById("processL4");
+
+  if (m1) m1.textContent = data.metric1;
+  if (l1) l1.textContent = data.label1;
+  if (m2) m2.textContent = data.metric2;
+  if (l2) l2.textContent = data.label2;
+  if (m3) m3.textContent = data.metric3;
+  if (l3) l3.textContent = data.label3;
+  if (m4) m4.textContent = data.metric4;
+  if (l4) l4.textContent = data.label4;
+}
+
+/* ==========================================================================
+   Technical Spec Sheet Modal
+   ========================================================================== */
+
+function openTechSpecModal() {
+  const modal = document.getElementById("techSpecModal");
+  if (modal) {
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function closeTechSpecModal() {
+  const modal = document.getElementById("techSpecModal");
+  if (modal) {
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+}
+
+window.calculatePackagingSpec = calculatePackagingSpec;
+window.applyEstimatorToQuote = applyEstimatorToQuote;
+window.selectProcessStep = selectProcessStep;
+window.openTechSpecModal = openTechSpecModal;
+window.closeTechSpecModal = closeTechSpecModal;
+
+
 
 
 

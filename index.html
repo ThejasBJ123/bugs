@@ -125,6 +125,9 @@
           <button class="btn btn-outline-white btn-lg" onclick="openRFQModal()">
             <i class="fa-solid fa-file-invoice"></i> Request Direct Quote
           </button>
+          <button class="btn btn-outline-white btn-lg" onclick="openTechSpecModal()">
+            <i class="fa-solid fa-file-pdf"></i> Download Tech Specs
+          </button>
         </div>
 
         <div class="hero-trust-badges">
@@ -216,56 +219,165 @@
     </div>
   </section>
 
-  <!-- Interactive Teaser / Feature Highlighting -->
-  <section class="section-padding" style="background: var(--white); padding: 4rem 0;">
+  <!-- Interactive Packaging Specification & GSM Estimator Widget -->
+  <section class="container" style="margin-bottom: 4rem;">
+    <div class="estimator-card">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 1rem;">
+        <div>
+          <span class="section-tag section-tag-emerald" style="margin-bottom: 0.35rem; display: inline-block;">Instant Technical Sizing</span>
+          <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--gold-300); margin: 0; display: flex; align-items: center; gap: 0.6rem;">
+            <i class="fa-solid fa-calculator text-gold"></i> B2B Packaging & GSM Estimator
+          </h2>
+        </div>
+        <button class="btn btn-outline-white btn-sm" onclick="openTechSpecModal()">
+          <i class="fa-solid fa-table"></i> View Full Technical Datasheet
+        </button>
+      </div>
+
+      <div class="estimator-grid">
+        <!-- Controls -->
+        <div class="estimator-controls">
+          <div style="margin-bottom: 1.25rem;">
+            <label style="font-weight: 700; color: var(--gold-300); font-size: 0.875rem; margin-bottom: 0.4rem; display: block;">1. Select Commodity / Target Packaging Application</label>
+            <select id="estimatorCommodity" class="form-control" onchange="calculatePackagingSpec()" style="background: #06192a; color: #ffffff; border-color: rgba(212, 175, 55, 0.4); font-weight: 700;">
+              <option value="cattle_feed">Cattle & Poultry Feed Sacks (Moisture-Lock)</option>
+              <option value="cement">Block Bottom Cement & Mineral Sacks (Micro-Vent)</option>
+              <option value="bopp_retail">BOPP Photographic Printed Bags (Retail Premium)</option>
+              <option value="fibc_jumbo">FIBC Bulk Jumbo Bags (1 to 2 Ton Lift)</option>
+              <option value="jute_silage">Eco Jute & Silage Fermentation Bags (Export Grade)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-weight: 700; color: var(--gold-300); font-size: 0.875rem; margin-bottom: 0.4rem; display: block;">2. Select Load Capacity / Weight</label>
+            <select id="estimatorCapacity" class="form-control" onchange="calculatePackagingSpec()" style="background: #06192a; color: #ffffff; border-color: rgba(212, 175, 55, 0.4); font-weight: 700;">
+              <option value="25kg">25 KG Standard Packing</option>
+              <option value="50kg" selected>50 KG Heavy Duty Packing</option>
+              <option value="1000kg">1,000 KG / 1 Ton Bulk Container</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Output Card -->
+        <div class="estimator-output">
+          <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--gold-300); font-weight: 800; letter-spacing: 0.5px;">Recommended Manufacturing Spec</div>
+          <div style="font-size: 1.4rem; font-weight: 800; color: var(--white); margin-top: 0.2rem;" id="specResultGSM">80 - 95 GSM</div>
+
+          <div class="spec-result-grid">
+            <div class="spec-result-box">
+              <div class="label">Tape Denier</div>
+              <div class="value" id="specResultDenier">850 Denier</div>
+            </div>
+            <div class="spec-result-box">
+              <div class="label">Weave Mesh</div>
+              <div class="value" id="specResultMesh">10 x 10</div>
+            </div>
+            <div class="spec-result-box" style="grid-column: span 2;">
+              <div class="label">PE Inner Liner / Coating</div>
+              <div class="value" id="specResultLiner" style="font-size: 0.95rem;">25-Micron Loose PE Liner</div>
+            </div>
+            <div class="spec-result-box" style="grid-column: span 2;">
+              <div class="label">Drop & Stacking Strength</div>
+              <div class="value" id="specResultBurst" style="font-size: 0.95rem; color: #4ade80;">Zero-Burst Stack Rating</div>
+            </div>
+          </div>
+
+          <button class="btn btn-gold" onclick="applyEstimatorToQuote()" style="width: 100%; margin-top: 0.5rem; justify-content: center;">
+            <i class="fa-solid fa-file-signature"></i> Request Factory Quote For This Spec
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive 4-Step Manufacturing Process & Technology Showcase -->
+  <section class="section-padding" style="background: var(--dark-50); border-top: 1px solid var(--dark-200); padding: 4rem 0;">
     <div class="container">
       <div class="text-center" style="margin-bottom: 2.5rem;">
-        <span class="section-tag">Why Choose Us</span>
-        <h2 class="section-title">Advanced Weaving Technology & Quality Control</h2>
+        <span class="section-tag section-tag-emerald">High-Speed Looms & Lab Testing</span>
+        <h2 class="section-title">Our 4-Step Integrated Manufacturing Technology</h2>
         <p class="section-subtitle">
-          Engineered to withstand rigorous transportation, harsh climate exposure, and automated high-speed bagging lines.
+          From 100% virgin polymer extrusion to automated circular weaving looms and ISO-certified drop testing.
         </p>
       </div>
 
-      <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-        <div class="feature-card">
-          <div class="feature-icon-wrapper">
-            <i class="fa-solid fa-shield-virus"></i>
+      <!-- 4 Process Tab Buttons -->
+      <div class="process-tabs-nav">
+        <button class="process-tab-btn active" onclick="selectProcessStep(1)">
+          <div class="step-num">1</div>
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem;">Tape Extrusion</div>
+            <div style="font-size: 0.75rem; opacity: 0.8;">Virgin Polymer & UV</div>
           </div>
-          <h3 class="feature-title">Anti-Burst & High Tensile</h3>
-          <p class="feature-desc">
-            Manufactured with 100% virgin polymer granules and high denier tape extrusion for supreme drop and stacking resistance.
+        </button>
+        <button class="process-tab-btn" onclick="selectProcessStep(2)">
+          <div class="step-num">2</div>
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem;">Circular Looms</div>
+            <div style="font-size: 0.75rem; opacity: 0.8;">48+ Looms Weaving</div>
+          </div>
+        </button>
+        <button class="process-tab-btn" onclick="selectProcessStep(3)">
+          <div class="step-num">3</div>
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem;">BOPP Lamination</div>
+            <div style="font-size: 0.75rem; opacity: 0.8;">8-Color HD Print</div>
+          </div>
+        </button>
+        <button class="process-tab-btn" onclick="selectProcessStep(4)">
+          <div class="step-num">4</div>
+          <div>
+            <div style="font-weight: 800; font-size: 0.95rem;">QC Testing Lab</div>
+            <div style="font-size: 0.75rem; opacity: 0.8;">Tensile & Drop Test</div>
+          </div>
+        </button>
+      </div>
+
+      <!-- Process Content Card -->
+      <div class="process-content-card">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+            <i class="fa-solid fa-industry text-gold" id="processStepIcon" style="font-size: 1.75rem;"></i>
+            <div>
+              <h3 id="processStepTitle" style="font-size: 1.35rem; font-weight: 800; color: var(--primary-900);">1. Polymer Tape Extrusion & UV Stabilizing</h3>
+              <div id="processStepSub" style="font-size: 0.85rem; font-weight: 700; color: var(--gold-700);">High-Speed Monofilament & Flat Tape Extrusion Plant</div>
+            </div>
+          </div>
+          <p id="processStepDesc" style="font-size: 0.95rem; color: var(--dark-700); line-height: 1.7; margin-top: 1rem;">
+            100% prime virgin polypropylene (PP) and high-density polyethylene (HDPE) granules are fused and extruded into high-tenacity flat tapes. Infused with 2,000+ hours UV masterbatch stabilizers for weather durability.
           </p>
+
+          <div class="process-metrics-list">
+            <div class="process-metric-item">
+              <div style="font-size: 1.2rem; font-weight: 800; color: var(--primary-900);" id="processM1">350 MT / Month</div>
+              <div style="font-size: 0.75rem; color: var(--dark-600); font-weight: 600;" id="processL1">Extrusion Capacity</div>
+            </div>
+            <div class="process-metric-item">
+              <div style="font-size: 1.2rem; font-weight: 800; color: var(--primary-900);" id="processM2">600 - 1500</div>
+              <div style="font-size: 0.75rem; color: var(--dark-600); font-weight: 600;" id="processL2">Tape Denier Range</div>
+            </div>
+            <div class="process-metric-item">
+              <div style="font-size: 1.2rem; font-weight: 800; color: var(--primary-900);" id="processM3">100% Virgin</div>
+              <div style="font-size: 0.75rem; color: var(--dark-600); font-weight: 600;" id="processL3">Polymer Quality</div>
+            </div>
+            <div class="process-metric-item">
+              <div style="font-size: 1.2rem; font-weight: 800; color: var(--primary-900);" id="processM4">2,000+ Hours</div>
+              <div style="font-size: 0.75rem; color: var(--dark-600); font-weight: 600;" id="processL4">UV Weather Resistance</div>
+            </div>
+          </div>
         </div>
 
-        <div class="feature-card">
-          <div class="feature-icon-wrapper">
-            <i class="fa-solid fa-cloud-showers-water"></i>
+        <div style="text-center">
+          <div style="background: linear-gradient(135deg, #07192b, #0c2742); padding: 2rem; border-radius: var(--radius-lg); border: 2px solid var(--gold-400); color: var(--white); text-align: center;">
+            <i class="fa-solid fa-microscope" style="font-size: 3rem; color: var(--gold-400); margin-bottom: 1rem;"></i>
+            <h4 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--white);">In-House Quality Audit</h4>
+            <p style="font-size: 0.85rem; color: rgba(255,255,255,0.8); line-height: 1.6;">
+              Every production lot undergoes rigorous elongation, tensile breaking load, drop endurance, and seam strength testing before dispatch.
+            </p>
+            <a href="public/infrastructure.html" class="btn btn-gold btn-sm" style="margin-top: 1rem; width: 100%;">
+              <i class="fa-solid fa-building-circle-check"></i> Explore Infrastructure Details
+            </a>
           </div>
-          <h3 class="feature-title">Moisture & UV Protection</h3>
-          <p class="feature-desc">
-            Equipped with multi-layer PE liner insertion, extrusion lamination, and UV masterbatch stabilizers tested for 2,000+ hours.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-wrapper">
-            <i class="fa-solid fa-palette"></i>
-          </div>
-          <h3 class="feature-title">Photographic BOPP Printing</h3>
-          <p class="feature-desc">
-            Up to 8-color high-definition rotogravure and flexo printing ensuring eye-catching retail shelf presence.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-wrapper">
-            <i class="fa-solid fa-certificate"></i>
-          </div>
-          <h3 class="feature-title">ISO Certified Testing Lab</h3>
-          <p class="feature-desc">
-            In-house quality laboratory verifying elongation, tensile breaking strength, drop endurance, and air permeability on every batch.
-          </p>
         </div>
       </div>
     </div>
@@ -515,11 +627,6 @@
           <textarea id="feedbackQuote" class="form-control" rows="3" required placeholder="Share your experience working with Rayashree Weaving packaging products..."></textarea>
         </div>
 
-        <div style="background: var(--dark-50); border: 1px solid var(--dark-200); border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.8rem; color: var(--dark-600); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
-          <i class="fa-solid fa-shield-halved text-emerald" style="font-size: 1rem;"></i>
-          <span>Submitted reviews undergo executive administration review prior to public publishing.</span>
-        </div>
-
         <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
           <button type="button" class="btn btn-outline" onclick="closeFeedbackModal()">Cancel</button>
           <button type="submit" class="btn btn-gold">
@@ -527,6 +634,91 @@
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Technical Specification Datasheet Modal -->
+  <div class="modal-backdrop" id="techSpecModal">
+    <div class="modal-card" style="max-width: 820px; max-height: 90vh; overflow-y: auto;">
+      <div class="modal-header">
+        <h3 style="color: #ffffff; font-weight: 800; display: flex; align-items: center; gap: 0.6rem; font-size: 1.2rem;">
+          <i class="fa-solid fa-file-pdf text-gold"></i> Rayashree Weaving - Technical Specification Datasheet
+        </h3>
+        <button class="modal-close-btn" onclick="closeTechSpecModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" style="padding: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; background: var(--dark-50); padding: 1rem 1.25rem; border-radius: var(--radius-md); border-left: 4px solid var(--gold-500); margin-bottom: 1.25rem;">
+          <div>
+            <div style="font-weight: 800; color: var(--primary-900);">Official Industrial Product Datasheet (2026 Edition)</div>
+            <div style="font-size: 0.8rem; color: var(--dark-600);">Certified specifications for tender applications, bulk RFQs, and export compliance.</div>
+          </div>
+          <button class="btn btn-gold btn-sm" onclick="window.print()">
+            <i class="fa-solid fa-print"></i> Print / Save PDF
+          </button>
+        </div>
+
+        <table class="tech-spec-table">
+          <thead>
+            <tr>
+              <th>Product Category</th>
+              <th>Material / Resin</th>
+              <th>GSM Range</th>
+              <th>Denier</th>
+              <th>Standard Load</th>
+              <th>Key Quality Features</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Cattle Feed Sacks</strong></td>
+              <td>100% Virgin PP/HDPE</td>
+              <td>65 - 95 GSM</td>
+              <td>750 - 900 D</td>
+              <td>25kg / 50kg</td>
+              <td>Zero-burst weave, 25u PE liner insertion</td>
+            </tr>
+            <tr>
+              <td><strong>Cement & Mineral Sacks</strong></td>
+              <td>High-Tenacity PP</td>
+              <td>70 - 100 GSM</td>
+              <td>800 - 950 D</td>
+              <td>50kg</td>
+              <td>Block bottom valve, micro-vent air escape</td>
+            </tr>
+            <tr>
+              <td><strong>BOPP Laminated Sacks</strong></td>
+              <td>PP + 18u BOPP Film</td>
+              <td>60 - 80 GSM Base</td>
+              <td>700 - 850 D</td>
+              <td>10kg / 25kg / 50kg</td>
+              <td>8-Color photographic rotogravure print</td>
+            </tr>
+            <tr>
+              <td><strong>FIBC Jumbo Containers</strong></td>
+              <td>U-Panel / Circular PP</td>
+              <td>140 - 220 GSM</td>
+              <td>1000 - 1500 D</td>
+              <td>500kg - 2,000kg</td>
+              <td>SWL 2,000 kg, 5:1 & 6:1 Safety Factor</td>
+            </tr>
+            <tr>
+              <td><strong>Eco Jute & Silage Bags</strong></td>
+              <td>Hydrocarbon-Free Jute / UV Poly</td>
+              <td>250 - 350 GSM</td>
+              <td>Natural Fibre</td>
+              <td>50kg / Bulk Tube</td>
+              <td>100% Biodegradable, hermetic fermentation</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; justify-content: flex-end;">
+          <button class="btn btn-outline" onclick="closeTechSpecModal()">Close</button>
+          <button class="btn btn-primary" onclick="closeTechSpecModal(); openRFQModal();">
+            <i class="fa-solid fa-file-invoice"></i> Request Direct Factory Pricing
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
