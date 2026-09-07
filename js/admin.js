@@ -28,6 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
 let currentFilter = "All";
 let searchQuery = "";
 let activeInquiryId = null;
+let testimonialFilter = "All";
+let testimonialSearchQuery = "";
 
 function initDashboard() {
   try { initNavigation(); } catch (e) { console.error("initNavigation error:", e); }
@@ -37,6 +39,7 @@ function initDashboard() {
   try { initCmsEditor(); } catch (e) { console.error("initCmsEditor error:", e); }
   try { initCompanyEditor(); } catch (e) { console.error("initCompanyEditor error:", e); }
   try { initLogoUploader(); } catch (e) { console.error("initLogoUploader error:", e); }
+  try { initTestimonialManager(); } catch (e) { console.error("initTestimonialManager error:", e); }
   try { renderAll(); } catch (e) { console.error("renderAll error:", e); }
 }
 
@@ -65,6 +68,9 @@ function initNavigation() {
 
       if (viewId === "viewCompany") {
         renderCompanyProfile();
+      }
+      if (viewId === "viewTestimonials") {
+        renderTestimonialsTable();
       }
 
       if (pageTitle) {
@@ -105,7 +111,9 @@ function renderAll() {
   loadCmsFormValues();
   renderTrafficAnalytics();
   renderOperationalAnalytics();
+  renderTestimonialsTable();
 }
+
 
 /* ==========================================================================
    Metrics & Traffic Rendering
@@ -1509,4 +1517,263 @@ window.resetDefaultSiteContent = resetDefaultSiteContent;
 window.initLogoUploader = initLogoUploader;
 window.clearAllInquiries = typeof clearAllInquiries === "function" ? clearAllInquiries : () => {};
 window.resetTrafficAnalytics = typeof resetTrafficAnalytics === "function" ? resetTrafficAnalytics : () => {};
+
+/* ==========================================================================
+   Client Feedback & Testimonials Moderation Management
+   ========================================================================== */
+
+function initTestimonialManager() {
+  const searchInput = document.getElementById("testimonialSearch");
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      testimonialSearchQuery = e.target.value.toLowerCase();
+      renderTestimonialsTable();
+    });
+  }
+
+  const filterPills = document.querySelectorAll(".testimonial-filter-pill");
+  filterPills.forEach(pill => {
+    pill.addEventListener("click", () => {
+      filterPills.forEach(p => p.classList.remove("active"));
+      pill.classList.add("active");
+      testimonialFilter = pill.getAttribute("data-status");
+      renderTestimonialsTable();
+    });
+  });
+
+  const form = document.getElementById("adminTestimonialForm");
+  if (form) {
+    form.addEventListener("submit", saveAdminTestimonial);
+  }
+}
+
+function renderTestimonialsTable() {
+  const tbody = document.getElementById("testimonialsTableBody");
+  if (!tbody || typeof getTestimonials !== "function") return;
+
+  const allTestimonials = getTestimonials();
+
+  // Update pending count badge on sidebar
+  const pendingCount = allTestimonials.filter(t => t.status === "Pending").length;
+  const badge = document.getElementById("pendingTestimonialsBadge");
+  if (badge) {
+    if (pendingCount > 0) {
+      badge.textContent = pendingCount;
+      badge.style.display = "inline-block";
+    } else {
+      badge.style.display = "none";
+    }
+  }
+
+  // Filter items
+  let filtered = allTestimonials;
+  if (testimonialFilter !== "All") {
+    filtered = filtered.filter(t => t.status === testimonialFilter);
+  }
+
+  if (testimonialSearchQuery) {
+    filtered = filtered.filter(t => 
+      (t.author && t.author.toLowerCase().includes(testimonialSearchQuery)) ||
+      (t.company && t.company.toLowerCase().includes(testimonialSearchQuery)) ||
+      (t.quote && t.quote.toLowerCase().includes(testimonialSearchQuery)) ||
+      (t.role && t.role.toLowerCase().includes(testimonialSearchQuery))
+    );
+  }
+
+  tbody.innerHTML = "";
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align: center; padding: 2.5rem; color: #64748b;">
+          <i class="fa-solid fa-comments" style="font-size: 2rem; color: #cbd5e1; margin-bottom: 0.5rem; display: block;"></i>
+          No feedback entries match the selected filter.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  filtered.forEach(item => {
+    const tr = document.createElement("tr");
+
+    // Status badge style
+    let statusClass = "badge-gray";
+    let statusLabel = item.status || "Pending";
+    if (item.status === "Approved") {
+      statusClass = "badge-emerald";
+    } else if (item.status === "Pending") {
+      statusClass = "badge-gold";
+    } else if (item.status === "Rejected") {
+      statusClass = "badge-red";
+    }
+
+    // Star rating
+    const ratingNum = item.rating || 5;
+    let starsHtml = "";
+    for (let i = 1; i <= 5; i++) {
+      if (i <= ratingNum) {
+        starsHtml += `<i class="fa-solid fa-star" style="color: #f59e0b; font-size: 0.75rem;"></i>`;
+      } else {
+        starsHtml += `<i class="fa-regular fa-star" style="color: #cbd5e1; font-size: 0.75rem;"></i>`;
+      }
+    }
+
+    tr.innerHTML = `
+      <td>
+        <div style="font-weight: 700; color: #032b27;">${item.id}</div>
+        <div style="font-size: 0.75rem; color: #64748b;">${item.date || 'Recent'}</div>
+      </td>
+      <td>
+        <div style="font-weight: 700; color: #0f172a;">${item.author}</div>
+        <div style="font-size: 0.775rem; color: #07524a; font-weight: 600;">${item.role ? item.role + ' • ' : ''}${item.company || ''}</div>
+        ${item.email ? `<div style="font-size: 0.725rem; color: #64748b;">${item.email}</div>` : ''}
+      </td>
+      <td>
+        <div>${starsHtml}</div>
+        <div style="font-size: 0.725rem; color: #64748b; font-weight: 600; margin-top: 2px;">${ratingNum}/5 Stars</div>
+      </td>
+      <td style="max-width: 320px;">
+        <div style="font-size: 0.85rem; color: #334155; line-height: 1.5; font-style: italic; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+          "${item.quote}"
+        </div>
+      </td>
+      <td>
+        <span class="badge ${statusClass}">${statusLabel}</span>
+      </td>
+      <td>
+        <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+          ${item.status !== "Approved" ? `
+            <button onclick="approveTestimonialItem('${item.id}')" class="btn btn-sm" style="background: #16a34a; color: #fff; padding: 0.25rem 0.5rem; font-size: 0.75rem;" title="Approve for Public Website">
+              <i class="fa-solid fa-check"></i> Approve
+            </button>
+          ` : ''}
+          ${item.status !== "Rejected" ? `
+            <button onclick="rejectTestimonialItem('${item.id}')" class="btn btn-sm" style="background: #f97316; color: #fff; padding: 0.25rem 0.5rem; font-size: 0.75rem;" title="Reject Feedback">
+              <i class="fa-solid fa-xmark"></i> Reject
+            </button>
+          ` : ''}
+          <button onclick="openAdminTestimonialModal('${item.id}')" class="btn btn-outline btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" title="Edit Details">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+          <button onclick="deleteTestimonialItem('${item.id}')" class="btn btn-outline btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; color: #ef4444; border-color: #fca5a5;" title="Delete Record">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function approveTestimonialItem(id) {
+  if (typeof updateTestimonialStatus === "function") {
+    updateTestimonialStatus(id, "Approved");
+    renderTestimonialsTable();
+    showAdminToast("Feedback approved! It is now published live on the public website.");
+  }
+}
+
+function rejectTestimonialItem(id) {
+  if (typeof updateTestimonialStatus === "function") {
+    updateTestimonialStatus(id, "Rejected");
+    renderTestimonialsTable();
+    showAdminToast("Feedback status updated to Rejected.");
+  }
+}
+
+function deleteTestimonialItem(id) {
+  if (confirm("Are you sure you want to delete this client feedback record?")) {
+    if (typeof deleteTestimonial === "function") {
+      deleteTestimonial(id);
+      renderTestimonialsTable();
+      showAdminToast("Client feedback entry deleted.");
+    }
+  }
+}
+
+function openAdminTestimonialModal(id = null) {
+  const modal = document.getElementById("adminTestimonialModal");
+  if (!modal) return;
+
+  const title = document.getElementById("adminTestimonialModalTitle");
+  const form = document.getElementById("adminTestimonialForm");
+  if (form) form.reset();
+
+  if (id) {
+    const testimonials = typeof getTestimonials === "function" ? getTestimonials() : [];
+    const item = testimonials.find(t => t.id === id);
+    if (item) {
+      if (title) title.innerHTML = `<i class="fa-solid fa-comments text-gold"></i> Edit Client Feedback`;
+      if (document.getElementById("adminTestimonialId")) document.getElementById("adminTestimonialId").value = item.id;
+      if (document.getElementById("adminTestimonialAuthor")) document.getElementById("adminTestimonialAuthor").value = item.author || "";
+      if (document.getElementById("adminTestimonialRole")) document.getElementById("adminTestimonialRole").value = item.role || "";
+      if (document.getElementById("adminTestimonialCompany")) document.getElementById("adminTestimonialCompany").value = item.company || "";
+      if (document.getElementById("adminTestimonialRating")) document.getElementById("adminTestimonialRating").value = item.rating || 5;
+      if (document.getElementById("adminTestimonialStatus")) document.getElementById("adminTestimonialStatus").value = item.status || "Approved";
+      if (document.getElementById("adminTestimonialQuote")) document.getElementById("adminTestimonialQuote").value = item.quote || "";
+    }
+  } else {
+    if (title) title.innerHTML = `<i class="fa-solid fa-plus text-gold"></i> Add Client Feedback`;
+    if (document.getElementById("adminTestimonialId")) document.getElementById("adminTestimonialId").value = "";
+    if (document.getElementById("adminTestimonialStatus")) document.getElementById("adminTestimonialStatus").value = "Approved";
+  }
+
+  modal.classList.add("active");
+}
+
+function closeAdminTestimonialModal() {
+  const modal = document.getElementById("adminTestimonialModal");
+  if (modal) modal.classList.remove("active");
+}
+
+function saveAdminTestimonial(e) {
+  e.preventDefault();
+  const id = document.getElementById("adminTestimonialId") ? document.getElementById("adminTestimonialId").value : "";
+  const author = document.getElementById("adminTestimonialAuthor") ? document.getElementById("adminTestimonialAuthor").value.trim() : "";
+  const role = document.getElementById("adminTestimonialRole") ? document.getElementById("adminTestimonialRole").value.trim() : "";
+  const company = document.getElementById("adminTestimonialCompany") ? document.getElementById("adminTestimonialCompany").value.trim() : "";
+  const rating = document.getElementById("adminTestimonialRating") ? (Number(document.getElementById("adminTestimonialRating").value) || 5) : 5;
+  const status = document.getElementById("adminTestimonialStatus") ? document.getElementById("adminTestimonialStatus").value : "Approved";
+  const quote = document.getElementById("adminTestimonialQuote") ? document.getElementById("adminTestimonialQuote").value.trim() : "";
+
+  if (!author || !quote) {
+    alert("Please provide the client name and feedback quote.");
+    return;
+  }
+
+  if (id) {
+    // Update existing
+    updateTestimonial(id, { author, role, company, rating, status, quote });
+    showAdminToast("Client feedback updated successfully!");
+  } else {
+    // Create new (as Approved by default when added by admin)
+    const testimonials = getTestimonials();
+    const newEntry = {
+      id: "TEST-" + Math.floor(1000 + Math.random() * 9000),
+      date: new Date().toISOString().slice(0, 10),
+      status: status || "Approved",
+      rating: rating,
+      quote: quote,
+      author: author,
+      role: role || "Valued Client",
+      company: company || "",
+      email: ""
+    };
+    testimonials.unshift(newEntry);
+    saveTestimonials(testimonials);
+    showAdminToast("New client feedback created successfully!");
+  }
+
+  closeAdminTestimonialModal();
+  renderTestimonialsTable();
+}
+
+window.approveTestimonialItem = approveTestimonialItem;
+window.rejectTestimonialItem = rejectTestimonialItem;
+window.deleteTestimonialItem = deleteTestimonialItem;
+window.openAdminTestimonialModal = openAdminTestimonialModal;
+window.closeAdminTestimonialModal = closeAdminTestimonialModal;
+window.renderTestimonialsTable = renderTestimonialsTable;
+
 

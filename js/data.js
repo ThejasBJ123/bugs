@@ -210,26 +210,41 @@ const DEFAULT_PRODUCTS = [
 
 const DEFAULT_INQUIRIES = [];
 
-const TESTIMONIALS = [
+const DEFAULT_TESTIMONIALS = [
   {
+    id: "TEST-1001",
     quote: "Rayashree Weaving has been our packaging partner for over 4 years. Their 50kg cattle feed woven sacks have zero burst rates during rough logistics, and their BOPP printing is top-class.",
     author: "R. Chandrashekar",
     role: "Head of Logistics",
-    company: "Amrutha Dairy & Feeds, Karnataka"
+    company: "Amrutha Dairy & Feeds, Karnataka",
+    rating: 5,
+    status: "Approved",
+    date: "2026-01-15"
   },
   {
+    id: "TEST-1002",
     quote: "Switching to Rayashree's block bottom valve cement bags drastically reduced cement dust loss and accelerated our automated packing line speed by 18%. Outstanding quality control.",
     author: "P. Ranganathan",
     role: "Plant Manager",
-    company: "South India Infrastructure Cement Ltd."
+    company: "South India Infrastructure Cement Ltd.",
+    rating: 5,
+    status: "Approved",
+    date: "2026-02-04"
   },
   {
+    id: "TEST-1003",
     quote: "For our coffee exports to Europe, compliance is non-negotiable. Rayashree's Hydrocarbon-Free Jute Bags pass every international audit smoothly. Highly recommended.",
     author: "Naveen Thomas",
     role: "Managing Director",
-    company: "Western Ghats Agri Exports"
+    company: "Western Ghats Agri Exports",
+    rating: 5,
+    status: "Approved",
+    date: "2026-02-28"
   }
 ];
+
+const TESTIMONIALS = DEFAULT_TESTIMONIALS;
+
 
 const INFRASTRUCTURE_STATS = [
   { label: "Circular Weaving Looms", value: "48+ Looms", desc: "High-speed Starlinger & Lohia circular looms" },
@@ -570,3 +585,81 @@ function updateInquiryStatus(id, newStatus, internalNotes = null) {
   }
   return null;
 }
+
+/* ==========================================================================
+   Testimonials & Feedback Persistent Storage System
+   ========================================================================== */
+
+function getTestimonials() {
+  const stored = localStorage.getItem("rw_testimonials");
+  if (stored !== null) {
+    try {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    } catch (e) {
+      console.error("Error reading rw_testimonials from localStorage:", e);
+    }
+  }
+  localStorage.setItem("rw_testimonials", JSON.stringify(DEFAULT_TESTIMONIALS));
+  return DEFAULT_TESTIMONIALS;
+}
+
+function saveTestimonials(testimonials) {
+  localStorage.setItem("rw_testimonials", JSON.stringify(testimonials));
+}
+
+function getApprovedTestimonials() {
+  const all = getTestimonials();
+  const approved = all.filter(t => t.status === "Approved");
+  return approved.length > 0 ? approved : DEFAULT_TESTIMONIALS;
+}
+
+function addFeedback(feedbackData) {
+  const testimonials = getTestimonials();
+  const newFeedback = {
+    id: "TEST-" + Math.floor(1000 + Math.random() * 9000),
+    date: new Date().toISOString().slice(0, 10),
+    status: "Pending", // Default pending admin approval!
+    rating: Number(feedbackData.rating) || 5,
+    quote: feedbackData.quote || feedbackData.message || "",
+    author: feedbackData.author || feedbackData.name || "Valued Client",
+    role: feedbackData.role || feedbackData.designation || "Customer",
+    company: feedbackData.company || "Partner Company",
+    email: feedbackData.email || ""
+  };
+  testimonials.unshift(newFeedback);
+  saveTestimonials(testimonials);
+  return newFeedback;
+}
+
+function updateTestimonialStatus(id, newStatus) {
+  const testimonials = getTestimonials();
+  const idx = testimonials.findIndex(t => t.id === id);
+  if (idx !== -1) {
+    testimonials[idx].status = newStatus;
+    saveTestimonials(testimonials);
+    return testimonials[idx];
+  }
+  return null;
+}
+
+function updateTestimonial(id, updatedFields) {
+  const testimonials = getTestimonials();
+  const idx = testimonials.findIndex(t => t.id === id);
+  if (idx !== -1) {
+    testimonials[idx] = { ...testimonials[idx], ...updatedFields };
+    saveTestimonials(testimonials);
+    return testimonials[idx];
+  }
+  return null;
+}
+
+function deleteTestimonial(id) {
+  let testimonials = getTestimonials();
+  testimonials = testimonials.filter(t => t.id !== id);
+  saveTestimonials(testimonials);
+  return testimonials;
+}
+

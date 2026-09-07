@@ -30,6 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
   try { initContactPageForm(); } catch (e) { console.error("initContactPageForm error:", e); }
   try { applyDynamicSiteContent(); } catch (e) { console.error("applyDynamicSiteContent error:", e); }
   try { populateRFQSelect(); } catch (e) { console.error("populateRFQSelect error:", e); }
+  try { renderPublicTestimonials(); } catch (e) { console.error("renderPublicTestimonials error:", e); }
+  try { initFeedbackModal(); } catch (e) { console.error("initFeedbackModal error:", e); }
 
   // Sync products from server (for Hostinger or multi-device browsing)
   if (typeof syncServerProducts === "function") {
@@ -38,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try { initProductGrid(); } catch (e) {}
       try { applyDynamicSiteContent(); } catch (e) {}
       try { populateRFQSelect(); } catch (e) {}
+      try { renderPublicTestimonials(); } catch (e) {}
     });
   }
   
@@ -52,11 +55,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Instant live re-render when admin updates products in another tab
 window.addEventListener("storage", (e) => {
-  if (e.key === "rw_products" || e.key === "rw_site_content" || e.key === "rw_company_info") {
+  if (e.key === "rw_products" || e.key === "rw_site_content" || e.key === "rw_company_info" || e.key === "rw_testimonials") {
     try { initProductThumbBar(); } catch (err) {}
     try { initProductGrid(); } catch (err) {}
     try { applyDynamicSiteContent(); } catch (err) {}
     try { populateRFQSelect(); } catch (err) {}
+    try { renderPublicTestimonials(); } catch (err) {}
   }
 });
 
@@ -698,10 +702,11 @@ function initProductGrid() {
 
           <div class="product-card-footer">
             <button class="btn btn-outline btn-sm" onclick="openProductSpecsModal('${prod.id}')" style="flex: 1;"><i class="fa-solid fa-circle-info"></i> View Specs</button>
-            <button class="btn btn-gold btn-sm" onclick="openRFQModal('${prod.name}')" style="flex: 1.2;">
-              <i class="fa-solid fa-paper-plane"></i> Quick Quote
-            </button>
+            <a href="https://wa.me/919108713258?text=${encodeURIComponent(`Hello Mr. Lakshmi Kanth (Rayashree Weaving),\n\nI want to BUY / order *${prod.name}*.\n• *Category:* ${prod.category || 'Industrial Packaging'}\n• *Capacity / Load:* ${prod.capacityRange || 'Custom'}\n• *GSM Weight:* ${prod.gsmRange || 'Standard'}\n\nPlease share current pricing and order placement details.`)}" target="_blank" class="btn btn-sm" style="flex: 1.2; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; background: #25d366; color: #ffffff; border: 1px solid #25d366; font-weight: 700;">
+              <i class="fa-brands fa-whatsapp" style="font-size: 1.05rem;"></i> Buy Now
+            </a>
           </div>
+
         </div>
       `;
       container.appendChild(card);
@@ -907,6 +912,116 @@ window.openProductSpecsModal = openProductSpecsModal;
 window.closeProductSpecsModal = closeProductSpecsModal;
 window.closeRFQModal = closeRFQModal;
 window.showToast = showToast;
+
+/* ==========================================================================
+   Client Testimonials & Feedback Dynamic Rendering & Form Submission
+   ========================================================================== */
+
+function renderPublicTestimonials() {
+  const container = document.getElementById("testimonialsGrid");
+  if (!container || typeof getApprovedTestimonials !== "function") return;
+
+  const testimonials = getApprovedTestimonials();
+  container.innerHTML = "";
+
+  testimonials.forEach(item => {
+    const card = document.createElement("div");
+    card.style.cssText = "background: var(--white); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--dark-200); position: relative; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm); transition: transform 0.2s ease, box-shadow 0.2s ease;";
+
+    // Build star rating HTML
+    const ratingNum = item.rating || 5;
+    let starsHtml = "";
+    for (let i = 1; i <= 5; i++) {
+      if (i <= ratingNum) {
+        starsHtml += `<i class="fa-solid fa-star" style="color: #f59e0b; margin-right: 2px;"></i>`;
+      } else {
+        starsHtml += `<i class="fa-regular fa-star" style="color: #cbd5e1; margin-right: 2px;"></i>`;
+      }
+    }
+
+    card.innerHTML = `
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <div style="color: var(--gold-500); font-size: 1.75rem;"><i class="fa-solid fa-quote-left"></i></div>
+          <div style="font-size: 0.85rem;">${starsHtml}</div>
+        </div>
+        <p style="font-size: 0.95rem; color: var(--dark-700); line-height: 1.7; margin-bottom: 1.5rem; font-style: italic;">
+          "${item.quote}"
+        </p>
+      </div>
+      <div>
+        <div style="font-weight: 800; color: var(--primary-900); font-size: 1.05rem;">${item.author}</div>
+        <div style="font-size: 0.825rem; color: var(--gold-700); font-weight: 600; margin-top: 2px;">
+          ${item.role ? item.role + ' • ' : ''}${item.company || ''}
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function initFeedbackModal() {
+  const modal = document.getElementById("feedbackModal");
+  const form = document.getElementById("feedbackForm");
+  if (!modal || !form) return;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("feedbackAuthor")?.value?.trim();
+    const role = document.getElementById("feedbackRole")?.value?.trim();
+    const company = document.getElementById("feedbackCompany")?.value?.trim();
+    const email = document.getElementById("feedbackEmail")?.value?.trim();
+    const rating = document.getElementById("feedbackRating")?.value || 5;
+    const quote = document.getElementById("feedbackQuote")?.value?.trim();
+
+    if (!name || !quote) {
+      alert("Please provide your name and your feedback message.");
+      return;
+    }
+
+    if (typeof addFeedback === "function") {
+      addFeedback({
+        author: name,
+        role: role || "Valued Client",
+        company: company || "",
+        email: email || "",
+        rating: rating,
+        quote: quote
+      });
+    }
+
+    form.reset();
+    closeFeedbackModal();
+    if (typeof showToast === "function") {
+      showToast("Thank you! Your feedback has been submitted for admin approval.");
+    } else {
+      alert("Thank you! Your feedback has been submitted for admin approval.");
+    }
+  });
+}
+
+function openFeedbackModal() {
+  const modal = document.getElementById("feedbackModal");
+  if (modal) {
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function closeFeedbackModal() {
+  const modal = document.getElementById("feedbackModal");
+  if (modal) {
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+}
+
+window.renderPublicTestimonials = renderPublicTestimonials;
+window.initFeedbackModal = initFeedbackModal;
+window.openFeedbackModal = openFeedbackModal;
+window.closeFeedbackModal = closeFeedbackModal;
+
 
 
 

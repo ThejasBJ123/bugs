@@ -54,6 +54,13 @@
         <span>Public Pages CMS</span>
       </button>
 
+      <button class="sidebar-btn" data-view="viewTestimonials" id="btnNavTestimonials">
+        <i class="fa-solid fa-comments"></i>
+        <span>Client Feedback</span>
+        <span id="pendingTestimonialsBadge" class="badge" style="display:none; margin-left: auto; background: #eab308; color: #1e1b4b; font-size: 0.7rem; padding: 2px 7px; border-radius: 10px; font-weight: 800;">0</span>
+      </button>
+
+
       <div style="margin-top: auto; padding-top: 1.5rem;">
         <a href="../index.html" class="sidebar-btn" target="_blank" style="color: #dfb774; background: rgba(223,183,116,0.1);">
           <i class="fa-solid fa-arrow-up-right-from-square"></i>
@@ -799,6 +806,57 @@
         </div>
       </section>
 
+      <!-- VIEW 6: CLIENT TESTIMONIALS & FEEDBACK MODERATION -->
+      <section class="admin-view-section" id="viewTestimonials" style="display: none;">
+        <div class="admin-card">
+          <div class="admin-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+            <div>
+              <h3 style="font-size: 1.35rem; font-weight: 800; color: #032b27; margin-bottom: 0.25rem;">
+                Client Feedback & Testimonials Moderation
+              </h3>
+              <p style="font-size: 0.875rem; color: #64748b; margin: 0;">
+                Review, approve, edit, or reject client feedback submissions before publishing to the public website.
+              </p>
+            </div>
+            <button class="btn btn-gold btn-sm" onclick="openAdminTestimonialModal()">
+              <i class="fa-solid fa-plus"></i> Add Client Feedback
+            </button>
+          </div>
+
+          <!-- Status Filter Tabs and Search Bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button class="testimonial-filter-pill filter-btn btn-sm active" data-status="All">All Feedback</button>
+              <button class="testimonial-filter-pill filter-btn btn-sm" data-status="Pending">Pending Approval</button>
+              <button class="testimonial-filter-pill filter-btn btn-sm" data-status="Approved">Approved</button>
+              <button class="testimonial-filter-pill filter-btn btn-sm" data-status="Rejected">Rejected</button>
+            </div>
+
+            <div style="width: 260px;">
+              <input type="text" id="testimonialSearch" class="form-control" placeholder="Search author, company, quote..." style="padding: 0.5rem 0.85rem; font-size: 0.875rem;">
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID & Date</th>
+                  <th>Author & Company</th>
+                  <th>Rating</th>
+                  <th>Feedback Review</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="testimonialsTableBody">
+                <!-- Rendered by js/admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
     </div>
   </main>
 
@@ -1045,6 +1103,63 @@
               <i class="fa-solid fa-floppy-disk"></i> Save & Apply Across All Pages
             </button>
             <button type="button" class="btn btn-outline modal-close-trigger" onclick="closeCompanyModal()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Testimonial Edit/Add Modal -->
+  <div class="modal-backdrop" id="adminTestimonialModal">
+    <div class="modal-card" style="max-width: 540px;">
+      <div class="modal-header">
+        <h3 id="adminTestimonialModalTitle"><i class="fa-solid fa-comments text-gold"></i> Edit Client Testimonial</h3>
+        <button class="modal-close-btn" onclick="closeAdminTestimonialModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body modal-body-compact">
+        <form id="adminTestimonialForm">
+          <input type="hidden" id="adminTestimonialId">
+          <div class="form-group">
+            <label class="form-label" for="adminTestimonialAuthor">Client Author Name *</label>
+            <input type="text" id="adminTestimonialAuthor" class="form-control" required placeholder="e.g. R. Chandrashekar">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="adminTestimonialRole">Role / Title</label>
+              <input type="text" id="adminTestimonialRole" class="form-control" placeholder="e.g. Head of Logistics">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="adminTestimonialCompany">Company Name *</label>
+              <input type="text" id="adminTestimonialCompany" class="form-control" required placeholder="e.g. Amrutha Dairy & Feeds">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="adminTestimonialRating">Star Rating</label>
+              <select id="adminTestimonialRating" class="form-select">
+                <option value="5">⭐⭐⭐⭐⭐ (5 Stars)</option>
+                <option value="4">⭐⭐⭐⭐ (4 Stars)</option>
+                <option value="3">⭐⭐⭐ (3 Stars)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="adminTestimonialStatus">Approval Status</label>
+              <select id="adminTestimonialStatus" class="form-select">
+                <option value="Approved">Approved (Public)</option>
+                <option value="Pending">Pending Review</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="adminTestimonialQuote">Feedback / Quote Text *</label>
+            <textarea id="adminTestimonialQuote" class="form-control" rows="4" required></textarea>
+          </div>
+          <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+            <button type="submit" class="btn btn-gold" style="flex: 1;">
+              <i class="fa-solid fa-floppy-disk"></i> Save & Update
+            </button>
+            <button type="button" class="btn btn-outline" onclick="closeAdminTestimonialModal()">Cancel</button>
           </div>
         </form>
       </div>

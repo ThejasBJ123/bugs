@@ -332,12 +332,17 @@
   <!-- Client Testimonials -->
   <section class="section-padding" style="background: var(--dark-50); border-top: 1px solid var(--dark-200);">
     <div class="container">
-      <div class="text-center" style="margin-bottom: 3.5rem;">
+      <div class="text-center" style="margin-bottom: 3rem;">
         <span class="section-tag section-tag-emerald">Trusted By Industry Leaders</span>
         <h2 class="section-title">What Our Packaging Partners Say</h2>
+        <div style="margin-top: 1rem;">
+          <button class="btn btn-gold btn-sm" onclick="openFeedbackModal()">
+            <i class="fa-solid fa-pen-to-square"></i> Submit Your Feedback
+          </button>
+        </div>
       </div>
 
-      <div class="testimonials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+      <div class="testimonials-grid" id="testimonialsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
         <div style="background: var(--white); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--dark-200); position: relative;">
           <div style="color: var(--gold-500); font-size: 2rem; margin-bottom: 1rem;"><i class="fa-solid fa-quote-left"></i></div>
           <p style="font-size: 0.95rem; color: var(--dark-700); line-height: 1.7; margin-bottom: 1.5rem;">
@@ -367,6 +372,7 @@
       </div>
     </div>
   </section>
+
 
   <!-- Footer -->
   <footer class="footer">
@@ -462,6 +468,67 @@
     </a>
   </div>
 
+
+  <!-- Client Feedback Submission Modal -->
+  <div class="modal-backdrop" id="feedbackModal">
+    <div class="modal-card" style="max-width: 540px;">
+      <div class="modal-header" style="border-bottom: 1px solid var(--dark-200); padding-bottom: 1rem;">
+        <h3 style="color: var(--primary-900); font-weight: 800; display: flex; align-items: center; gap: 0.6rem; font-size: 1.25rem;">
+          <i class="fa-solid fa-comment-medical text-gold"></i> Submit Client Feedback
+        </h3>
+        <button class="modal-close-btn" onclick="closeFeedbackModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="feedbackForm" style="padding-top: 1rem;">
+        <div style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Your Full Name *</label>
+          <input type="text" id="feedbackAuthor" class="form-control" required placeholder="e.g. Ramesh Kumar">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Role / Designation</label>
+            <input type="text" id="feedbackRole" class="form-control" placeholder="e.g. Purchase Manager">
+          </div>
+          <div>
+            <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Company Name *</label>
+            <input type="text" id="feedbackCompany" class="form-control" required placeholder="e.g. Karnataka Agri Feeds">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Contact Email (Optional)</label>
+            <input type="email" id="feedbackEmail" class="form-control" placeholder="e.g. client@company.com">
+          </div>
+          <div>
+            <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Rating *</label>
+            <select id="feedbackRating" class="form-control" style="font-weight: 700;">
+              <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+              <option value="4">⭐⭐⭐⭐ (4/5)</option>
+              <option value="3">⭐⭐⭐ (3/5)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.25rem;">
+          <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Your Review / Feedback *</label>
+          <textarea id="feedbackQuote" class="form-control" rows="3" required placeholder="Share your experience working with Rayashree Weaving packaging products..."></textarea>
+        </div>
+
+        <div style="background: var(--dark-50); border: 1px solid var(--dark-200); border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.8rem; color: var(--dark-600); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+          <i class="fa-solid fa-shield-halved text-emerald" style="font-size: 1rem;"></i>
+          <span>Submitted reviews undergo executive administration review prior to public publishing.</span>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+          <button type="button" class="btn btn-outline" onclick="closeFeedbackModal()">Cancel</button>
+          <button type="submit" class="btn btn-gold">
+            <i class="fa-solid fa-paper-plane"></i> Submit Feedback
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- JavaScript Scripts -->
   <script src="js/data.js?v=3.5"></script>
