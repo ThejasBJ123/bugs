@@ -633,6 +633,11 @@ ul, ol {
   gap: 1rem;
 }
 
+/* Mobile Swipe Hint Badge (Hidden on Desktop by default) */
+.mobile-swipe-hint {
+  display: none;
+}
+
 .product-filter-bar {
   display: flex;
   justify-content: center;
