@@ -1412,7 +1412,7 @@ function renderCompanyProfile() {
     elEmailLink.href = `mailto:${company.email || "rayashreewpvtltd@gmail.com"}`;
   }
   if (elHours) elHours.textContent = company.hours || "Mon - Sat: 8:30 AM - 7:30 PM (IST)";
-  if (elAddress) elAddress.textContent = company.address || "No. 09 Survey No. 77/3, Hosahalli, Kannali, Kodigenahalli post, Yeshwanthpura Hobli, Bangalore North, Bangalore - 560112, Karnataka, India";
+  if (elAddress) elAddress.textContent = company.address || "Sy No. 6/10 & 6/1, Kenchanapur Village, Kengeri Hobali, Sulikere Post, BENGALURU-560060, Karnataka, India";
 
   // Render Dynamic Manufacturing Scope
   const prodCountEl = document.getElementById("compViewProductCount");

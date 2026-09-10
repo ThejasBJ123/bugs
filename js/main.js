@@ -130,10 +130,19 @@ function applyDynamicSiteContent() {
         tip.textContent = "Chat on WhatsApp";
         a.appendChild(tip);
       }
-    } else if (!a.href.includes("?text=")) {
-      a.href = `https://wa.me/${waNum}`;
-    }
   });
+
+  if (company.shortAddress || company.address) {
+    const topLocationItems = document.querySelectorAll(".top-bar-item .fa-location-dot ~ span");
+    topLocationItems.forEach(span => {
+      span.textContent = company.shortAddress || "Kenchanapur Village, Kengeri Hobli, Bengaluru - 560060";
+    });
+
+    const footerLocationItems = document.querySelectorAll(".footer-contact-item .fa-location-dot ~ span");
+    footerLocationItems.forEach(span => {
+      span.textContent = company.shortAddress || "Kenchanapur Village, Kengeri Hobli, Bengaluru - 560060";
+    });
+  }
 
   // 3. Home Page Hero & Stats (if on index.html)
   if (content && content.home) {

@@ -14,8 +14,10 @@ const COMPANY_INFO = {
   phoneFormatted: "+91 91087 13258",
   whatsappNumber: "919108713258",
   email: "rayashreewpvtltd@gmail.com",
-  address: "No. 09 Survey No. 77/3, Hosahalli, Kannali, Kodigenahalli post, Yeshwanthpura Hobli, Bangalore North, Bangalore - 560112, Karnataka, India",
-  shortAddress: "Hosahalli, Kannali, Bangalore North - 560112",
+  address: "Sy No. 6/10 & 6/1, Kenchanapur Village, Kengeri Hobali, Sulikere Post, BENGALURU-560060, Karnataka, India",
+  shortAddress: "Kenchanapur Village, Kengeri Hobli, Bengaluru - 560060",
+  udyamNo: "UDYAM-AM-KR-03-0729350",
+  gstinNo: "29AAHCH4322G1ZN",
   hours: "Mon - Sat: 8:30 AM - 7:30 PM",
   capacity: "5,000,000+ Sacks / Month",
   established: "2018",
@@ -314,7 +316,7 @@ const DEFAULT_PAGE_CONTENT = {
     ceoName: "Lakshmi Kanth",
     phone: "+91 9108713258",
     email: "rayashreewpvtltd@gmail.com",
-    address: "No. 09 Survey No. 77/3, Hosahalli, Kannali, Kodigenahalli post, Yeshwanthpura Hobli, Bangalore North, Bangalore - 560112",
+    address: "Sy No. 6/10 & 6/1, Kenchanapur Village, Kengeri Hobali, Sulikere Post, BENGALURU-560060",
     timings: "Monday - Saturday: 8:30 AM - 7:30 PM (IST)"
   }
 };
@@ -438,7 +440,7 @@ function getProducts() {
   if (stored !== null) {
     try { 
       const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed) && parsed.length > 0) {
+      if (Array.isArray(parsed)) {
         const cleaned = parsed.filter(p => {
           if (!p || typeof p !== "object") return false;
           const name = String(p.name || "").trim().toLowerCase();
@@ -456,12 +458,10 @@ function getProducts() {
           return true;
         });
 
-        if (cleaned.length > 0) {
-          if (cleaned.length !== parsed.length) {
-            localStorage.setItem("rw_products", JSON.stringify(cleaned));
-          }
-          return cleaned;
+        if (cleaned.length !== parsed.length) {
+          localStorage.setItem("rw_products", JSON.stringify(cleaned));
         }
+        return cleaned;
       }
     } catch (e) { 
       console.error("Error reading rw_products from localStorage:", e); 
@@ -600,7 +600,7 @@ function getTestimonials() {
   if (stored !== null) {
     try {
       const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed) && parsed.length > 0) {
+      if (Array.isArray(parsed)) {
         return parsed;
       }
     } catch (e) {
