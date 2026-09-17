@@ -20,7 +20,7 @@ function resolveAssetPath(path) {
   return path;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function initApp() {
   try { initPreloader(); } catch (e) { console.error("initPreloader error:", e); }
   try { initNavbar(); } catch (e) { console.error("initNavbar error:", e); }
   try { initRFQModal(); } catch (e) { console.error("initRFQModal error:", e); }
@@ -51,7 +51,13 @@ document.addEventListener("DOMContentLoaded", () => {
       trackPageView(pageName);
     } catch (e) {}
   }
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initApp);
+} else {
+  initApp();
+}
 
 // Instant live re-render when admin updates products in another tab
 window.addEventListener("storage", (e) => {
@@ -130,6 +136,7 @@ function applyDynamicSiteContent() {
         tip.textContent = "Chat on WhatsApp";
         a.appendChild(tip);
       }
+    }
   });
 
   if (company.shortAddress || company.address) {
@@ -873,7 +880,8 @@ function initPreloader() {
   if (!preloader) return;
 
   const titleElem = document.getElementById("animatedPreloaderTitle");
-  if (titleElem) {
+  if (titleElem && !titleElem.dataset.animated) {
+    titleElem.dataset.animated = "true";
     const text = "RAYASHREE WEAVING PVT. LTD.";
     titleElem.innerHTML = "";
     
@@ -887,6 +895,7 @@ function initPreloader() {
   }
 
   const hidePreloader = () => {
+    if (preloader.classList.contains("fade-out")) return;
     preloader.classList.add("fade-out");
     setTimeout(() => {
       preloader.style.display = "none";
