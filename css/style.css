@@ -1161,6 +1161,11 @@ ul, ol {
 }
 
 @media (max-width: 768px) {
+  /* Utility: hide on mobile */
+  .hide-mobile {
+    display: none !important;
+  }
+
   :root {
     --header-height: 64px;
   }
@@ -1191,8 +1196,15 @@ ul, ol {
   }
 
   .brand-logo img {
-    height: 34px;
-    max-width: 140px;
+    height: 36px;
+    max-width: 130px;
+    object-fit: contain;
+  }
+
+  .brand-logo > a > div,
+  .brand-logo div {
+    padding: 0.25rem 0.5rem !important;
+    max-width: 160px;
   }
 
   .header-actions {
@@ -1273,33 +1285,36 @@ ul, ol {
     transform: scale(0.92);
   }
 
+  /* Top Bar – compact on mobile: only phone & email, centered */
   .top-bar {
-    display: block !important;
     background: var(--primary-900);
     color: var(--dark-200);
-    font-size: 0.725rem;
-    padding: 0.35rem 0;
+    font-size: 0.75rem;
+    padding: 0.4rem 0;
     border-bottom: 1px solid rgba(223, 183, 116, 0.2);
   }
 
   .top-bar-inner {
     justify-content: center !important;
-    gap: 0.35rem 0.85rem !important;
+    gap: 0 !important;
   }
 
   .top-bar-info {
-    gap: 0.4rem 0.85rem !important;
     justify-content: center !important;
+    gap: 0.35rem 1rem !important;
+    flex-wrap: wrap;
+    width: 100%;
     text-align: center;
   }
 
   .top-bar-item {
-    font-size: 0.725rem !important;
+    font-size: 0.78rem !important;
     white-space: nowrap;
+    gap: 0.3rem;
   }
 
   .top-bar-item i {
-    font-size: 0.75rem !important;
+    font-size: 0.78rem !important;
   }
 
   /* Hero Section Mobile Fixes */
