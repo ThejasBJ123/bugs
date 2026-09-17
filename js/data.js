@@ -33,7 +33,7 @@ const DEFAULT_PRODUCTS = [
     shortName: "FIBC Bulk Bags",
     category: "Bulk Logistics",
     badge: "Heavy Duty 2-Ton",
-    image: "assets/images/bags.jpg",
+    image: "assets/images/fibc-bags.jpg",
     capacityRange: "500kg - 2,000kg (SWL 1 - 2 Ton)",
     gsmRange: "140 GSM - 240 GSM",
     material: "Virgin PP Woven Fabric with Safety Factor 5:1 / 6:1",
@@ -215,7 +215,7 @@ const DEFAULT_PRODUCTS = [
     shortName: "Industrial Bags",
     category: "Industrial",
     badge: "Heavy Duty",
-    image: "assets/images/bags.jpg",
+    image: "assets/images/industrial-bags.jpg",
     capacityRange: "10kg - 100kg",
     gsmRange: "90 GSM - 180 GSM",
     material: "Heavy-Duty Virgin PP / HDPE Woven Polypropylene",
@@ -234,8 +234,10 @@ const DEFAULT_PRODUCTS = [
       "Stackable pallet-compatible design for efficient warehouse logistics"
     ]
   }
-];
-
+];
+
+
+
 const DEFAULT_INQUIRIES = [];
 
 const DEFAULT_TESTIMONIALS = [
