@@ -378,7 +378,7 @@ function renderInquiriesTable() {
     else if (item.status === "Archived") badgeClass = "badge-archived";
 
     const cleanPhone = item.phone.replace(/[^0-9]/g, "");
-    const waText = encodeURIComponent(`Hello ${item.clientName}, This is Lakshmi Kanth from Rayashree Weaving regarding your inquiry #${item.id} for ${item.product}.`);
+    const waText = encodeURIComponent(`Hello ${item.clientName}, This is Rayashree from Rayashree Weaving regarding your inquiry #${item.id} for ${item.product}.`);
 
     tr.innerHTML = `
       <td><strong>${item.id}</strong><div style="font-size: 0.75rem; color: #94a3b8;">${item.date}</div></td>
@@ -1250,7 +1250,7 @@ function loadCmsFormValues() {
 
   // 5. Contact & Footer CMS
   if (company) {
-    if (document.getElementById("cmsContactCeoName")) document.getElementById("cmsContactCeoName").value = company.ceo || "Lakshmi Kanth";
+    if (document.getElementById("cmsContactCeoName")) document.getElementById("cmsContactCeoName").value = company.ceo || "Rayashree";
     if (document.getElementById("cmsContactPhone")) document.getElementById("cmsContactPhone").value = company.phone || "+91 9108713258";
     if (document.getElementById("cmsContactEmail")) document.getElementById("cmsContactEmail").value = company.email || "rayashreewpvtltd@gmail.com";
     if (document.getElementById("cmsContactHours")) document.getElementById("cmsContactHours").value = company.hours || "Mon - Sat: 8:30 AM - 7:30 PM (IST)";
@@ -1381,7 +1381,7 @@ function renderCompanyProfile() {
     headerLogo.src = resolveAssetPath(company.logo || company.logoWhite);
   }
   if (headerName) headerName.textContent = company.name || "RAYASHREE WEAVING PVT. LTD.";
-  if (headerCeo) headerCeo.textContent = company.ceo || "Lakshmi Kanth";
+  if (headerCeo) headerCeo.textContent = company.ceo || "Rayashree";
 
   // Update Corporate Details
   const elLegal = document.getElementById("compViewLegalName");
@@ -1395,7 +1395,7 @@ function renderCompanyProfile() {
 
   if (elLegal) elLegal.textContent = company.name || "RAYASHREE WEAVING PVT. LTD.";
   if (elBrand) elBrand.textContent = company.brandName || "Rayashree Weaving";
-  if (elCeo) elCeo.textContent = company.ceo || "Lakshmi Kanth";
+  if (elCeo) elCeo.textContent = company.ceo || "Rayashree";
 
   const cleanPhone = company.phone || "+91 9108713258";
   const numOnly = (company.whatsappNumber || cleanPhone).replace(/[^0-9]/g, "");
@@ -1535,7 +1535,7 @@ function openCompanyModal() {
   if (!modal) return;
 
   if (document.getElementById("compEditName")) document.getElementById("compEditName").value = company.name || "RAYASHREE WEAVING PVT. LTD.";
-  if (document.getElementById("compEditCeo")) document.getElementById("compEditCeo").value = company.ceo || "Lakshmi Kanth";
+  if (document.getElementById("compEditCeo")) document.getElementById("compEditCeo").value = company.ceo || "Rayashree";
   if (document.getElementById("compEditPhone")) document.getElementById("compEditPhone").value = company.phone || "+91 9108713258";
   if (document.getElementById("compEditEmail")) document.getElementById("compEditEmail").value = company.email || "rayashreewpvtltd@gmail.com";
   if (document.getElementById("compEditHours")) document.getElementById("compEditHours").value = company.hours || "Mon - Sat: 8:30 AM - 7:30 PM (IST)";

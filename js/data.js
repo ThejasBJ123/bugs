@@ -8,7 +8,7 @@ const COMPANY_INFO = {
   tagline: "Precision Woven Solutions • Global Quality Packaging & Textiles",
   logo: "assets/logo.png",
   logoWhite: "assets/logo.png",
-  ceo: "Lakshmi Kanth",
+  ceo: "Rayashree",
   designation: "Company CEO",
   phone: "+91 9108713258",
   phoneFormatted: "+91 91087 13258",
@@ -341,7 +341,7 @@ const DEFAULT_PAGE_CONTENT = {
     customDesc: "At Rayashree Weaving, we customize every parameter to match your packing machinery and logistics constraints. We engineer custom GSMs (50 to 450 GSM), multi-color rotogravure / flexo branding, gusset widths, and liner attachments."
   },
   contact: {
-    ceoName: "Lakshmi Kanth",
+    ceoName: "Rayashree",
     phone: "+91 9108713258",
     email: "rayashreewpvtltd@gmail.com",
     address: "Sy No. 6/10 & 6/1, Kenchanapur Village, Kengeri Hobali, Sulikere Post, BENGALURU-560060",

@@ -524,12 +524,12 @@ function openRFQModal(productName = "") {
     const prod = products.find(p => (p.name && p.name.toLowerCase() === productName.toLowerCase()) || p.id === productName);
     
     if (prod) {
-      text = `Hello Mr. Lakshmi Kanth (Rayashree Weaving),\n\nI would like to request a direct factory quotation and specifications for:\n📦 *Product:* ${prod.name}\n📂 *Category:* ${prod.category || 'Industrial Packaging'}\n⚖️ *Capacity / Load:* ${prod.capacityRange || 'Custom'}\n🧵 *GSM Weight:* ${prod.gsmRange || 'Standard'}\n\nPlease share current factory pricing, minimum order quantity, and delivery timeline.`;
+      text = `Hello Rayashree (Rayashree Weaving),\n\nI would like to request a direct factory quotation and specifications for:\n📦 *Product:* ${prod.name}\n📂 *Category:* ${prod.category || 'Industrial Packaging'}\n⚖️ *Capacity / Load:* ${prod.capacityRange || 'Custom'}\n🧵 *GSM Weight:* ${prod.gsmRange || 'Standard'}\n\nPlease share current factory pricing, minimum order quantity, and delivery timeline.`;
     } else {
-      text = `Hello Mr. Lakshmi Kanth (Rayashree Weaving),\n\nI would like to request a quotation for *${productName.trim()}*.\n\nPlease share current factory pricing and delivery timeline.`;
+      text = `Hello Rayashree (Rayashree Weaving),\n\nI would like to request a quotation for *${productName.trim()}*.\n\nPlease share current factory pricing and delivery timeline.`;
     }
   } else {
-    text = `Hello Mr. Lakshmi Kanth (Rayashree Weaving),\n\nI would like to request a direct factory quotation for bulk industrial woven packaging & sacks.\n\nPlease share your product catalog and pricing.`;
+    text = `Hello Rayashree (Rayashree Weaving),\n\nI would like to request a direct factory quotation for bulk industrial woven packaging & sacks.\n\nPlease share your product catalog and pricing.`;
   }
 
   const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
@@ -706,7 +706,7 @@ function initProductGrid() {
 
           <div class="product-card-footer">
             <button class="btn btn-outline btn-sm" onclick="openProductSpecsModal('${prod.id}')" style="flex: 1;"><i class="fa-solid fa-circle-info"></i> View Specs</button>
-            <a href="https://wa.me/919108713258?text=${encodeURIComponent(`Hello Mr. Lakshmi Kanth (Rayashree Weaving),\n\nI want to BUY / order *${prod.name}*.\n• *Category:* ${prod.category || 'Industrial Packaging'}\n• *Capacity / Load:* ${prod.capacityRange || 'Custom'}\n• *GSM Weight:* ${prod.gsmRange || 'Standard'}\n\nPlease share current pricing and order placement details.`)}" target="_blank" class="btn btn-sm" style="flex: 1.2; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; background: #25d366; color: #ffffff; border: 1px solid #25d366; font-weight: 700;">
+            <a href="https://wa.me/919108713258?text=${encodeURIComponent(`Hello Rayashree (Rayashree Weaving),\n\nI want to BUY / order *${prod.name}*.\n• *Category:* ${prod.category || 'Industrial Packaging'}\n• *Capacity / Load:* ${prod.capacityRange || 'Custom'}\n• *GSM Weight:* ${prod.gsmRange || 'Standard'}\n\nPlease share current pricing and order placement details.`)}" target="_blank" class="btn btn-sm" style="flex: 1.2; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; background: #25d366; color: #ffffff; border: 1px solid #25d366; font-weight: 700;">
               <i class="fa-brands fa-whatsapp" style="font-size: 1.05rem;"></i> Buy Now
             </a>
           </div>
@@ -835,7 +835,7 @@ function openProductSpecsModal(productId) {
       <button class="btn btn-gold btn-lg" onclick="closeProductSpecsModal(); openRFQModal('${prod.name}');" style="flex: 1.5;">
         <i class="fa-solid fa-calculator"></i> Request Direct Factory Quote
       </button>
-      <a href="https://wa.me/919108713258?text=${encodeURIComponent(`Hello Mr. Lakshmi Kanth (Rayashree Weaving),\n\nI am inquiring about *${prod.name}*.\n• *Category:* ${prod.category || 'Industrial Packaging'}\n• *Capacity / Load:* ${prod.capacityRange || 'Custom'}\n• *GSM Weight:* ${prod.gsmRange || 'Standard'}\n• *Material:* ${prod.material || '100% Virgin Polymer'}\n\nPlease provide pricing and minimum order quantity.`)}" target="_blank" class="btn btn-primary" style="flex: 1;">
+      <a href="https://wa.me/919108713258?text=${encodeURIComponent(`Hello Rayashree (Rayashree Weaving),\n\nI am inquiring about *${prod.name}*.\n• *Category:* ${prod.category || 'Industrial Packaging'}\n• *Capacity / Load:* ${prod.capacityRange || 'Custom'}\n• *GSM Weight:* ${prod.gsmRange || 'Standard'}\n• *Material:* ${prod.material || '100% Virgin Polymer'}\n\nPlease provide pricing and minimum order quantity.`)}" target="_blank" class="btn btn-primary" style="flex: 1;">
         <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
       </a>
     </div>
