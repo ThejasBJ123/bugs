@@ -1389,57 +1389,35 @@ ul, ol {
     font-size: 0.725rem !important;
   }
 
-  /* Horizontal Filter Bar for Touch */
+  /* Wrap Filter Bar for Touch Screens */
   .product-filter-bar {
     display: flex !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
+    flex-wrap: wrap !important;
     gap: 0.5rem !important;
-    padding: 0.5rem 0.25rem 0.6rem !important;
-    margin-bottom: 0.75rem !important;
-    scrollbar-width: none;
-  }
-
-  .product-filter-bar::-webkit-scrollbar {
-    display: none;
+    padding: 0.25rem 0 !important;
+    margin-bottom: 1.25rem !important;
+    overflow-x: visible !important;
   }
 
   .filter-btn {
     white-space: nowrap !important;
-    flex-shrink: 0 !important;
     padding: 0.45rem 0.85rem !important;
-    font-size: 0.8rem !important;
+    font-size: 0.82rem !important;
   }
 
-  /* Mobile Swipe Hint Pill */
+  /* Hide Swipe Hint */
   .mobile-swipe-hint {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--gold-700);
-    background: rgba(223, 183, 116, 0.12);
-    border: 1px solid rgba(223, 183, 116, 0.25);
-    border-radius: 20px;
-    padding: 0.3rem 0.85rem;
-    margin: 0 auto 0.85rem auto;
-    width: fit-content;
+    display: none !important;
   }
 
-  /* Products Horizontal Snap Carousel on Mobile (Massively reduces vertical length) */
+  /* Full-Width Responsive Products Grid on Mobile (No cut-off cards) */
   .products-grid {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    gap: 1rem !important;
-    padding: 0.5rem 0.25rem 1rem 0.25rem !important;
-    scrollbar-width: none !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    overflow-x: visible !important;
+    padding: 0 !important;
+    width: 100% !important;
   }
 
   .products-grid::-webkit-scrollbar {
@@ -1447,17 +1425,18 @@ ul, ol {
   }
 
   .products-grid .product-card {
-    flex: 0 0 280px !important;
-    width: 280px !important;
-    min-width: 280px !important;
-    max-width: 82vw !important;
-    scroll-snap-align: start !important;
+    flex: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
     display: flex !important;
     flex-direction: column !important;
   }
 
   .product-card-img {
-    height: 165px !important;
+    height: 220px !important;
+    width: 100% !important;
+    object-fit: cover !important;
   }
 
   .product-card-body {
