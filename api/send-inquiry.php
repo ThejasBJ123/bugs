@@ -101,7 +101,7 @@ This inquiry was submitted on your Hostinger website.
 ";
 
 $headers = [
-    'From'         => 'no-reply@' . ($_SERVER['SERVER_NAME'] ?? 'rayashreeweaving.com'),
+    'From'         => 'no-reply@' . ($_SERVER['SERVER_NAME'] ?? 'rayashreeweaving.in'),
     'Reply-To'     => !empty($email) ? $email : 'rayashreewpvtltd@gmail.com',
     'X-Mailer'     => 'PHP/' . phpversion()
 ];
