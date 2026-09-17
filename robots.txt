@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.rayashreeweaving.com/sitemap.xml
+
+# Block admin panel from Google
+Disallow: /admin/
+Disallow: /api/
+Disallow: /data/
