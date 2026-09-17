@@ -12,14 +12,44 @@
   
   <!-- Font Awesome & Google Fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=2.4">
-  <link rel="stylesheet" href="css/components.css?v=2.4">
+  <link rel="stylesheet" href="css/style.css?v=4.0">
+  <link rel="stylesheet" href="css/components.css?v=4.0">
+
+  <style>
+    /* CSS failsafe: automatically transitions to public page after 5s even if JS is blocked/cached */
+    .site-preloader {
+      animation: preloaderAutoExit 5.2s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+    }
+    .site-preloader.fade-out {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      display: none !important;
+    }
+    @keyframes preloaderAutoExit {
+      0%, 88% {
+        opacity: 1;
+        visibility: visible;
+      }
+      97% {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      100% {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        display: none !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <!-- Divine 5-Second Intro Preloader Screen -->
   <div class="site-preloader" id="sitePreloader">
-    <button class="preloader-skip-btn" id="skipPreloaderBtn">Skip <i class="fa-solid fa-forward-step"></i></button>
+    <button class="preloader-skip-btn" id="skipPreloaderBtn" onclick="var p=document.getElementById('sitePreloader');if(p){p.style.display='none';p.style.pointerEvents='none';}">Skip <i class="fa-solid fa-forward-step"></i></button>
     <div class="preloader-ambient-glow"></div>
     <div class="preloader-card">
       <!-- Sacred God Avatar & Mantra inside Golden Animated Circle -->
@@ -55,20 +85,21 @@
   </div>
 
   <script>
-    /* Immediate failsafe: guarantee preloader auto-dismisses after 5 seconds & skip button works */
+    /* Immediate failsafe: auto-dismiss after 5s & instant skip to public page */
     (function() {
-      var preloader = document.getElementById("sitePreloader");
-      var skipBtn = document.getElementById("skipPreloaderBtn");
-      function dismiss() {
-        if (preloader && !preloader.classList.contains("fade-out")) {
-          preloader.classList.add("fade-out");
-          setTimeout(function() {
-            preloader.style.display = "none";
-          }, 850);
-        }
+      var p = document.getElementById("sitePreloader");
+      var btn = document.getElementById("skipPreloaderBtn");
+      function connectPublicPage() {
+        if (!p) return;
+        p.classList.add("fade-out");
+        p.style.pointerEvents = "none";
+        p.style.opacity = "0";
+        setTimeout(function() {
+          p.style.display = "none";
+        }, 300);
       }
-      if (skipBtn) skipBtn.addEventListener("click", dismiss);
-      setTimeout(dismiss, 5000);
+      if (btn) btn.onclick = connectPublicPage;
+      setTimeout(connectPublicPage, 5000);
     })();
   </script>
 
@@ -645,8 +676,8 @@
   </div>
 
   <!-- JavaScript Scripts -->
-  <script src="js/data.js?v=3.6"></script>
-  <script src="js/i18n.js?v=3.6"></script>
-  <script src="js/main.js?v=3.6"></script>
+  <script src="js/data.js?v=4.0"></script>
+  <script src="js/i18n.js?v=4.0"></script>
+  <script src="js/main.js?v=4.0"></script>
 </body>
 </html>
