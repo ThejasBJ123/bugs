@@ -27,10 +27,62 @@ const COMPANY_INFO = {
 
 const DEFAULT_PRODUCTS = [
   {
+    id: "PROD-FIBC",
+    slug: "fibc-bags",
+    name: "FIBC Bags",
+    shortName: "FIBC Bulk Bags",
+    category: "Bulk Logistics",
+    badge: "Heavy Duty 2-Ton",
+    image: "assets/images/bags.jpg",
+    capacityRange: "500kg - 2,000kg (SWL 1 - 2 Ton)",
+    gsmRange: "140 GSM - 240 GSM",
+    material: "Virgin PP Woven Fabric with Safety Factor 5:1 / 6:1",
+    tagline: "Heavy-Duty Flexible Intermediate Bulk Containers & Liners",
+    specifications: {
+      "Structure Types": "U-Panel, 4-Panel, Circular, Baffle Q-Bags",
+      "Lifting Loops": "Corner Loops, Cross-Corner Loops, Stevedore Straps",
+      "Filling / Discharge": "Open Top, Duffle Skirt, Filling Spout, Discharge Valve",
+      "Safety Factor (SF)": "5:1 (Single Trip) / 6:1 (Multi-Trip Heavy Duty)",
+      "Liner Attachments": "Form-Fit, Gusseted, Aluminum Barrier & Conductive Type C"
+    },
+    features: [
+      "Rigid ISO 21898 safety drop and load endurance tested",
+      "Baffle Q-Bag design prevents rounding to save 30% shipping space",
+      "Anti-static Type B & C fabric for hazardous chemical transport",
+      "Complete moisture protection with 80-120 micron PE liner"
+    ]
+  },
+  {
+    id: "PROD-LINER",
+    slug: "liner-bags",
+    name: "Liner Bags",
+    shortName: "Liner Bags",
+    category: "Bulk Logistics",
+    badge: "Moisture Proof",
+    image: "assets/images/liner-bags.jpg",
+    capacityRange: "Custom Sizes - 50L to 2,000L",
+    gsmRange: "80 Micron - 200 Micron",
+    material: "Food-Grade Virgin LDPE / LLDPE Polyethylene",
+    tagline: "High-Barrier Moisture-Proof Liners for FIBC, Drums & Containers",
+    specifications: {
+      "Types": "Form-Fit, Gusseted, Flat, Conductive (Type C), Barrier Foil",
+      "Thickness": "80 - 200 Micron (Custom)",
+      "Food Grade": "FDA Compliant, ROHS Certified",
+      "Sealing": "Heat Sealed with Reinforced Seams",
+      "Applications": "FIBC Liners, Drum Liners, Container Liners"
+    },
+    features: [
+      "Food-grade compliant for pharmaceuticals, food & chemicals",
+      "100% moisture-proof and airtight seal capability",
+      "Custom form-fit liners for any FIBC or container size",
+      "Anti-static and conductive options for hazardous materials"
+    ]
+  },
+  {
     id: "PROD-CATTLE",
     slug: "cattle-feed",
-    name: "Cattle Feed Woven Sacks",
-    shortName: "Cattle Feed Sacks",
+    name: "\uD83D\uDC04 Cattle Feed Bags",
+    shortName: "Cattle Feed Bags",
     category: "Feed & Agri",
     badge: "Best Seller",
     image: "assets/images/cattle-feed.jpg",
@@ -55,7 +107,7 @@ const DEFAULT_PRODUCTS = [
   {
     id: "PROD-POULTRY",
     slug: "poultry-feed",
-    name: "Poultry Feed Bags",
+    name: "\uD83D\uDC14 Poultry Feed Bags",
     shortName: "Poultry Feed Bags",
     category: "Feed & Agri",
     badge: "Export Grade",
@@ -81,8 +133,8 @@ const DEFAULT_PRODUCTS = [
   {
     id: "PROD-CEMENT",
     slug: "cement-bags",
-    name: "Block Bottom Cement Bags",
-    shortName: "Cement Valve Bags",
+    name: "\uD83C\uDFD7\uFE0F Cement Bags",
+    shortName: "Cement Bags",
     category: "Building & Construction",
     badge: "AD*STAR Tech",
     image: "assets/images/cement.jpg",
@@ -105,10 +157,36 @@ const DEFAULT_PRODUCTS = [
     ]
   },
   {
+    id: "PROD-AGRI",
+    slug: "agriculture-bags",
+    name: "\uD83C\uDF3E Agriculture Bags",
+    shortName: "Agriculture Bags",
+    category: "Agriculture & Farming",
+    badge: "Farm Grade",
+    image: "assets/images/agriculture-bags.jpg",
+    capacityRange: "10kg / 25kg / 50kg",
+    gsmRange: "60 GSM - 90 GSM",
+    material: "100% Virgin PP Woven with UV Stabilizer",
+    tagline: "Durable Woven Bags for Seeds, Grains, Fertilizers & Produce",
+    specifications: {
+      "Standard Dimensions": "18 x 28 inch / 22 x 38 inch",
+      "Printing": "Up to 6-Color Flexo / Rotogravure",
+      "UV Protection": "UV Masterbatch Stabilized for Field Use",
+      "Closure": "Open Mouth or Valve Type",
+      "Lamination": "BOPP Laminated or Plain Woven"
+    },
+    features: [
+      "Breathable weave prevents moisture buildup in stored grains",
+      "UV-stabilized for outdoor farm and field use",
+      "Available in printed or plain versions for bulk labeling",
+      "High-tensile stitching for rough field handling"
+    ]
+  },
+  {
     id: "PROD-SILAGE",
     slug: "silage-bags",
-    name: "Agricultural Silage Bags",
-    shortName: "Silage Fermentation Bags",
+    name: "\uD83C\uDF31 Silage Bags",
+    shortName: "Silage Bags",
     category: "Agriculture & Farming",
     badge: "High Barrier",
     image: "assets/images/silage-bags.jpg",
@@ -120,7 +198,7 @@ const DEFAULT_PRODUCTS = [
       "Available Sizes": "50kg, 100kg & 10ft Continuous Silo Tubes",
       "UV Resistance": "Minimum 24 Months Field Sunlight Rating",
       "Puncture Strength": "High Dart Impact (> 1,200 grams)",
-      "Oxygen Barrier": "< 10 cc/m²/24h Oxygen Permeability",
+      "Oxygen Barrier": "< 10 cc/m2/24h Oxygen Permeability",
       "Color Options": "White/Black Dual-Tone (Sun Reflective)"
     },
     features: [
@@ -131,85 +209,33 @@ const DEFAULT_PRODUCTS = [
     ]
   },
   {
-    id: "PROD-JUTE",
-    slug: "jute-sacks",
-    name: "Eco-Friendly Jute & Burlap Sacks",
-    shortName: "Natural Jute Sacks",
-    category: "Eco & Natural",
-    badge: "100% Biodegradable",
-    image: "assets/images/jute.jpg",
-    capacityRange: "50kg / 60kg / 100kg",
-    gsmRange: "280 GSM - 450 GSM",
-    material: "100% Natural Golden Jute Fibre (Hydrocarbon-Free)",
-    tagline: "Breathable Natural Gunny Bags for Coffee, Cocoa, Rice & Grains",
-    specifications: {
-      "Standard Sizes": "Standard A-Twill, B-Twill, Heavy Cee (28x40 inch)",
-      "Grade": "Food Grade MOT / Hydrocarbon-Free Processed",
-      "Striping": "Standard Green Stripes / Custom Mill Identification",
-      "Mouth Finish": "Selvedge & Overhead Hemmed",
-      "Sewing": "Herakles Double Heavy Duty Safety Stitch"
-    },
-    features: [
-      "100% natural, biodegradable, compostable and eco-friendly",
-      "Natural fiber porosity prevents moisture sweating & mold in grains",
-      "Complies with European & US organic food packaging standards",
-      "Re-usable multiple times with supreme tear resistance"
-    ]
-  },
-  {
-    id: "PROD-LINEN",
-    slug: "linen-fabric",
-    name: "Linen Fabric & Industrial Textiles",
-    shortName: "Linen Textile Fabric",
-    category: "Textiles & Weaving",
-    badge: "Custom Looms",
-    image: "assets/images/linen-fabric.jpg",
-    capacityRange: "Continuous Rolls (50m - 500m)",
-    gsmRange: "120 GSM - 350 GSM",
-    material: "Natural Pure Flax / Blended High-Tensile Linen",
-    tagline: "Precision Woven Natural Linen Rolls for Furnishings & Technical Use",
-    specifications: {
-      "Roll Width": "36 inch to 120 inch (Custom Sizing)",
-      "Yarn Count": "10s to 60s Natural Flax & Blend Weave",
-      "Finish": "Bleached, Semi-Bleached, Natural Grey, Scoured",
-      "Applications": "Home Textiles, Apparel, Industrial Filtration, Curtains",
-      "Packaging": "Moisture-Proof Polywrap Rolls on Heavy Core"
-    },
-    features: [
-      "Superior natural cooling and breathability with luxurious texture",
-      "Natural antibacterial and hypoallergenic properties",
-      "High tensile durability that softens gracefully with each wash",
-      "Custom loom width weaving matched to export buyer specifications"
-    ]
-  },
-  {
-    id: "PROD-FIBC",
-    slug: "fibc-bags",
-    name: "Industrial FIBC Jumbo Bags & Liners",
-    shortName: "FIBC Bulk Bags",
-    category: "Bulk Logistics",
-    badge: "Heavy Duty 2-Ton",
+    id: "PROD-INDUSTRIAL",
+    slug: "industrial-bags",
+    name: "\uD83C\uDFED Industrial Bags",
+    shortName: "Industrial Bags",
+    category: "Industrial",
+    badge: "Heavy Duty",
     image: "assets/images/bags.jpg",
-    capacityRange: "500kg - 2,000kg (SWL 1 - 2 Ton)",
-    gsmRange: "140 GSM - 240 GSM",
-    material: "Virgin PP Woven Fabric with Safety Factor 5:1 / 6:1",
-    tagline: "Heavy-Duty Flexible Intermediate Bulk Containers & Liners",
+    capacityRange: "10kg - 100kg",
+    gsmRange: "90 GSM - 180 GSM",
+    material: "Heavy-Duty Virgin PP / HDPE Woven Polypropylene",
+    tagline: "Robust Woven Sacks for Chemicals, Minerals & Industrial Bulk",
     specifications: {
-      "Structure Types": "U-Panel, 4-Panel, Circular, Baffle Q-Bags",
-      "Lifting Loops": "Corner Loops, Cross-Corner Loops, Stevedore Straps",
-      "Filling / Discharge": "Open Top, Duffle Skirt, Filling Spout, Discharge Valve",
-      "Safety Factor (SF)": "5:1 (Single Trip) / 6:1 (Multi-Trip Heavy Duty)",
-      "Liner Attachments": "Form-Fit, Gusseted, Aluminum Barrier & Conductive Type C"
+      "Standard Dimensions": "Custom Sizes Available",
+      "Lamination": "BOPP / PE Coated / Uncoated Options",
+      "Printing": "Up to 8-Color Rotogravure or Flexo",
+      "Closure": "Open Mouth, Valve, Heat-Sealed or Sewn",
+      "Special Options": "Anti-Static, UV Stabilized, Breathable Weave"
     },
     features: [
-      "Rigid ISO 21898 safety drop and load endurance tested",
-      "Baffle Q-Bag design prevents rounding to save 30% shipping space",
-      "Anti-static Type B & C fabric for hazardous chemical transport",
-      "Complete moisture protection with 80-120 micron PE liner"
+      "High-tensile anti-burst construction for industrial bulk loads",
+      "Chemical-resistant coating for corrosive material storage",
+      "Custom print, sizing and lamination for brand compliance",
+      "Stackable pallet-compatible design for efficient warehouse logistics"
     ]
   }
-];
-
+];
+
 const DEFAULT_INQUIRIES = [];
 
 const DEFAULT_TESTIMONIALS = [
