@@ -7,8 +7,50 @@
   <meta name="description" content="Browse the full manufacturing portfolio of Rayashree Weaving: Cattle Feed Bags, Poultry Feed Sacks, Cement Valve Bags, Silage Bags, Jute Sacks, Linen Fabric, and FIBC Bags.">
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="../css/style.css?v=2.5">
-  <link rel="stylesheet" href="../css/components.css?v=2.5">
+  <link rel="stylesheet" href="../css/style.css?v=5.2">
+  <link rel="stylesheet" href="../css/components.css?v=5.2">
+
+  <style>
+    /* Mobile Responsive Full-Width Product Cards (Guaranteed 100% visible, no cut-offs) */
+    @media (max-width: 768px) {
+      .products-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+        overflow-x: visible !important;
+        padding: 0 !important;
+        width: 100% !important;
+      }
+      .products-grid .product-card {
+        flex: none !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      .product-card-img {
+        height: 240px !important;
+        width: 100% !important;
+        object-fit: cover !important;
+      }
+      .product-filter-bar {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+        overflow-x: visible !important;
+        margin-bottom: 1.25rem !important;
+      }
+      .filter-btn {
+        white-space: nowrap !important;
+        padding: 0.45rem 0.85rem !important;
+        font-size: 0.82rem !important;
+      }
+      .mobile-swipe-hint {
+        display: none !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
