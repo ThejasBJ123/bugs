@@ -3,10 +3,12 @@ Public Website: https://thejasbj123.github.io/bugs/ (Landing page:
 index.html
 )
 
-Admin Portal: https://thejasbj123.github.io/bugs/admin/ (Admin page: 
+Admin Portal: https://thejasbj123.github.io/bugs/admin/ (Admin page: admin/index.html)
+Live Hostinger Admin: https://rayashreeweaving.in/admin/
 
-admin/index.html
-)
+Admin Credentials:
+- Username: Rayashree
+- Password: Shree@#$9481
 
 
 public_html
