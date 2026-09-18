@@ -493,3 +493,150 @@ body.admin-body {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ==========================================================================
+   Executive Admin Authentication Overlay
+   ========================================================================== */
+
+body.not-authenticated .admin-sidebar,
+body.not-authenticated .admin-main {
+  display: none !important;
+}
+
+.admin-login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 50% 20%, #07524a 0%, #032b27 50%, #011917 100%);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  opacity: 1;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
+}
+
+.admin-login-overlay.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.admin-login-card {
+  background: rgba(3, 43, 39, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(223, 183, 116, 0.35);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 35px rgba(223, 183, 116, 0.15);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 440px;
+  padding: 2.5rem 2.25rem;
+  box-sizing: border-box;
+  color: #f8fafc;
+  animation: loginCardPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes loginCardPop {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.admin-login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.admin-login-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: 1px solid #dfb774;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  margin-bottom: 1.25rem;
+}
+
+.admin-login-logo img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+.admin-login-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #dfb774;
+  background: rgba(223, 183, 116, 0.12);
+  border: 1px solid rgba(223, 183, 116, 0.3);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  margin-bottom: 0.85rem;
+}
+
+.admin-login-header h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 0.35rem 0;
+  letter-spacing: -0.02em;
+}
+
+.admin-login-header p {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.admin-login-input {
+  background: rgba(15, 23, 42, 0.6) !important;
+  border: 1.5px solid rgba(223, 183, 116, 0.3) !important;
+  color: #ffffff !important;
+  font-size: 0.95rem !important;
+  border-radius: 10px !important;
+  padding: 0.75rem 1rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.admin-login-input:focus {
+  border-color: #dfb774 !important;
+  background: rgba(15, 23, 42, 0.85) !important;
+  box-shadow: 0 0 0 3px rgba(223, 183, 116, 0.25) !important;
+  outline: none !important;
+}
+
+.admin-login-btn {
+  width: 100% !important;
+  padding: 0.85rem !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+  box-shadow: 0 6px 20px rgba(223, 183, 116, 0.25) !important;
+}
+
+.admin-login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(223, 183, 116, 0.35) !important;
+}

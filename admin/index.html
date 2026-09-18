@@ -12,9 +12,61 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="../css/style.css?v=2.2">
   <link rel="stylesheet" href="../css/components.css?v=2.2">
-  <link rel="stylesheet" href="../css/admin.css?v=2.2">
+  <link rel="stylesheet" href="../css/admin.css?v=3.0">
 </head>
-<body class="admin-body">
+<body class="admin-body not-authenticated">
+
+  <!-- Executive Admin Authentication Modal Gate -->
+  <div id="adminLoginOverlay" class="admin-login-overlay">
+    <div class="admin-login-card">
+      <div class="admin-login-header">
+        <div class="admin-login-logo">
+          <img src="../assets/logo.png" alt="Rayashree Weaving Logo">
+        </div>
+        <div>
+          <span class="admin-login-badge"><i class="fa-solid fa-shield-halved"></i> SECURE ACCESS</span>
+        </div>
+        <h2>Executive Portal</h2>
+        <p>Rayashree Weaving Pvt. Ltd. Management Console</p>
+      </div>
+
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+        <div class="form-group" style="margin-bottom: 1.25rem; text-align: left;">
+          <label class="form-label" for="loginUsername" style="color: #dfb774; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.5rem; display: block;">
+            <i class="fa-solid fa-user" style="margin-right: 6px;"></i> Admin Username
+          </label>
+          <input type="text" id="loginUsername" class="form-control admin-login-input" placeholder="Enter username" required autocomplete="username">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem; text-align: left;">
+          <label class="form-label" for="loginPassword" style="color: #dfb774; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.5rem; display: block;">
+            <i class="fa-solid fa-lock" style="margin-right: 6px;"></i> Admin Password
+          </label>
+          <div style="position: relative;">
+            <input type="password" id="loginPassword" class="form-control admin-login-input" placeholder="Enter password" required autocomplete="current-password" style="padding-right: 2.75rem !important;">
+            <button type="button" onclick="toggleAdminPasswordVisibility()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #94a3b8; cursor: pointer; padding: 4px; font-size: 1rem;" title="Show/Hide password">
+              <i class="fa-solid fa-eye" id="togglePasswordIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="loginErrorMsg" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); color: #fca5a5; padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.85rem; margin-bottom: 1.25rem; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-circle-exclamation" style="color: #ef4444;"></i>
+          <span>Invalid username or password. Please try again.</span>
+        </div>
+
+        <button type="submit" class="btn btn-gold admin-login-btn">
+          <i class="fa-solid fa-right-to-bracket"></i> Sign In to Portal
+        </button>
+
+        <div style="text-align: center; margin-top: 1.5rem;">
+          <a href="../index.html" style="color: #94a3b8; font-size: 0.85rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s;">
+            <i class="fa-solid fa-arrow-left"></i> Return to Public Website
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Sidebar -->
   <aside class="admin-sidebar">
@@ -70,14 +122,19 @@
     </nav>
 
     <div class="sidebar-footer">
-      <div style="display: flex; align-items: center; gap: 0.75rem; color: #cbd5e1; font-size: 0.85rem;">
-        <div style="width: 32px; height: 32px; border-radius: 50%; background: #dfb774; color: #032b27; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem;">
-          LK
+      <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; color: #cbd5e1; font-size: 0.85rem;">
+          <div style="width: 34px; height: 34px; border-radius: 50%; background: #dfb774; color: #032b27; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem;">
+            RW
+          </div>
+          <div>
+            <div style="font-weight: 700; color: #fff;">Rayashree</div>
+            <div style="font-size: 0.725rem; color: #dfb774;">Executive Admin</div>
+          </div>
         </div>
-        <div>
-          <div style="font-weight: 700; color: #fff;">Rayashree</div>
-          <div style="font-size: 0.725rem; color: #dfb774;">Company CEO</div>
-        </div>
+        <button onclick="handleAdminLogout()" title="Log Out of Portal" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); color: #f87171; border-radius: 8px; padding: 6px 10px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 700; transition: all 0.2s;">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
       </div>
     </div>
   </aside>
@@ -106,6 +163,9 @@
         <a href="https://wa.me/919108713258" target="_blank" class="btn btn-primary btn-sm">
           <i class="fa-brands fa-whatsapp"></i> CEO Direct
         </a>
+        <button onclick="handleAdminLogout()" class="btn btn-outline btn-sm" title="Log Out" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.4);">
+          <i class="fa-solid fa-right-from-bracket"></i> Log Out
+        </button>
       </div>
     </header>
 
@@ -1186,5 +1246,81 @@
   <script src="../js/data.js?v=3.5"></script>
   <script src="../js/i18n.js?v=3.5"></script>
   <script src="../js/admin.js?v=3.5"></script>
+
+  <!-- Executive Authentication Handler -->
+  <script>
+    (function initAdminAuth() {
+      const isAuth = sessionStorage.getItem('rw_admin_session') === 'authenticated';
+      const overlay = document.getElementById('adminLoginOverlay');
+      if (isAuth) {
+        document.body.classList.remove('not-authenticated');
+        if (overlay) overlay.style.display = 'none';
+      } else {
+        document.body.classList.add('not-authenticated');
+        if (overlay) {
+          overlay.style.display = 'flex';
+          setTimeout(function() {
+            const u = document.getElementById('loginUsername');
+            if (u) u.focus();
+          }, 200);
+        }
+      }
+    })();
+
+    function handleAdminLogin(e) {
+      if (e) e.preventDefault();
+      const u = (document.getElementById('loginUsername') ? document.getElementById('loginUsername').value : '').trim();
+      const p = (document.getElementById('loginPassword') ? document.getElementById('loginPassword').value : '').trim();
+      const err = document.getElementById('loginErrorMsg');
+
+      // Credentials:
+      // Username: Rayashree (case-insensitive)
+      // Password: Shree@#$9481 (exact)
+      if (u.toLowerCase() === 'rayashree' && p === 'Shree@#$9481') {
+        if (err) err.style.display = 'none';
+        sessionStorage.setItem('rw_admin_session', 'authenticated');
+        document.body.classList.remove('not-authenticated');
+        const overlay = document.getElementById('adminLoginOverlay');
+        if (overlay) {
+          overlay.classList.add('fade-out');
+          setTimeout(function() {
+            overlay.style.display = 'none';
+          }, 300);
+        }
+        if (typeof showToast === 'function') {
+          showToast('Welcome, Rayashree! Authenticated successfully.');
+        }
+      } else {
+        if (err) err.style.display = 'flex';
+        const pInput = document.getElementById('loginPassword');
+        if (pInput) {
+          pInput.value = '';
+          pInput.focus();
+        }
+      }
+    }
+
+    function handleAdminLogout() {
+      if (confirm('Are you sure you want to sign out of the Executive Portal?')) {
+        sessionStorage.removeItem('rw_admin_session');
+        window.location.reload();
+      }
+    }
+
+    function toggleAdminPasswordVisibility() {
+      const pInput = document.getElementById('loginPassword');
+      const icon = document.getElementById('togglePasswordIcon');
+      if (!pInput || !icon) return;
+      if (pInput.type === 'password') {
+        pInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        pInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+  </script>
 </body>
 </html>
