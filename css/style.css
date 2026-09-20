@@ -286,6 +286,30 @@ ul, ol {
   width: auto;
 }
 
+.brand-logo-pill {
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(223, 183, 116, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.25s ease;
+}
+
+.brand-logo-pill:hover {
+  border-color: var(--gold-400);
+  box-shadow: 0 4px 14px rgba(223, 183, 116, 0.25);
+}
+
+.brand-header-logo {
+  height: 44px;
+  width: auto;
+  max-width: 240px;
+  object-fit: contain;
+  display: block;
+}
+
 .nav-menu {
   display: flex;
   align-items: center;
