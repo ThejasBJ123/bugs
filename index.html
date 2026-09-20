@@ -307,25 +307,65 @@
     </div>
   </header>
 
-  <!-- ABOVE THE FOLD: Compact Executive Hero Section -->
-  <section class="hero-compact">
+  <!-- FIRST SCREEN IMMEDIATE: Products Catalog Section (First thing visitor sees) -->
+  <section class="products-section" id="products" style="padding: 2rem 0 4rem 0; background: #ffffff;">
+    <div class="container">
+      <div class="catalog-anchor-bar" style="background: transparent; border: none; padding: 0 0 1.25rem 0;">
+        <div class="anchor-bar-inner">
+          <div>
+            <span class="section-tag section-tag-emerald"><i class="fa-solid fa-boxes-packing"></i> Direct Manufacturing Catalog • ISO 9001:2015</span>
+            <h1 class="section-title dynamic-prod-heading" style="margin-bottom: 0.35rem; font-size: 2.35rem; color: var(--primary-900);">
+              Rayashree Weaving Product Catalog
+            </h1>
+            <p style="color: var(--dark-600); font-size: 1rem; margin: 0;">
+              Heavy-duty HDPE / PP Woven Sacks, FIBC Bags, Feed Bags & Industrial Packaging. Select a product to customize or order directly.
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="#customizer" class="btn btn-gold btn-sm">
+              <i class="fa-solid fa-sliders"></i> Open Bag Customizer
+            </a>
+            <a href="https://wa.me/919108713258?text=Hello%20Rayashree,%20I%20would%20like%20to%20inquire%20about%20your%20products." target="_blank" class="btn btn-sm" style="background: #25d366; color: #fff; border: 1px solid #22c55e; font-weight: 700;">
+              <i class="fa-brands fa-whatsapp"></i> WhatsApp Factory
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Buttons (Populated Dynamically by js/main.js) -->
+      <div class="product-filter-bar" id="productFilterBar" style="margin-bottom: 2rem;">
+        <!-- Dynamic Category Filter Buttons from js/main.js -->
+      </div>
+
+      <!-- All Products Grid with Images & VERTICAL Action Buttons (Populated Dynamically by js/main.js) -->
+      <div class="products-grid" id="productShowcaseGrid">
+        <!-- Rendered dynamically with 3 vertical buttons: Customize, View Specs, Buy on WhatsApp -->
+      </div>
+
+      <div class="text-center" style="margin-top: 2.5rem;">
+        <a href="#customizer" class="btn btn-gold btn-lg">
+          <i class="fa-solid fa-sliders"></i> Open Interactive Bag Customizer & Calculator &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Executive Overview & Plant Capacity Section (Placed After Products) -->
+  <section class="hero-compact" id="overview">
     <div class="container hero-compact-grid">
       <div>
         <div class="section-tag section-tag-emerald" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
           <i class="fa-solid fa-award text-gold"></i> Bangalore's Premier Industrial Weaving & Bag Factory • ISO 9001:2015
         </div>
-        <h1 class="hero-compact-title">
+        <h2 class="hero-compact-title" style="font-size: 2.4rem;">
           Precision Engineered <span class="text-gold-gradient">Woven Packaging</span> & Industrial Fabrics
-        </h1>
+        </h2>
         <p class="hero-compact-desc">
           Rayashree Weaving Pvt. Ltd. is Bangalore's trusted manufacturer of heavy-duty <strong>HDPE / PP Woven Sacks, FIBC Bags, PE Liners, Container Liners, Jute, and Linen Fabrics</strong> with monthly capacity exceeding 5 million bags.
         </p>
 
         <div class="hero-cta-group">
-          <a href="#products" class="btn btn-gold btn-lg">
-            <i class="fa-solid fa-boxes-stacked"></i> Explore All 8 Products Below
-          </a>
-          <a href="#customizer" class="btn btn-outline-white btn-lg">
+          <a href="#customizer" class="btn btn-gold btn-lg">
             <i class="fa-solid fa-sliders"></i> Customize Your Bags
           </a>
           <a href="https://wa.me/919108713258?text=Hello%20Rayashree,%20I%20need%20a%20factory%20quote%20for%20packaging%20sacks." target="_blank" class="btn btn-lg" style="background: #25d366; color: #ffffff; border: 1px solid #22c55e; font-weight: 700;">
@@ -387,49 +427,6 @@
             <a href="#customizer" style="color: var(--gold-300); font-size: 0.825rem; font-weight: 700; text-decoration: none;">Build Custom Sacks &rarr;</a>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FIRST SCREEN IMMEDIATE CATALOG: Products Section -->
-  <section class="products-section" id="products" style="padding: 2.5rem 0 4.5rem 0; background: #ffffff;">
-    <div class="container">
-      <div class="catalog-anchor-bar" style="background: transparent; border: none; padding: 0 0 1.5rem 0;">
-        <div class="anchor-bar-inner">
-          <div>
-            <span class="section-tag section-tag-emerald"><i class="fa-solid fa-boxes-packing"></i> Core Manufacturing Catalog</span>
-            <h2 class="section-title dynamic-prod-heading" style="margin-bottom: 0.35rem; font-size: 2.2rem; color: var(--primary-900);">
-              Manufacturing Product Portfolio
-            </h2>
-            <p style="color: var(--dark-600); font-size: 0.95rem; margin: 0;">
-              Every product card below includes custom sizing, specs datasheet, and 1-click factory ordering.
-            </p>
-          </div>
-          <div style="display: flex; gap: 0.75rem;">
-            <a href="#customizer" class="btn btn-gold btn-sm">
-              <i class="fa-solid fa-sliders"></i> Open Bag Customizer
-            </a>
-            <button class="btn btn-primary btn-sm" onclick="openRFQModal()">
-              <i class="fa-solid fa-file-invoice"></i> Direct Factory Quote
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Filter Buttons (Populated Dynamically by js/main.js) -->
-      <div class="product-filter-bar" id="productFilterBar" style="margin-bottom: 2rem;">
-        <!-- Dynamic Category Filter Buttons from js/main.js -->
-      </div>
-
-      <!-- All Products Grid with Images & VERTICAL Action Buttons (Populated Dynamically by js/main.js) -->
-      <div class="products-grid" id="productShowcaseGrid">
-        <!-- Rendered dynamically with 3 vertical buttons: Customize, View Specs, Buy on WhatsApp -->
-      </div>
-
-      <div class="text-center" style="margin-top: 3rem;">
-        <a href="#customizer" class="btn btn-gold btn-lg">
-          <i class="fa-solid fa-sliders"></i> Launch Interactive Bag Customizer &rarr;
-        </a>
       </div>
     </div>
   </section>
