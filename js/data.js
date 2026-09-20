@@ -6,8 +6,8 @@ const COMPANY_INFO = {
   name: "Rayashree Weaving Pvt. Ltd.",
   brandName: "Rayashree Weaving",
   tagline: "Precision Woven Solutions • Global Quality Packaging & Textiles",
-  logo: "assets/logo.png",
-  logoWhite: "assets/logo.png",
+  logo: "assets/logo.svg",
+  logoWhite: "assets/logo-white.svg",
   ceo: "Rayashree",
   designation: "Company CEO",
   phone: "+91 9108713258",
@@ -290,11 +290,11 @@ function getCompanyInfo() {
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      if (!parsed.logo || parsed.logo.endsWith('.svg')) {
-        parsed.logo = "assets/logo.png";
+      if (!parsed.logo) {
+        parsed.logo = "assets/logo.svg";
       }
-      if (!parsed.logoWhite || parsed.logoWhite.endsWith('.svg')) {
-        parsed.logoWhite = "assets/logo.png";
+      if (!parsed.logoWhite) {
+        parsed.logoWhite = "assets/logo-white.svg";
       }
       return { ...COMPANY_INFO, ...parsed };
     } catch (e) { console.error(e); }
@@ -486,16 +486,18 @@ function getProducts() {
           return true;
         });
 
-        if (cleaned.length !== parsed.length) {
-          localStorage.setItem("rw_products", JSON.stringify(cleaned));
+        if (cleaned.length > 0) {
+          if (cleaned.length !== parsed.length) {
+            localStorage.setItem("rw_products", JSON.stringify(cleaned));
+          }
+          return cleaned;
         }
-        return cleaned;
       }
     } catch (e) { 
       console.error("Error reading rw_products from localStorage:", e); 
     }
   }
-  // If empty or null, seed with standard 7 demo manufacturing products
+  // If empty or null, seed with standard default manufacturing products
   localStorage.setItem("rw_products", JSON.stringify(DEFAULT_PRODUCTS));
   return DEFAULT_PRODUCTS;
 }

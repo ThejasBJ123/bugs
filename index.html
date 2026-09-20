@@ -76,8 +76,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=6.0">
-  <link rel="stylesheet" href="css/components.css?v=6.0">
+  <link rel="stylesheet" href="css/style.css?v=7.0">
+  <link rel="stylesheet" href="css/components.css?v=7.0">
 
   <style>
     /* Brand logo styling */
@@ -243,6 +243,376 @@
       max-height: 80vh;
       overflow-y: auto;
     }
+
+    /* Products Grid and Vertical Action Buttons (Guaranteed Render) */
+    .products-grid {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+      gap: 2rem !important;
+      width: 100% !important;
+    }
+    .product-card {
+      background: #ffffff !important;
+      border-radius: 16px !important;
+      overflow: hidden !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06) !important;
+      transition: all 0.25s ease !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    .product-card:hover {
+      transform: translateY(-6px) !important;
+      box-shadow: 0 12px 30px rgba(3, 43, 39, 0.15) !important;
+      border-color: #dfb774 !important;
+    }
+    .product-card-img {
+      position: relative !important;
+      height: 220px !important;
+      overflow: hidden !important;
+      background: #f1f5f9 !important;
+    }
+    .product-card-img img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      transition: transform 0.4s ease !important;
+    }
+    .product-card:hover .product-card-img img {
+      transform: scale(1.06) !important;
+    }
+    .product-badge {
+      position: absolute !important;
+      top: 1rem !important;
+      left: 1rem !important;
+      padding: 0.35rem 0.85rem !important;
+      border-radius: 9999px !important;
+      font-size: 0.75rem !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.04em !important;
+      text-transform: uppercase !important;
+      background: #dfb774 !important;
+      color: #032b27 !important;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+    }
+    .product-card-body {
+      padding: 1.5rem !important;
+      display: flex !important;
+      flex-direction: column !important;
+      flex-grow: 1 !important;
+    }
+    .product-category {
+      font-size: 0.8rem !important;
+      font-weight: 700 !important;
+      color: #c4984f !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.05em !important;
+      margin-bottom: 0.35rem !important;
+    }
+    .product-title {
+      font-size: 1.3rem !important;
+      font-weight: 800 !important;
+      color: #032b27 !important;
+      margin-bottom: 0.4rem !important;
+    }
+    .product-tagline {
+      font-size: 0.88rem !important;
+      color: #64748b !important;
+      line-height: 1.5 !important;
+      margin-bottom: 1rem !important;
+    }
+    .product-specs-preview {
+      background: #f8fafc !important;
+      border-radius: 10px !important;
+      padding: 0.75rem 1rem !important;
+      margin-bottom: 1.25rem !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.5rem !important;
+      font-size: 0.82rem !important;
+    }
+    .spec-preview-label {
+      color: #94a3b8 !important;
+      font-weight: 600 !important;
+      display: block !important;
+    }
+    .spec-preview-val {
+      color: #032b27 !important;
+      font-weight: 700 !important;
+      display: block !important;
+    }
+    .product-card-footer {
+      margin-top: auto !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.55rem !important;
+      padding-top: 1.25rem !important;
+      border-top: 1px solid #e2e8f0 !important;
+      width: 100% !important;
+    }
+    .product-card-footer .btn {
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0.5rem !important;
+      padding: 0.72rem 1rem !important;
+      font-size: 0.88rem !important;
+      font-weight: 700 !important;
+      border-radius: 10px !important;
+      text-decoration: none !important;
+      cursor: pointer !important;
+      box-sizing: border-box !important;
+    }
+    .btn-customize-prod {
+      background: linear-gradient(135deg, #dfb774 0%, #c4984f 100%) !important;
+      color: #032b27 !important;
+      border: 1px solid #d4af37 !important;
+      box-shadow: 0 3px 8px rgba(223, 183, 116, 0.25) !important;
+      transition: all 0.2s ease !important;
+    }
+    .btn-customize-prod:hover {
+      background: linear-gradient(135deg, #ebd1a2 0%, #dfb774 100%) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 16px rgba(223, 183, 116, 0.45) !important;
+    }
+    .btn-specs-prod {
+      background: #ffffff !important;
+      color: #1e293b !important;
+      border: 1.5px solid #cbd5e1 !important;
+      transition: all 0.2s ease !important;
+    }
+    .btn-specs-prod:hover {
+      background: #032b27 !important;
+      color: #ffffff !important;
+      border-color: #032b27 !important;
+    }
+    .btn-whatsapp-prod {
+      background: #25d366 !important;
+      color: #ffffff !important;
+      border: 1px solid #22c55e !important;
+      box-shadow: 0 3px 8px rgba(37, 211, 102, 0.25) !important;
+      transition: all 0.2s ease !important;
+    }
+    .btn-whatsapp-prod:hover {
+      background: #1eb954 !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4) !important;
+    }
+
+    /* Customizer Section Full CSS */
+    .customizer-section {
+      background: linear-gradient(135deg, #021a17 0%, #042e29 50%, #032420 100%) !important;
+      color: #ffffff !important;
+      padding: 4.5rem 0 !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+    .customizer-grid {
+      display: grid !important;
+      grid-template-columns: 1.35fr 1fr !important;
+      gap: 2.5rem !important;
+      align-items: start !important;
+    }
+    @media (max-width: 992px) {
+      .customizer-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    .configurator-card {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid rgba(223, 183, 116, 0.3) !important;
+      border-radius: 20px !important;
+      padding: 2.25rem !important;
+      backdrop-filter: blur(10px) !important;
+    }
+    .config-step {
+      margin-bottom: 1.75rem !important;
+    }
+    .config-step-title {
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.75rem !important;
+      font-size: 1.05rem !important;
+      font-weight: 800 !important;
+      color: #ffffff !important;
+      margin-bottom: 0.85rem !important;
+    }
+    .config-step-number {
+      width: 28px !important;
+      height: 28px !important;
+      border-radius: 50% !important;
+      background: #dfb774 !important;
+      color: #032b27 !important;
+      font-size: 0.85rem !important;
+      font-weight: 900 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .config-pill-grid {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important;
+      gap: 0.75rem !important;
+    }
+    .config-pill {
+      background: rgba(255, 255, 255, 0.07) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+      border-radius: 12px !important;
+      padding: 0.85rem 0.75rem !important;
+      text-align: center !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+    }
+    .config-pill:hover, .config-pill.active {
+      background: rgba(223, 183, 116, 0.22) !important;
+      border-color: #dfb774 !important;
+    }
+    .config-pill .pill-name {
+      display: block !important;
+      font-size: 0.9rem !important;
+      font-weight: 700 !important;
+      color: #ffffff !important;
+    }
+    .config-pill .pill-meta {
+      display: block !important;
+      font-size: 0.75rem !important;
+      color: #dfb774 !important;
+      margin-top: 0.2rem !important;
+    }
+    .custom-inputs-row {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 1rem !important;
+    }
+    @media (max-width: 600px) {
+      .custom-inputs-row {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    .custom-input-box {
+      background: rgba(255, 255, 255, 0.06) !important;
+      border: 1px solid rgba(255, 255, 255, 0.18) !important;
+      border-radius: 10px !important;
+      padding: 0.6rem 0.85rem !important;
+    }
+    .custom-input-box label {
+      font-size: 0.75rem !important;
+      color: #94a3b8 !important;
+      display: block !important;
+      margin-bottom: 0.25rem !important;
+      text-transform: uppercase !important;
+      font-weight: 700 !important;
+    }
+    .custom-input-box input,
+    .custom-input-box select {
+      width: 100% !important;
+      background: transparent !important;
+      border: none !important;
+      color: #ffffff !important;
+      font-size: 0.95rem !important;
+      font-weight: 700 !important;
+      outline: none !important;
+    }
+    .custom-input-box select option {
+      background: #032b27 !important;
+      color: #ffffff !important;
+    }
+    .customizer-summary-card {
+      position: sticky !important;
+      top: 100px !important;
+      background: linear-gradient(145deg, #043831 0%, #032621 100%) !important;
+      border: 2px solid #dfb774 !important;
+      border-radius: 20px !important;
+      padding: 2rem !important;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45) !important;
+    }
+    .summary-title {
+      font-size: 1.35rem !important;
+      font-weight: 800 !important;
+      color: #ffffff !important;
+      margin-bottom: 1.25rem !important;
+    }
+    .summary-spec-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.75rem !important;
+      margin-bottom: 1.75rem !important;
+      background: rgba(0, 0, 0, 0.25) !important;
+      border-radius: 12px !important;
+      padding: 1.25rem !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+    .summary-spec-row {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      font-size: 0.88rem !important;
+    }
+    .summary-spec-label {
+      color: #94a3b8 !important;
+      font-weight: 600 !important;
+    }
+    .summary-spec-val {
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      text-align: right !important;
+    }
+    .btn-customizer-submit {
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0.6rem !important;
+      padding: 0.95rem 1.25rem !important;
+      font-size: 1rem !important;
+      font-weight: 800 !important;
+      border-radius: 12px !important;
+      background: #25d366 !important;
+      color: #ffffff !important;
+      border: none !important;
+      cursor: pointer !important;
+      transition: all 0.25s ease !important;
+      text-decoration: none !important;
+    }
+    .btn-customizer-secondary {
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0.5rem !important;
+      padding: 0.85rem 1.25rem !important;
+      font-size: 0.95rem !important;
+      font-weight: 700 !important;
+      border-radius: 12px !important;
+      background: transparent !important;
+      color: #ffffff !important;
+      border: 1.5px solid rgba(223, 183, 116, 0.5) !important;
+      cursor: pointer !important;
+      margin-top: 0.75rem !important;
+    }
+    .product-filter-bar {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 0.6rem !important;
+      margin-bottom: 2rem !important;
+    }
+    .filter-btn {
+      padding: 0.55rem 1.1rem !important;
+      border-radius: 30px !important;
+      font-size: 0.88rem !important;
+      font-weight: 700 !important;
+      border: 1.5px solid #cbd5e1 !important;
+      background: #ffffff !important;
+      color: #1e293b !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: #032b27 !important;
+      color: #dfb774 !important;
+      border-color: #032b27 !important;
+    }
   </style>
 </head>
 <body>
@@ -332,14 +702,291 @@
         </div>
       </div>
 
-      <!-- Filter Buttons (Populated Dynamically by js/main.js) -->
+      <!-- Filter Buttons (Pre-rendered & Dynamic) -->
       <div class="product-filter-bar" id="productFilterBar" style="margin-bottom: 2rem;">
-        <!-- Dynamic Category Filter Buttons from js/main.js -->
+        <button class="filter-btn active" data-filter="All">All Products (8)</button>
+        <button class="filter-btn" data-filter="Bulk Logistics">Bulk Logistics</button>
+        <button class="filter-btn" data-filter="Feed & Agri">Feed & Agri</button>
+        <button class="filter-btn" data-filter="Building & Construction">Building & Construction</button>
+        <button class="filter-btn" data-filter="Agriculture & Farming">Agriculture & Farming</button>
+        <button class="filter-btn" data-filter="Industrial">Industrial</button>
       </div>
 
-      <!-- All Products Grid with Images & VERTICAL Action Buttons (Populated Dynamically by js/main.js) -->
+      <!-- All Products Grid with Images & VERTICAL Action Buttons -->
       <div class="products-grid" id="productShowcaseGrid">
-        <!-- Rendered dynamically with 3 vertical buttons: Customize, View Specs, Buy on WhatsApp -->
+        
+        <!-- Product 1: FIBC Bags -->
+        <div class="product-card" data-category="Bulk Logistics">
+          <div class="product-card-img" onclick="openProductSpecsModal('PROD-FIBC')" style="cursor: pointer;">
+            <img src="assets/images/fibc-bags.jpg" alt="FIBC Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+            <span class="product-badge">Heavy Duty 2-Ton</span>
+          </div>
+          <div class="product-card-body">
+            <span class="product-category">Bulk Logistics</span>
+            <h3 class="product-title" onclick="openProductSpecsModal('PROD-FIBC')" style="cursor: pointer;">FIBC Bags</h3>
+            <p class="product-tagline">Heavy-Duty Flexible Intermediate Bulk Containers & Liners</p>
+            <div class="product-specs-preview">
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Capacity / Load:</span>
+                <span class="spec-preview-val">500kg - 2,000kg (SWL 1 - 2 Ton)</span>
+              </div>
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">GSM Weight:</span>
+                <span class="spec-preview-val">140 GSM - 240 GSM</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn btn-customize-prod" onclick="openCustomizerModal('PROD-FIBC')">
+                <i class="fa-solid fa-sliders"></i> Customize Product
+              </button>
+              <button class="btn btn-specs-prod" onclick="openProductSpecsModal('PROD-FIBC')">
+                <i class="fa-solid fa-circle-info"></i> View Full Specs
+              </button>
+              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*FIBC%20Bags*.%0A%E2%80%A2%20*Category:*%20Bulk%20Logistics%0A%E2%80%A2%20*Capacity%20/%20Load:*%20500kg%20-%202,000kg%20(SWL%201%20-%202%20Ton)%0A%E2%80%A2%20*GSM%20Weight:*%20140%20GSM%20-%20240%20GSM%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
+                <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 2: Liner Bags -->
+        <div class="product-card" data-category="Bulk Logistics">
+          <div class="product-card-img" onclick="openProductSpecsModal('PROD-LINER')" style="cursor: pointer;">
+            <img src="assets/images/liner-bags.jpg" alt="Liner Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+            <span class="product-badge">Moisture Proof</span>
+          </div>
+          <div class="product-card-body">
+            <span class="product-category">Bulk Logistics</span>
+            <h3 class="product-title" onclick="openProductSpecsModal('PROD-LINER')" style="cursor: pointer;">Liner Bags</h3>
+            <p class="product-tagline">High-Barrier Moisture-Proof Liners for FIBC, Drums & Containers</p>
+            <div class="product-specs-preview">
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Capacity / Load:</span>
+                <span class="spec-preview-val">Custom Sizes - 50L to 2,000L</span>
+              </div>
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">GSM Weight:</span>
+                <span class="spec-preview-val">80 Micron - 200 Micron</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn btn-customize-prod" onclick="openCustomizerModal('PROD-LINER')">
+                <i class="fa-solid fa-sliders"></i> Customize Product
+              </button>
+              <button class="btn btn-specs-prod" onclick="openProductSpecsModal('PROD-LINER')">
+                <i class="fa-solid fa-circle-info"></i> View Full Specs
+              </button>
+              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*Liner%20Bags*.%0A%E2%80%A2%20*Category:*%20Bulk%20Logistics%0A%E2%80%A2%20*Capacity%20/%20Load:*%20Custom%20Sizes%0A%E2%80%A2%20*GSM%20Weight:*%2080%20Micron%20-%20200%20Micron%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
+                <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 3: Cattle Feed Bags -->
+        <div class="product-card" data-category="Feed & Agri">
+          <div class="product-card-img" onclick="openProductSpecsModal('PROD-CATTLE')" style="cursor: pointer;">
+            <img src="assets/images/cattle-feed.jpg" alt="Cattle Feed Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+            <span class="product-badge">Best Seller</span>
+          </div>
+          <div class="product-card-body">
+            <span class="product-category">Feed & Agri</span>
+            <h3 class="product-title" onclick="openProductSpecsModal('PROD-CATTLE')" style="cursor: pointer;">🐄 Cattle Feed Bags</h3>
+            <p class="product-tagline">High-Strength Woven Sacks with UV Protection & Anti-Slip Finish</p>
+            <div class="product-specs-preview">
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Capacity / Load:</span>
+                <span class="spec-preview-val">25kg / 50kg / 75kg</span>
+              </div>
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">GSM Weight:</span>
+                <span class="spec-preview-val">80 GSM - 95 GSM</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn btn-customize-prod" onclick="openCustomizerModal('PROD-CATTLE')">
+                <i class="fa-solid fa-sliders"></i> Customize Product
+              </button>
+              <button class="btn btn-specs-prod" onclick="openProductSpecsModal('PROD-CATTLE')">
+                <i class="fa-solid fa-circle-info"></i> View Full Specs
+              </button>
+              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*Cattle%20Feed%20Bags*.%0A%E2%80%A2%20*Category:*%20Feed%20%26%20Agri%0A%E2%80%A2%20*Capacity%20/%20Load:*%2025kg%20/%2050kg%20/%2075kg%0A%E2%80%A2%20*GSM%20Weight:*%2080%20GSM%20-%2095%20GSM%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
+                <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 4: Poultry Feed Bags -->
+        <div class="product-card" data-category="Feed & Agri">
+          <div class="product-card-img" onclick="openProductSpecsModal('PROD-POULTRY')" style="cursor: pointer;">
+            <img src="assets/images/poultry-feed.jpg" alt="Poultry Feed Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+            <span class="product-badge">Export Grade</span>
+          </div>
+          <div class="product-card-body">
+            <span class="product-category">Feed & Agri</span>
+            <h3 class="product-title" onclick="openProductSpecsModal('PROD-POULTRY')" style="cursor: pointer;">🐔 Poultry Feed Bags</h3>
+            <p class="product-tagline">Photographic Multi-Color Printed Sacks with Moisture Barrier</p>
+            <div class="product-specs-preview">
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Capacity / Load:</span>
+                <span class="spec-preview-val">25kg / 50kg</span>
+              </div>
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">GSM Weight:</span>
+                <span class="spec-preview-val">85 GSM - 110 GSM</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn btn-customize-prod" onclick="openCustomizerModal('PROD-POULTRY')">
+                <i class="fa-solid fa-sliders"></i> Customize Product
+              </button>
+              <button class="btn btn-specs-prod" onclick="openProductSpecsModal('PROD-POULTRY')">
+                <i class="fa-solid fa-circle-info"></i> View Full Specs
+              </button>
+              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*Poultry%20Feed%20Bags*.%0A%E2%80%A2%20*Category:*%20Feed%20%26%20Agri%0A%E2%80%A2%20*Capacity%20/%20Load:*%2025kg%20/%2050kg%0A%E2%80%A2%20*GSM%20Weight:*%2085%20GSM%20-%20110%20GSM%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
+                <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 5: Cement Bags -->
+        <div class="product-card" data-category="Building & Construction">
+          <div class="product-card-img" onclick="openProductSpecsModal('PROD-CEMENT')" style="cursor: pointer;">
+            <img src="assets/images/cement.jpg" alt="Cement Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+            <span class="product-badge">AD*STAR Tech</span>
+          </div>
+          <div class="product-card-body">
+            <span class="product-category">Building & Construction</span>
+            <h3 class="product-title" onclick="openProductSpecsModal('PROD-CEMENT')" style="cursor: pointer;">🏗️ Cement Bags</h3>
+            <p class="product-tagline">Self-Closing Valve Packaging for High-Speed Rotary Cement Fillers</p>
+            <div class="product-specs-preview">
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Capacity / Load:</span>
+                <span class="spec-preview-val">50kg Standard</span>
+              </div>
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">GSM Weight:</span>
+                <span class="spec-preview-val">70 GSM - 85 GSM</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn btn-customize-prod" onclick="openCustomizerModal('PROD-CEMENT')">
+                <i class="fa-solid fa-sliders"></i> Customize Product
+              </button>
+              <button class="btn btn-specs-prod" onclick="openProductSpecsModal('PROD-CEMENT')">
+                <i class="fa-solid fa-circle-info"></i> View Full Specs
+              </button>
+              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*Cement%20Bags*.%0A%E2%80%A2%20*Category:*%20Building%20%26%20Construction%0A%E2%80%A2%20*Capacity%20/%20Load:*%2050kg%20Standard%0A%E2%80%A2%20*GSM%20Weight:*%2070%20GSM%20-%2085%20GSM%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
+                <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 6: Agriculture Bags -->
+        <div class="product-card" data-category="Agriculture & Farming">
+          <div class="product-card-img" onclick="openProductSpecsModal('PROD-AGRI')" style="cursor: pointer;">
+            <img src="assets/images/agri-grain.jpg" alt="Agriculture Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+            <span class="product-badge">UV Treated</span>
+          </div>
+          <div class="product-card-body">
+            <span class="product-category">Agriculture & Farming</span>
+            <h3 class="product-title" onclick="openProductSpecsModal('PROD-AGRI')" style="cursor: pointer;">🌾 Agriculture Bags</h3>
+            <p class="product-tagline">Breathable & Water-Repellent Packaging for Food Grains & Seeds</p>
+            <div class="product-specs-preview">
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Capacity / Load:</span>
+                <span class="spec-preview-val">25kg / 50kg / 100kg</span>
+              </div>
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">GSM Weight:</span>
+                <span class="spec-preview-val">65 GSM - 90 GSM</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn btn-customize-prod" onclick="openCustomizerModal('PROD-AGRI')">
+                <i class="fa-solid fa-sliders"></i> Customize Product
+              </button>
+              <button class="btn btn-specs-prod" onclick="openProductSpecsModal('PROD-AGRI')">
+                <i class="fa-solid fa-circle-info"></i> View Full Specs
+              </button>
+              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*Agriculture%20Bags*.%0A%E2%80%A2%20*Category:*%20Agriculture%20%26%20Farming%0A%E2%80%A2%20*Capacity%20/%20Load:*%2025kg%20/%2050kg%20/%20100kg%0A%E2%80%A2%20*GSM%20Weight:*%2065%20GSM%20-%2090%20GSM%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
+                <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 7: Silage Bags -->
+        <div class="product-card" data-category="Agriculture & Farming">
+          <div class="product-card-img" onclick="openProductSpecsModal('PROD-SILAGE')" style="cursor: pointer;">
+            <img src="assets/images/silage.jpg" alt="Silage Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+            <span class="product-badge">High Barrier</span>
+          </div>
+          <div class="product-card-body">
+            <span class="product-category">Agriculture & Farming</span>
+            <h3 class="product-title" onclick="openProductSpecsModal('PROD-SILAGE')" style="cursor: pointer;">🌱 Silage Bags</h3>
+            <p class="product-tagline">Multi-Layer Fermentation Protection Bags for Green Forage Storage</p>
+            <div class="product-specs-preview">
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Capacity / Load:</span>
+                <span class="spec-preview-val">50kg - 500kg Capacity</span>
+              </div>
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">GSM Weight:</span>
+                <span class="spec-preview-val">120 Micron - 180 Micron</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn btn-customize-prod" onclick="openCustomizerModal('PROD-SILAGE')">
+                <i class="fa-solid fa-sliders"></i> Customize Product
+              </button>
+              <button class="btn btn-specs-prod" onclick="openProductSpecsModal('PROD-SILAGE')">
+                <i class="fa-solid fa-circle-info"></i> View Full Specs
+              </button>
+              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*Silage%20Bags*.%0A%E2%80%A2%20*Category:*%20Agriculture%20%26%20Farming%0A%E2%80%A2%20*Capacity%20/%20Load:*%2050kg%20-%20500kg%0A%E2%80%A2%20*GSM%20Weight:*%20120%20Micron%20-%20180%20Micron%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
+                <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 8: Industrial Bags -->
+        <div class="product-card" data-category="Industrial">
+          <div class="product-card-img" onclick="openProductSpecsModal('PROD-INDUSTRIAL')" style="cursor: pointer;">
+            <img src="assets/images/industrial.jpg" alt="Industrial Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+            <span class="product-badge">Heavy Duty</span>
+          </div>
+          <div class="product-card-body">
+            <span class="product-category">Industrial</span>
+            <h3 class="product-title" onclick="openProductSpecsModal('PROD-INDUSTRIAL')" style="cursor: pointer;">⚙️ Industrial Bags</h3>
+            <p class="product-tagline">Heavy-Duty Chemical, Mineral, Resin & Heavy Hardware Sacks</p>
+            <div class="product-specs-preview">
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Capacity / Load:</span>
+                <span class="spec-preview-val">25kg / 50kg / 1,000kg</span>
+              </div>
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">GSM Weight:</span>
+                <span class="spec-preview-val">90 GSM - 180 GSM</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn btn-customize-prod" onclick="openCustomizerModal('PROD-INDUSTRIAL')">
+                <i class="fa-solid fa-sliders"></i> Customize Product
+              </button>
+              <button class="btn btn-specs-prod" onclick="openProductSpecsModal('PROD-INDUSTRIAL')">
+                <i class="fa-solid fa-circle-info"></i> View Full Specs
+              </button>
+              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*Industrial%20Bags*.%0A%E2%80%A2%20*Category:*%20Industrial%0A%E2%80%A2%20*Capacity%20/%20Load:*%2025kg%20/%2050kg%20/%201,000kg%0A%E2%80%A2%20*GSM%20Weight:*%2090%20GSM%20-%20180%20GSM%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
+                <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <div class="text-center" style="margin-top: 2.5rem;">
@@ -1121,8 +1768,20 @@
   </div>
 
   <!-- JavaScript Scripts -->
-  <script src="js/data.js?v=6.0"></script>
-  <script src="js/i18n.js?v=6.0"></script>
-  <script src="js/main.js?v=6.0"></script>
+  <script>
+    try {
+      var _storedProds = localStorage.getItem("rw_products");
+      if (_storedProds === "[]" || _storedProds === "null" || !_storedProds) {
+        localStorage.removeItem("rw_products");
+      }
+      var _storedComp = localStorage.getItem("rw_company_info");
+      if (_storedComp && _storedComp.includes("logo.png")) {
+        localStorage.removeItem("rw_company_info");
+      }
+    } catch(e) {}
+  </script>
+  <script src="js/data.js?v=7.0"></script>
+  <script src="js/i18n.js?v=7.0"></script>
+  <script src="js/main.js?v=7.0"></script>
 </body>
 </html>
