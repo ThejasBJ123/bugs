@@ -28,7 +28,7 @@
   <meta name="twitter:description" content="FIBC Bulk Bags, PP Woven Sacks, Cattle Feed, Cement & Agriculture Bags Manufacturer in Bangalore.">
   <meta name="twitter:image" content="https://www.rayashreeweaving.in/assets/images/hero-factory.jpg">
 
-  <!-- Structured Data: Local Business (Helps Google show your address, phone, hours) -->
+  <!-- Structured Data: Local Business -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -73,151 +73,194 @@
   
   <!-- Font Awesome & Google Fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=5.2">
-  <link rel="stylesheet" href="css/components.css?v=5.2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=6.0">
+  <link rel="stylesheet" href="css/components.css?v=6.0">
 
   <style>
-    /* CSS failsafe: automatically transitions to public page after 5s even if JS is blocked/cached */
-    .site-preloader {
-      animation: preloaderAutoExit 5.2s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+    /* Brand logo styling */
+    .brand-logo-pill {
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      padding: 0.35rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid rgba(223, 183, 116, 0.5);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: all 0.25s ease;
     }
-    .site-preloader.fade-out {
-      opacity: 0 !important;
-      visibility: hidden !important;
-      pointer-events: none !important;
-      display: none !important;
+    .brand-logo-pill:hover {
+      border-color: var(--gold-400);
+      box-shadow: 0 4px 14px rgba(223, 183, 116, 0.25);
     }
-    @keyframes preloaderAutoExit {
-      0%, 88% {
-        opacity: 1;
-        visibility: visible;
+    .brand-header-logo {
+      height: 44px;
+      width: auto;
+      max-width: 240px;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* Above-the-fold First-Screen Hero */
+    .hero-compact {
+      background: linear-gradient(135deg, #021a17 0%, #053b34 50%, #032420 100%);
+      color: #ffffff;
+      padding: 2.75rem 0 2rem 0;
+      position: relative;
+      border-bottom: 1px solid rgba(223, 183, 116, 0.25);
+    }
+    .hero-compact-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    .hero-compact-title {
+      font-size: 2.6rem;
+      font-weight: 800;
+      line-height: 1.15;
+      color: #ffffff;
+      margin: 0.75rem 0 1rem 0;
+    }
+    .hero-compact-desc {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      max-width: 620px;
+    }
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .hero-trust-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+    }
+    .hero-trust-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.3rem 0.65rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .hero-stat-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(223, 183, 116, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
+    .hero-stats-mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .mini-stat-item {
+      border-left: 3px solid var(--gold-400);
+      padding-left: 0.75rem;
+    }
+    .mini-stat-num {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--gold-300);
+      line-height: 1.1;
+    }
+    .mini-stat-lbl {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.2rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 992px) {
+      .hero-compact-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
-      97% {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-      }
-      100% {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        display: none !important;
+      .hero-compact-title {
+        font-size: 2rem;
       }
     }
 
-    /* Mobile Responsive Full-Width Product Cards (Guaranteed 100% visible, no cut-offs) */
-    @media (max-width: 768px) {
-      .products-grid {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        gap: 1.5rem !important;
-        overflow-x: visible !important;
-        padding: 0 !important;
-        width: 100% !important;
-      }
-      .products-grid .product-card {
-        flex: none !important;
-        width: 100% !important;
-        min-width: 0 !important;
-        max-width: 100% !important;
-        display: flex !important;
-        flex-direction: column !important;
-      }
-      .product-card-img {
-        height: 240px !important;
-        width: 100% !important;
-        object-fit: cover !important;
-      }
-      .product-filter-bar {
-        display: flex !important;
-        flex-wrap: wrap !important;
-        gap: 0.5rem !important;
-        overflow-x: visible !important;
-        margin-bottom: 1.25rem !important;
-      }
-      .filter-btn {
-        white-space: nowrap !important;
-        padding: 0.45rem 0.85rem !important;
-        font-size: 0.82rem !important;
-      }
-      .mobile-swipe-hint {
-        display: none !important;
-      }
+    /* First screen visual anchor bar */
+    .catalog-anchor-bar {
+      background: #f8fafc;
+      border-bottom: 1px solid var(--dark-200);
+      padding: 1rem 0;
+    }
+    .anchor-bar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .anchor-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary-900);
+    }
+
+    /* Interactive Customizer Modal styling */
+    .customizer-modal-dialog {
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      max-width: 620px;
+      width: 100%;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+      overflow: hidden;
+      border: 1.5px solid var(--gold-400);
+    }
+    .customizer-modal-header {
+      background: linear-gradient(135deg, #032b27 0%, #07524a 100%);
+      padding: 1.25rem 1.5rem;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .customizer-modal-body {
+      padding: 1.75rem;
+      max-height: 80vh;
+      overflow-y: auto;
     }
   </style>
 </head>
 <body>
 
-  <!-- Divine 5-Second Intro Preloader Screen -->
-  <div class="site-preloader" id="sitePreloader">
-    <button class="preloader-skip-btn" id="skipPreloaderBtn" onclick="var p=document.getElementById('sitePreloader');if(p){p.style.display='none';p.style.pointerEvents='none';}">Skip <i class="fa-solid fa-forward-step"></i></button>
-    <div class="preloader-ambient-glow"></div>
-    <div class="preloader-card">
-      <!-- Sacred God Avatar & Mantra inside Golden Animated Circle -->
-      <div class="god-circle-frame-container">
-        <div class="god-rotating-ring"></div>
-        <div class="god-outer-halo"></div>
-        <div class="god-circle-inner">
-          <img src="assets/images/raghavendra-swamy.jpg" alt="Guru Sri Raghavendra Swamy" class="god-circle-img">
-        </div>
-      </div>
-      <div class="god-mantra">|| ಶ್ರೀ ರಾಘವೇಂದ್ರಾಯ ನಮಃ ||</div>
-
-      <!-- Company Logo -->
-      <div class="preloader-logo-wrap">
-        <img src="assets/images/rayashree-logo.png" alt="Rayashree Weaving Pvt Ltd Logo" class="preloader-logo-img">
-      </div>
-
-      <!-- Letter-by-Letter Animated Name -->
-      <div class="animated-letters-title" id="animatedPreloaderTitle">
-        <span>RAYASHREE WEAVING PVT. LTD.</span>
-      </div>
-
-      <div class="preloader-subtitle">
-        Premier Heavy-Duty Woven Packaging & Industrial Sacks
-      </div>
-
-      <!-- 5-Second Golden Progress Bar -->
-      <div class="preloader-progress-wrap">
-        <div class="preloader-progress-bar"></div>
-      </div>
-      <div class="preloader-timer-label">Entering Experience...</div>
-    </div>
-  </div>
-
-  <script>
-    /* Immediate failsafe: auto-dismiss after 5s & instant skip to public page */
-    (function() {
-      var p = document.getElementById("sitePreloader");
-      var btn = document.getElementById("skipPreloaderBtn");
-      function connectPublicPage() {
-        if (!p) return;
-        p.classList.add("fade-out");
-        p.style.pointerEvents = "none";
-        p.style.opacity = "0";
-        setTimeout(function() {
-          p.style.display = "none";
-        }, 300);
-      }
-      if (btn) btn.onclick = connectPublicPage;
-      setTimeout(connectPublicPage, 5000);
-    })();
-  </script>
-
-  <!-- Top Bar with Official Contact Details -->
+  <!-- Top Bar with Official Contact Details & Statutory Trust -->
   <div class="top-bar">
     <div class="container top-bar-inner">
       <div class="top-bar-info">
         <div class="top-bar-item hide-mobile">
-          <i class="fa-solid fa-location-dot"></i>
+          <i class="fa-solid fa-location-dot text-gold"></i>
           <span>Kenchanapur Village, Kengeri Hobli, Bengaluru - 560060</span>
         </div>
         <div class="top-bar-item">
-          <i class="fa-solid fa-phone"></i>
+          <i class="fa-solid fa-phone text-gold"></i>
           <a href="tel:+919108713258">+91 9108713258</a>
         </div>
         <div class="top-bar-item">
-          <i class="fa-solid fa-envelope"></i>
+          <i class="fa-solid fa-envelope text-gold"></i>
           <a href="mailto:rayashreewpvtltd@gmail.com">rayashreewpvtltd@gmail.com</a>
         </div>
         <div class="top-bar-item hide-mobile" style="color: var(--gold-300); font-weight: 700;">
@@ -228,6 +271,9 @@
           <i class="fa-solid fa-landmark"></i>
           <span>MSME: <strong>UDYAM-AM-KR-03-0729350</strong></span>
         </div>
+        <div class="top-bar-item hide-mobile" style="color: var(--gold-300); font-weight: 700;">
+          <span>|| ಶ್ರೀ ರಾಘವೇಂದ್ರಾಯ ನಮಃ ||</span>
+        </div>
       </div>
     </div>
   </div>
@@ -236,21 +282,22 @@
   <header class="main-header">
     <div class="container header-inner">
       <a href="index.html" class="brand-logo" title="Rayashree Weaving Pvt. Ltd.">
-        <div style="background: #ffffff; display: flex; align-items: center; padding: 0.35rem 0.75rem; border-radius: 8px; border: 1px solid #dfb774; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-          <img src="assets/logo.png" alt="Rayashree Weaving Pvt Ltd Logo" style="max-height: 42px; width: auto; object-fit: contain;">
+        <div class="brand-logo-pill">
+          <img src="assets/logo.svg" alt="Rayashree Weaving Logo" class="brand-header-logo" onerror="this.src='assets/logo.png'">
         </div>
       </a>
 
       <nav class="nav-menu" id="navMenu">
         <a href="index.html" class="nav-link active">Home</a>
-        <a href="public/products.html" class="nav-link">Products</a>
+        <a href="#products" class="nav-link">Products</a>
+        <a href="#customizer" class="nav-link">Bag Customizer</a>
         <a href="public/infrastructure.html" class="nav-link">Infrastructure</a>
         <a href="public/about.html" class="nav-link">About Us</a>
         <a href="public/contact.html" class="nav-link">Contact</a>
       </nav>
 
       <div class="header-actions">
-        <a href="https://wa.me/919108713258?text=Hello%20Rayashree,%20I%20am%20visiting%20the%20Rayashree%20Weaving%20website%20and%20would%20like%20to%20connect." target="_blank" class="btn btn-gold btn-sm">
+        <a href="https://wa.me/919108713258?text=Hello%20Rayashree,%20I%20am%20visiting%20the%20Rayashree%20Weaving%20website%20and%20would%20like%20to%20connect%20regarding%20woven%20sacks." target="_blank" class="btn btn-gold btn-sm">
           <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> Contact Now
         </a>
         <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
@@ -260,132 +307,377 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-content">
-        <div class="hero-tag">
-          <i class="fa-solid fa-award"></i> Leading Industrial Weaving & Packaging
+  <!-- ABOVE THE FOLD: Compact Executive Hero Section -->
+  <section class="hero-compact">
+    <div class="container hero-compact-grid">
+      <div>
+        <div class="section-tag section-tag-emerald" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <i class="fa-solid fa-award text-gold"></i> Bangalore's Premier Industrial Weaving & Bag Factory • ISO 9001:2015
         </div>
-        <h1 class="hero-title">
-          Engineered Woven Packaging <br>
-          <span class="text-gold-gradient">For High-Performance Bulk Logistics</span>
+        <h1 class="hero-compact-title">
+          Precision Engineered <span class="text-gold-gradient">Woven Packaging</span> & Industrial Fabrics
         </h1>
-        <p class="hero-desc">
+        <p class="hero-compact-desc">
           Rayashree Weaving Pvt. Ltd. is Bangalore's trusted manufacturer of heavy-duty <strong>HDPE / PP Woven Sacks, FIBC Bags, PE Liners, Container Liners, Jute, and Linen Fabrics</strong> with monthly capacity exceeding 5 million bags.
         </p>
 
-        <div class="hero-actions">
-          <a href="public/products.html" class="btn btn-gold btn-lg">
-            <i class="fa-solid fa-cubes-stacked"></i> Explore All Products
+        <div class="hero-cta-group">
+          <a href="#products" class="btn btn-gold btn-lg">
+            <i class="fa-solid fa-boxes-stacked"></i> Explore All 8 Products Below
           </a>
-          <button class="btn btn-outline-white btn-lg" onclick="openRFQModal()">
-            <i class="fa-solid fa-file-invoice"></i> Request Direct Quote
-          </button>
+          <a href="#customizer" class="btn btn-outline-white btn-lg">
+            <i class="fa-solid fa-sliders"></i> Customize Your Bags
+          </a>
+          <a href="https://wa.me/919108713258?text=Hello%20Rayashree,%20I%20need%20a%20factory%20quote%20for%20packaging%20sacks." target="_blank" class="btn btn-lg" style="background: #25d366; color: #ffffff; border: 1px solid #22c55e; font-weight: 700;">
+            <i class="fa-brands fa-whatsapp"></i> Chat with Factory
+          </a>
         </div>
 
-        <div class="hero-trust-badges">
-          <div class="trust-item">
-            <i class="fa-solid fa-shield-halved"></i>
-            <span>Zero-Burst Drop Resistance</span>
+        <div class="hero-trust-strip">
+          <div class="hero-trust-tag">
+            <i class="fa-solid fa-shield-halved text-emerald"></i>
+            <span>Zero-Burst Drop Tested</span>
           </div>
-          <div class="trust-item">
-            <i class="fa-solid fa-sun"></i>
-            <span>UV Weather Fortified</span>
+          <div class="hero-trust-tag">
+            <i class="fa-solid fa-sun text-gold"></i>
+            <span>UV Weather Fortified (2000+ Hrs)</span>
           </div>
-          <div class="trust-item">
-            <i class="fa-solid fa-truck-fast"></i>
+          <div class="hero-trust-tag">
+            <i class="fa-solid fa-truck-fast text-emerald"></i>
             <span>Pan-India & Global Supply</span>
           </div>
-          <div class="trust-item" style="border: 1px solid var(--gold-400); background: rgba(223, 183, 116, 0.15); border-radius: 20px; padding: 0.25rem 0.75rem;">
-            <i class="fa-solid fa-receipt text-gold"></i>
-            <span>GSTIN: <strong>29AAHCH4322G1ZN</strong></span>
-          </div>
-          <div class="trust-item" style="border: 1px solid var(--gold-400); background: rgba(223, 183, 116, 0.15); border-radius: 20px; padding: 0.25rem 0.75rem;">
-            <i class="fa-solid fa-landmark text-gold"></i>
-            <span>MSME: <strong>UDYAM-AM-KR-03-0729350</strong></span>
+          <div class="hero-trust-tag" style="border-color: var(--gold-400); background: rgba(223, 183, 116, 0.15); color: var(--gold-300);">
+            <i class="fa-solid fa-receipt"></i>
+            <span>GSTIN: 29AAHCH4322G1ZN</span>
           </div>
         </div>
       </div>
 
-      <div class="hero-visual">
-        <div class="hero-image-wrapper">
-          <img src="assets/images/hero-factory.jpg" alt="Rayashree Weaving Factory Looms">
-        </div>
-        <div class="hero-floating-card">
-          <div class="floating-icon">
-            <i class="fa-solid fa-industry"></i>
+      <div>
+        <div class="hero-stat-card">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 0.6rem;">
+              <i class="fa-solid fa-industry text-gold" style="font-size: 1.5rem;"></i>
+              <strong style="color: #ffffff; font-size: 1.1rem;">Bangalore Plant Capacity</strong>
+            </div>
+            <span style="font-size: 0.75rem; background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 0.25rem 0.6rem; border-radius: 20px; font-weight: 700;">ACTIVE PRODUCTION</span>
           </div>
-          <div class="floating-text">
-            <h4>5 Million+</h4>
-            <p>Monthly Sacks Production Capacity</p>
+
+          <div class="hero-stats-mini-grid">
+            <div class="mini-stat-item">
+              <div class="mini-stat-num">5 Million+</div>
+              <div class="mini-stat-lbl">Monthly Sacks Output</div>
+            </div>
+            <div class="mini-stat-item">
+              <div class="mini-stat-num">48+</div>
+              <div class="mini-stat-lbl">Circular Looms Running</div>
+            </div>
+            <div class="mini-stat-item">
+              <div class="mini-stat-num">350 MT</div>
+              <div class="mini-stat-lbl">Monthly Polymer Extrusion</div>
+            </div>
+            <div class="mini-stat-item">
+              <div class="mini-stat-num">99.8%</div>
+              <div class="mini-stat-lbl">On-Time Consignment Delivery</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.8rem; color: #cbd5e1;"><i class="fa-solid fa-circle-check text-emerald"></i> ISO 9001:2015 Lab Tested</span>
+            <a href="#customizer" style="color: var(--gold-300); font-size: 0.825rem; font-weight: 700; text-decoration: none;">Build Custom Sacks &rarr;</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Quick Stats Bar -->
-  <div class="container">
-    <div class="stats-bar">
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-number">48+</div>
-          <div class="stat-label">Circular Looms Operating</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">Full Portfolio</div>
-          <div class="stat-label">Core Industrial Products</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">350 MT</div>
-          <div class="stat-label">Monthly Polymer Extrusion</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">99.8%</div>
-          <div class="stat-label">On-Time Consignment Delivery</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Product Categories Section -->
-  <section class="products-section" id="products" style="padding: 3.5rem 0 4rem 0;">
+  <!-- FIRST SCREEN IMMEDIATE CATALOG: Products Section -->
+  <section class="products-section" id="products" style="padding: 2.5rem 0 4.5rem 0; background: #ffffff;">
     <div class="container">
-      <div class="text-center" style="margin-bottom: 2rem;">
-        <span class="section-tag section-tag-emerald">Our Core Manufacturing</span>
-        <h2 class="section-title dynamic-prod-heading">Specialized Product Categories</h2>
-        <p class="section-subtitle">
-          From moisture-lock agricultural feed packaging and heavy-duty cement sacks to 100% natural jute and 2-ton FIBC jumbo containers.
-        </p>
+      <div class="catalog-anchor-bar" style="background: transparent; border: none; padding: 0 0 1.5rem 0;">
+        <div class="anchor-bar-inner">
+          <div>
+            <span class="section-tag section-tag-emerald"><i class="fa-solid fa-boxes-packing"></i> Core Manufacturing Catalog</span>
+            <h2 class="section-title dynamic-prod-heading" style="margin-bottom: 0.35rem; font-size: 2.2rem; color: var(--primary-900);">
+              Manufacturing Product Portfolio
+            </h2>
+            <p style="color: var(--dark-600); font-size: 0.95rem; margin: 0;">
+              Every product card below includes custom sizing, specs datasheet, and 1-click factory ordering.
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.75rem;">
+            <a href="#customizer" class="btn btn-gold btn-sm">
+              <i class="fa-solid fa-sliders"></i> Open Bag Customizer
+            </a>
+            <button class="btn btn-primary btn-sm" onclick="openRFQModal()">
+              <i class="fa-solid fa-file-invoice"></i> Direct Factory Quote
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Filter Buttons (Populated Dynamically by js/main.js) -->
-      <div class="product-filter-bar" id="productFilterBar">
-        <!-- Dynamic Filter Buttons from js/main.js -->
+      <div class="product-filter-bar" id="productFilterBar" style="margin-bottom: 2rem;">
+        <!-- Dynamic Category Filter Buttons from js/main.js -->
       </div>
 
-      <!-- All Products Grid with Images (Populated Dynamically by js/main.js) -->
+      <!-- All Products Grid with Images & VERTICAL Action Buttons (Populated Dynamically by js/main.js) -->
       <div class="products-grid" id="productShowcaseGrid">
-        <!-- Rendered dynamically from Admin Catalog -->
+        <!-- Rendered dynamically with 3 vertical buttons: Customize, View Specs, Buy on WhatsApp -->
       </div>
 
-      <div class="text-center" style="margin-top: 2rem; margin-bottom: 0.5rem;">
-        <button class="btn btn-primary btn-lg" onclick="openRFQModal()">
-          <i class="fa-solid fa-file-invoice"></i> Request Direct Factory Pricing on All Products
-        </button>
+      <div class="text-center" style="margin-top: 3rem;">
+        <a href="#customizer" class="btn btn-gold btn-lg">
+          <i class="fa-solid fa-sliders"></i> Launch Interactive Bag Customizer &rarr;
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Interactive Teaser / Feature Highlighting -->
-  <section class="section-padding" style="background: var(--white); padding: 4rem 0;">
+  <!-- INTERACTIVE PACKAGING CUSTOMIZER & CONFIGURATOR -->
+  <section class="customizer-section" id="customizer">
     <div class="container">
-      <div class="text-center" style="margin-bottom: 2.5rem;">
-        <span class="section-tag">Why Choose Us</span>
+      <div class="text-center" style="margin-bottom: 3.5rem;">
+        <span class="section-tag section-tag-emerald"><i class="fa-solid fa-wand-magic-sparkles text-gold"></i> Live Packaging Configurator</span>
+        <h2 style="font-size: 2.5rem; font-weight: 800; color: #ffffff; margin-bottom: 0.75rem;">
+          Custom Bag & Bulk Packaging Calculator
+        </h2>
+        <p style="color: rgba(255, 255, 255, 0.85); max-width: 650px; margin: 0 auto; font-size: 1.05rem;">
+          Configure your exact manufacturing parameters: select polymer base, enter dimensions, choose GSM, and receive direct factory pricing instantly.
+        </p>
+      </div>
+
+      <div class="customizer-grid">
+        <!-- Left: Interactive Configuration Steps -->
+        <div class="configurator-card">
+          <!-- Step 1: Base Product -->
+          <div class="config-step">
+            <div class="config-step-title">
+              <span class="config-step-number">1</span>
+              <span>Select Bag / Container Type</span>
+            </div>
+            <div class="config-pill-grid">
+              <div class="config-pill active" data-field="product" data-val="FIBC Bags">
+                <span class="pill-name">FIBC Bags</span>
+                <span class="pill-meta">1 - 2 Ton SWL</span>
+              </div>
+              <div class="config-pill" data-field="product" data-val="Cattle Feed Bags">
+                <span class="pill-name">Cattle Feed</span>
+                <span class="pill-meta">25 / 50 / 75 kg</span>
+              </div>
+              <div class="config-pill" data-field="product" data-val="Poultry Feed Bags">
+                <span class="pill-name">Poultry Feed</span>
+                <span class="pill-meta">HD BOPP Print</span>
+              </div>
+              <div class="config-pill" data-field="product" data-val="Cement Bags">
+                <span class="pill-name">Cement Bags</span>
+                <span class="pill-meta">AD*STAR Valve</span>
+              </div>
+              <div class="config-pill" data-field="product" data-val="Agriculture Bags">
+                <span class="pill-name">Agri Sacks</span>
+                <span class="pill-meta">UV Weatherproof</span>
+              </div>
+              <div class="config-pill" data-field="product" data-val="Silage Bags">
+                <span class="pill-name">Silage Bags</span>
+                <span class="pill-meta">High Barrier</span>
+              </div>
+              <div class="config-pill" data-field="product" data-val="Liner Bags">
+                <span class="pill-name">PE Liners</span>
+                <span class="pill-meta">Moisture Proof</span>
+              </div>
+              <div class="config-pill" data-field="product" data-val="Industrial Bags">
+                <span class="pill-name">Industrial</span>
+                <span class="pill-meta">Heavy Duty</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Dimensions -->
+          <div class="config-step">
+            <div class="config-step-title">
+              <span class="config-step-number">2</span>
+              <span>Enter Required Dimensions</span>
+            </div>
+            <div class="custom-inputs-row">
+              <div class="custom-input-box">
+                <label for="customWidth">Width</label>
+                <input type="text" id="customWidth" value="24" placeholder="e.g. 24">
+              </div>
+              <div class="custom-input-box">
+                <label for="customLength">Length / Height</label>
+                <input type="text" id="customLength" value="38" placeholder="e.g. 38">
+              </div>
+              <div class="custom-input-box">
+                <label for="customUnit">Measurement Unit</label>
+                <select id="customUnit">
+                  <option value="inch">Inches (in)</option>
+                  <option value="cm">Centimeters (cm)</option>
+                  <option value="mm">Millimeters (mm)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: GSM Fabric Weight -->
+          <div class="config-step">
+            <div class="config-step-title">
+              <span class="config-step-number">3</span>
+              <span>Fabric Weight (GSM / Micron)</span>
+            </div>
+            <div class="config-pill-grid">
+              <div class="config-pill" data-field="gsm" data-val="65 GSM">
+                <span class="pill-name">65 GSM</span>
+                <span class="pill-meta">Lightweight / Grains</span>
+              </div>
+              <div class="config-pill" data-field="gsm" data-val="85 GSM">
+                <span class="pill-name">85 GSM</span>
+                <span class="pill-meta">Standard Animal Feed</span>
+              </div>
+              <div class="config-pill" data-field="gsm" data-val="110 GSM">
+                <span class="pill-name">110 GSM</span>
+                <span class="pill-meta">Heavy Feed / Fertilizer</span>
+              </div>
+              <div class="config-pill active" data-field="gsm" data-val="180 GSM">
+                <span class="pill-name">180 GSM</span>
+                <span class="pill-meta">FIBC / Heavy Bulk</span>
+              </div>
+              <div class="config-pill" data-field="gsm" data-val="240 GSM">
+                <span class="pill-name">240 GSM</span>
+                <span class="pill-meta">Multi-Trip 2-Ton</span>
+              </div>
+              <div class="config-pill" data-field="gsm" data-val="Custom GSM">
+                <span class="pill-name">Custom GSM</span>
+                <span class="pill-meta">Client Specification</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4: Printing & Artwork -->
+          <div class="config-step">
+            <div class="config-step-title">
+              <span class="config-step-number">4</span>
+              <span>Branding & Surface Printing</span>
+            </div>
+            <div class="config-pill-grid">
+              <div class="config-pill" data-field="printing" data-val="Plain Unprinted">
+                <span class="pill-name">Plain Unprinted</span>
+                <span class="pill-meta">Standard Woven</span>
+              </div>
+              <div class="config-pill active" data-field="printing" data-val="1-2 Color Flexo">
+                <span class="pill-name">1-2 Color Flexo</span>
+                <span class="pill-meta">Basic Logo / Text</span>
+              </div>
+              <div class="config-pill" data-field="printing" data-val="Up to 4-Color Flexo">
+                <span class="pill-name">4-Color Flexo</span>
+                <span class="pill-meta">Multi-Tone Print</span>
+              </div>
+              <div class="config-pill" data-field="printing" data-val="8-Color HD BOPP">
+                <span class="pill-name">8-Color HD BOPP</span>
+                <span class="pill-meta">Photographic Gloss/Matte</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 5: Liner Attachment -->
+          <div class="config-step">
+            <div class="config-step-title">
+              <span class="config-step-number">5</span>
+              <span>Inner Barrier & Liner</span>
+            </div>
+            <div class="config-pill-grid">
+              <div class="config-pill" data-field="liner" data-val="No Liner (Unlined)">
+                <span class="pill-name">No Liner</span>
+                <span class="pill-meta">Breathable Weave</span>
+              </div>
+              <div class="config-pill active" data-field="liner" data-val="Food-Grade LDPE Liner">
+                <span class="pill-name">Food-Grade LDPE</span>
+                <span class="pill-meta">Moisture Lock (80-120u)</span>
+              </div>
+              <div class="config-pill" data-field="liner" data-val="Form-Fit Gusseted Liner">
+                <span class="pill-name">Form-Fit Gusset</span>
+                <span class="pill-meta">FIBC & Drum Sizing</span>
+              </div>
+              <div class="config-pill" data-field="liner" data-val="Conductive Type C Liner">
+                <span class="pill-name">Conductive Type C</span>
+                <span class="pill-meta">Anti-Static Chemical</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quantity input -->
+          <div class="config-step" style="margin-bottom: 0;">
+            <div class="config-step-title">
+              <span class="config-step-number">6</span>
+              <span>Estimated Order Quantity</span>
+            </div>
+            <div class="custom-input-box" style="max-width: 320px;">
+              <label for="customQuantity">Number of Bags / Units</label>
+              <input type="number" id="customQuantity" value="5000" min="500" step="500">
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Live Real-Time Specification Card -->
+        <div class="customizer-summary-card">
+          <div class="summary-badge">
+            <i class="fa-solid fa-sliders"></i> Bespoke Specification Recap
+          </div>
+          <h3 class="summary-title" id="sumHeading">
+            Custom Manufacturing Order
+          </h3>
+
+          <div class="summary-spec-list">
+            <div class="summary-spec-row">
+              <span class="summary-spec-label">Selected Base:</span>
+              <span class="summary-spec-val" id="sumProduct">FIBC Bags</span>
+            </div>
+            <div class="summary-spec-row">
+              <span class="summary-spec-label">Dimensions:</span>
+              <span class="summary-spec-val" id="sumDimensions">24 x 38 inch</span>
+            </div>
+            <div class="summary-spec-row">
+              <span class="summary-spec-label">Fabric Weight:</span>
+              <span class="summary-spec-val" id="sumGSM">180 GSM</span>
+            </div>
+            <div class="summary-spec-row">
+              <span class="summary-spec-label">Printing:</span>
+              <span class="summary-spec-val" id="sumPrinting">1-2 Color Flexo</span>
+            </div>
+            <div class="summary-spec-row">
+              <span class="summary-spec-label">Barrier / Liner:</span>
+              <span class="summary-spec-val" id="sumLiner">Food-Grade LDPE Liner</span>
+            </div>
+            <div class="summary-spec-row">
+              <span class="summary-spec-label">Estimated Order:</span>
+              <span class="summary-spec-val" id="sumQuantity">5,000 Bags</span>
+            </div>
+          </div>
+
+          <div class="summary-actions">
+            <button class="btn-customizer-submit" id="btnConfigSubmitWA">
+              <i class="fa-brands fa-whatsapp"></i> Send Custom Spec on WhatsApp
+            </button>
+            <button class="btn-customizer-secondary" id="btnConfigSubmitRFQ">
+              <i class="fa-solid fa-file-lines"></i> Open Detailed Spec Modal
+            </button>
+          </div>
+
+          <div style="margin-top: 1.5rem; font-size: 0.78rem; color: #94a3b8; text-align: center; line-height: 1.5;">
+            <i class="fa-solid fa-shield-halved text-emerald"></i> Direct factory engineering under CEO Rayashree. Guaranteed zero-burst quality.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Advanced Weaving Technology & Quality Control -->
+  <section class="section-padding" style="background: #ffffff; padding: 4.5rem 0;">
+    <div class="container">
+      <div class="text-center" style="margin-bottom: 3rem;">
+        <span class="section-tag section-tag-emerald">Why Choose Rayashree</span>
         <h2 class="section-title">Advanced Weaving Technology & Quality Control</h2>
         <p class="section-subtitle">
-          Engineered to withstand rigorous transportation, harsh climate exposure, and automated high-speed bagging lines.
+          Engineered to withstand rough logistics, extreme weather conditions, and automated high-speed bagging lines.
         </p>
       </div>
 
@@ -433,15 +725,15 @@
     </div>
   </section>
 
-  <!-- Government Registration & Statutory Trust Section -->
-  <section class="container" style="margin-bottom: 2.5rem; margin-top: 3rem;">
-    <div class="statutory-trust-box" style="background: linear-gradient(135deg, #032b27 0%, #07524a 100%); border: 1px solid #dfb774; border-radius: var(--radius-xl); padding: 2rem 2.5rem; color: #ffffff; box-shadow: var(--shadow-lg);">
+  <!-- Statutory Government Registration & Trust Box -->
+  <section class="container" style="margin-bottom: 3.5rem;">
+    <div class="statutory-trust-box" style="background: linear-gradient(135deg, #032b27 0%, #07524a 100%); border: 1.5px solid var(--gold-400); border-radius: var(--radius-xl); padding: 2.25rem 2.5rem; color: #ffffff; box-shadow: var(--shadow-lg);">
       <div class="statutory-trust-header" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(223, 183, 116, 0.25); padding-bottom: 1.25rem;">
         <div>
           <div style="display: flex; align-items: center; gap: 0.6rem; color: var(--gold-400); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.35rem;">
             <i class="fa-solid fa-shield-check"></i> Verified Statutory Credentials & Government Certifications
           </div>
-          <h3 style="font-size: 1.5rem; font-weight: 800; color: #ffffff; margin: 0;">
+          <h3 style="font-size: 1.6rem; font-weight: 800; color: #ffffff; margin: 0;">
             Government Registered Enterprise & Certified Manufacturer
           </h3>
         </div>
@@ -480,14 +772,14 @@
           </div>
         </div>
 
-        <!-- Quality Certification Card -->
-        <div style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1.25rem;">
-          <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(223, 183, 116, 0.2); color: var(--gold-400); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">
+        <!-- Quality Compliance Card -->
+        <div class="statutory-card" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1.25rem;">
+          <div class="statutory-card-icon" style="width: 48px; height: 48px; border-radius: 12px; background: rgba(223, 183, 116, 0.2); color: var(--gold-400); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">
             <i class="fa-solid fa-award"></i>
           </div>
           <div>
             <div style="font-size: 0.775rem; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em;">Standards & Quality Compliance</div>
-            <div style="font-size: 1.05rem; font-weight: 800; color: #ffffff; margin-top: 0.15rem;">ISO 9001:2015 & IS 14887</div>
+            <div class="statutory-card-val" style="font-size: 1.05rem; font-weight: 800; color: #ffffff; margin-top: 0.15rem;">ISO 9001:2015 & IS 14887</div>
             <div style="font-size: 0.75rem; color: var(--gold-300); margin-top: 0.15rem;">Food Grade & High-Tensile Certified</div>
           </div>
         </div>
@@ -496,7 +788,7 @@
   </section>
 
   <!-- Executive Direct Connect Banner -->
-  <section class="container" style="margin-bottom: 4rem; margin-top: 2rem;">
+  <section class="container" style="margin-bottom: 4rem;">
     <div class="executive-banner">
       <div class="executive-grid">
         <div>
@@ -568,7 +860,7 @@
   </section>
 
   <!-- Client Testimonials -->
-  <section class="section-padding" style="background: var(--dark-50); border-top: 1px solid var(--dark-200);">
+  <section class="section-padding" style="background: var(--dark-50); border-top: 1px solid var(--dark-200); padding: 4.5rem 0;">
     <div class="container">
       <div class="text-center" style="margin-bottom: 3rem;">
         <span class="section-tag section-tag-emerald">Trusted By Industry Leaders</span>
@@ -598,54 +890,39 @@
           <div style="font-weight: 800; color: var(--primary-900);">P. Ranganathan</div>
           <div style="font-size: 0.825rem; color: var(--gold-700); font-weight: 600;">Plant Manager • South India Infrastructure Cement Ltd.</div>
         </div>
-
-        <div style="background: var(--white); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--dark-200); position: relative;">
-          <div style="color: var(--gold-500); font-size: 2rem; margin-bottom: 1rem;"><i class="fa-solid fa-quote-left"></i></div>
-          <p style="font-size: 0.95rem; color: var(--dark-700); line-height: 1.7; margin-bottom: 1.5rem;">
-            "For our coffee exports to Europe, compliance is non-negotiable. Rayashree's Hydrocarbon-Free Jute Bags pass every international audit smoothly. Highly recommended."
-          </p>
-          <div style="font-weight: 800; color: var(--primary-900);">Naveen Thomas</div>
-          <div style="font-size: 0.825rem; color: var(--gold-700); font-weight: 600;">Managing Director • Western Ghats Agri Exports</div>
-        </div>
       </div>
     </div>
   </section>
-
 
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div style="background: #ffffff; display: inline-flex; align-items: center; padding: 0.35rem 0.75rem; border-radius: 8px; margin-bottom: 1rem;">
-            <img src="assets/logo.png" alt="Rayashree Weaving Pvt. Ltd." style="height: 44px;">
+          <div class="brand-logo-pill" style="display: inline-flex; margin-bottom: 1.25rem;">
+            <img src="assets/logo.svg" alt="Rayashree Weaving Logo" class="brand-header-logo" onerror="this.src='assets/logo.png'">
           </div>
-          <p>
-            Premier manufacturers of HDPE / PP Woven Sacks, FIBC Bags, PE Liners, Container Liners, Jute, and Linen Fabrics in Bangalore, India.
+          <p class="footer-desc">
+            Rayashree Weaving Pvt. Ltd. is Bangalore's premier manufacturing powerhouse producing high-tensile HDPE / PP Woven Sacks, FIBC Bags, PE Liners, Container Liners, Jute, and Linen Fabrics.
           </p>
-          <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
-            <a href="https://wa.me/919108713258" target="_blank" style="width: 36px; height: 36px; border-radius: 50%; background: #25D366; color: #fff; display: flex; align-items: center; justify-content: center;"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="mailto:rayashreewpvtltd@gmail.com" style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary-700); color: #fff; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-envelope"></i></a>
-            <a href="tel:+919108713258" style="width: 36px; height: 36px; border-radius: 50%; background: var(--gold-600); color: #fff; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-phone"></i></a>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Product Categories</h4>
+          <div class="footer-links">
+            <a href="#products">FIBC Bulk Bags</a>
+            <a href="#products">Cattle & Poultry Feed Sacks</a>
+            <a href="#products">Cement Valve Bags</a>
+            <a href="#products">Agriculture & Silage Sacks</a>
+            <a href="#products">Industrial & Liner Bags</a>
           </div>
         </div>
 
         <div>
-          <h4 class="footer-title">Product Catalog</h4>
+          <h4 class="footer-title">Quick Links</h4>
           <div class="footer-links">
-            <a href="public/products.html">All Manufacturing Lines</a>
-            <a href="public/products.html">PP & HDPE Woven Sacks</a>
-            <a href="public/products.html">BOPP Laminated Sacks</a>
-            <a href="public/products.html">FIBC Bulk Jumbo Bags</a>
-            <a href="public/products.html">Natural Eco Jute Bags</a>
-            <a href="public/products.html">Silage & Tube Bags</a>
-            <a href="public/products.html">Technical Linen Textiles</a>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="footer-title">Company</h4>
-          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="#customizer">Bespoke Customizer</a>
             <a href="public/about.html">About Rayashree Weaving</a>
             <a href="public/infrastructure.html">Factory Infrastructure</a>
             <a href="public/contact.html">Plant Location & Contact</a>
@@ -656,19 +933,19 @@
         <div>
           <h4 class="footer-title">Bangalore Facility</h4>
           <div class="footer-contact-item">
-            <i class="fa-solid fa-user-tie"></i>
+            <i class="fa-solid fa-user-tie text-gold"></i>
             <span><strong>Rayashree</strong> (Company CEO)</span>
           </div>
           <div class="footer-contact-item">
-            <i class="fa-solid fa-phone"></i>
+            <i class="fa-solid fa-phone text-gold"></i>
             <span><a href="tel:+919108713258">+91 9108713258</a></span>
           </div>
           <div class="footer-contact-item">
-            <i class="fa-solid fa-envelope"></i>
+            <i class="fa-solid fa-envelope text-gold"></i>
             <span><a href="mailto:rayashreewpvtltd@gmail.com">rayashreewpvtltd@gmail.com</a></span>
           </div>
           <div class="footer-contact-item">
-            <i class="fa-solid fa-location-dot"></i>
+            <i class="fa-solid fa-location-dot text-gold"></i>
             <span>Sy No. 6/10 & 6/1, Kenchanapur Village, Kengeri Hobali, Sulikere Post, BENGALURU-560060</span>
           </div>
         </div>
@@ -681,7 +958,7 @@
     </div>
   </footer>
 
-  <!-- Floating Direct Contact Elements -->
+  <!-- Floating Direct WhatsApp Button -->
   <a href="https://wa.me/919108713258?text=Hello%20Rayashree,%20I%20am%20visiting%20the%20Rayashree%20Weaving%20website%20and%20would%20like%20to%20inquire%20about%20your%20products." target="_blank" class="floating-whatsapp" title="Chat on WhatsApp with CEO Rayashree">
     <i class="fa-brands fa-whatsapp"></i>
   </a>
@@ -696,16 +973,99 @@
       <i class="fa-brands fa-whatsapp"></i>
       <span>WhatsApp</span>
     </a>
-    <a href="javascript:openRFQModal()" class="mobile-bar-action mobile-bar-quote" title="Get Quick Quote">
-      <i class="fa-solid fa-bolt text-gold"></i>
-      <span>Fast Quote</span>
+    <a href="#customizer" class="mobile-bar-action mobile-bar-quote" title="Customize Bags">
+      <i class="fa-solid fa-sliders text-gold"></i>
+      <span>Customize</span>
     </a>
-    <a href="public/products.html" class="mobile-bar-action" title="Browse Products">
+    <a href="#products" class="mobile-bar-action" title="Browse Products">
       <i class="fa-solid fa-boxes-stacked"></i>
-      <span>Catalog</span>
+      <span>Products</span>
     </a>
   </div>
 
+  <!-- Dedicated Product Customizer Modal -->
+  <div class="modal-backdrop" id="customizerModal">
+    <div class="customizer-modal-dialog">
+      <div class="customizer-modal-header">
+        <h3 style="color: #ffffff; font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 0.6rem;" id="modalCustHeading">
+          <i class="fa-solid fa-sliders text-gold"></i> Customize Product Specification
+        </h3>
+        <button class="modal-close-btn modal-close-trigger" onclick="closeCustomizerModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="customizer-modal-body">
+        <form id="customizerModalForm">
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Selected Product *</label>
+            <select id="modalCustProduct" class="form-control" style="font-weight: 700;">
+              <option value="FIBC Bags">FIBC Bags (Jumbo 1-2 Ton Bulk Container)</option>
+              <option value="Cattle Feed Bags">Cattle Feed Bags</option>
+              <option value="Poultry Feed Bags">Poultry Feed Bags</option>
+              <option value="Cement Bags">Cement Bags (AD*STAR Valve)</option>
+              <option value="Agriculture Bags">Agriculture Bags</option>
+              <option value="Silage Bags">Silage Bags</option>
+              <option value="Liner Bags">Liner Bags</option>
+              <option value="Industrial Bags">Industrial Bags</option>
+            </select>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+            <div>
+              <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Dimensions / Sizing</label>
+              <input type="text" id="modalCustDims" class="form-control" placeholder="e.g. 24 x 38 inch or 90x90x120 cm">
+            </div>
+            <div>
+              <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Target GSM Weight</label>
+              <input type="text" id="modalCustGSM" class="form-control" placeholder="e.g. 85 GSM / 180 GSM">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+            <div>
+              <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Printing & Artwork</label>
+              <select id="modalCustPrinting" class="form-control">
+                <option value="Plain Unprinted">Plain Unprinted</option>
+                <option value="1-2 Color Flexo">1-2 Color Flexo</option>
+                <option value="4-Color Flexo">4-Color Flexo</option>
+                <option value="8-Color HD BOPP Photographic">8-Color HD BOPP Photographic</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Liner Requirement</label>
+              <select id="modalCustLiner" class="form-control">
+                <option value="No Liner (Unlined)">No Liner (Unlined)</option>
+                <option value="Food-Grade LDPE Liner (80-120u)">Food-Grade LDPE Liner (80-120u)</option>
+                <option value="Form-Fit Gusseted Liner">Form-Fit Gusseted Liner</option>
+                <option value="Conductive Type C Liner">Conductive Type C Liner</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Estimated Quantity *</label>
+            <input type="text" id="modalCustQty" class="form-control" placeholder="e.g. 5,000 Bags / 25,000 Bags / Container Load">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; background: var(--dark-50); padding: 1rem; border-radius: 10px; border: 1px solid var(--dark-200);">
+            <div>
+              <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Your Name *</label>
+              <input type="text" id="modalCustName" class="form-control" required placeholder="e.g. Anand Kumar">
+            </div>
+            <div>
+              <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Phone / WhatsApp *</label>
+              <input type="tel" id="modalCustPhone" class="form-control" required placeholder="e.g. 9876543210">
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+            <button type="button" class="btn btn-outline" onclick="closeCustomizerModal()">Cancel</button>
+            <button type="submit" class="btn btn-gold" style="background: #25d366; color: #fff; border: 1px solid #22c55e;">
+              <i class="fa-brands fa-whatsapp"></i> Send Custom Spec on WhatsApp
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!-- Client Feedback Submission Modal -->
   <div class="modal-backdrop" id="feedbackModal">
@@ -716,7 +1076,7 @@
         </h3>
         <button class="modal-close-btn" onclick="closeFeedbackModal()"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <form id="feedbackForm" style="padding-top: 1rem;">
+      <form id="feedbackForm" style="padding: 1.5rem;">
         <div style="margin-bottom: 1rem;">
           <label class="form-label" style="font-weight: 700; color: var(--dark-800); margin-bottom: 0.35rem; display: block;">Your Full Name *</label>
           <input type="text" id="feedbackAuthor" class="form-control" required placeholder="e.g. Ramesh Kumar">
@@ -753,11 +1113,6 @@
           <textarea id="feedbackQuote" class="form-control" rows="3" required placeholder="Share your experience working with Rayashree Weaving packaging products..."></textarea>
         </div>
 
-        <div style="background: var(--dark-50); border: 1px solid var(--dark-200); border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.8rem; color: var(--dark-600); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
-          <i class="fa-solid fa-shield-halved text-emerald" style="font-size: 1rem;"></i>
-          <span>Submitted reviews undergo executive administration review prior to public publishing.</span>
-        </div>
-
         <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
           <button type="button" class="btn btn-outline" onclick="closeFeedbackModal()">Cancel</button>
           <button type="submit" class="btn btn-gold">
@@ -769,8 +1124,8 @@
   </div>
 
   <!-- JavaScript Scripts -->
-  <script src="js/data.js?v=4.0"></script>
-  <script src="js/i18n.js?v=4.0"></script>
-  <script src="js/main.js?v=4.0"></script>
+  <script src="js/data.js?v=6.0"></script>
+  <script src="js/i18n.js?v=6.0"></script>
+  <script src="js/main.js?v=6.0"></script>
 </body>
 </html>

@@ -49,9 +49,9 @@
 
   <!-- Brand Typography -->
   <g transform="translate(245, 10)">
-    <!-- "Rayashree" or "eaving" -->
+    <!-- Brand Title -->
     <text x="0" y="52" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-weight="800" font-size="42" fill="#043933" letter-spacing="-0.5">
-      eaving
+      Weaving
     </text>
     
     <!-- Top Brand Tag -->

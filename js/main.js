@@ -32,6 +32,8 @@ function initApp() {
   try { populateRFQSelect(); } catch (e) { console.error("populateRFQSelect error:", e); }
   try { renderPublicTestimonials(); } catch (e) { console.error("renderPublicTestimonials error:", e); }
   try { initFeedbackModal(); } catch (e) { console.error("initFeedbackModal error:", e); }
+  try { initPackagingConfigurator(); } catch (e) { console.error("initPackagingConfigurator error:", e); }
+  try { initCustomizerModal(); } catch (e) { console.error("initCustomizerModal error:", e); }
 
   // Sync products from server (for Hostinger or multi-device browsing)
   if (typeof syncServerProducts === "function") {
@@ -705,9 +707,14 @@ function initProductGrid() {
           </div>
 
           <div class="product-card-footer">
-            <button class="btn btn-outline btn-sm" onclick="openProductSpecsModal('${prod.id}')" style="flex: 1;"><i class="fa-solid fa-circle-info"></i> View Specs</button>
-            <a href="https://wa.me/919108713258?text=${encodeURIComponent(`Hello Rayashree (Rayashree Weaving),\n\nI want to BUY / order *${prod.name}*.\n• *Category:* ${prod.category || 'Industrial Packaging'}\n• *Capacity / Load:* ${prod.capacityRange || 'Custom'}\n• *GSM Weight:* ${prod.gsmRange || 'Standard'}\n\nPlease share current pricing and order placement details.`)}" target="_blank" class="btn btn-sm" style="flex: 1.2; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; background: #25d366; color: #ffffff; border: 1px solid #25d366; font-weight: 700;">
-              <i class="fa-brands fa-whatsapp" style="font-size: 1.05rem;"></i> Buy Now
+            <button class="btn btn-customize-prod" onclick="openCustomizerModal('${prod.id}')">
+              <i class="fa-solid fa-sliders"></i> Customize Product
+            </button>
+            <button class="btn btn-specs-prod" onclick="openProductSpecsModal('${prod.id}')">
+              <i class="fa-solid fa-circle-info"></i> View Full Specs
+            </button>
+            <a href="https://wa.me/919108713258?text=${encodeURIComponent(`Hello Rayashree (Rayashree Weaving),\n\nI want to order / inquire about *${prod.name}*.\n• *Category:* ${prod.category || 'Industrial Packaging'}\n• *Capacity / Load:* ${prod.capacityRange || 'Custom'}\n• *GSM Weight:* ${prod.gsmRange || 'Standard'}\n\nPlease share current factory pricing and dispatch timeline.`)}" target="_blank" class="btn btn-whatsapp-prod">
+              <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
             </a>
           </div>
 
@@ -1027,6 +1034,216 @@ window.renderPublicTestimonials = renderPublicTestimonials;
 window.initFeedbackModal = initFeedbackModal;
 window.openFeedbackModal = openFeedbackModal;
 window.closeFeedbackModal = closeFeedbackModal;
+
+/* ==========================================================================
+   Interactive Packaging Configurator & Customizer System
+   ========================================================================== */
+
+let activeCustomConfig = {
+  product: "FIBC Bags",
+  dimensions: "90 x 90 x 120 cm",
+  gsm: "180 GSM",
+  printing: "1-2 Color Flexo",
+  liner: "Food-Grade LDPE Liner",
+  quantity: "5,000 Bags"
+};
+
+function initPackagingConfigurator() {
+  const configurator = document.getElementById("customizer");
+  if (!configurator) return;
+
+  const productPills = configurator.querySelectorAll(".config-pill[data-field='product']");
+  const gsmPills = configurator.querySelectorAll(".config-pill[data-field='gsm']");
+  const printPills = configurator.querySelectorAll(".config-pill[data-field='printing']");
+  const linerPills = configurator.querySelectorAll(".config-pill[data-field='liner']");
+
+  function setupPillGroup(pills, fieldKey, summaryId) {
+    pills.forEach(pill => {
+      pill.addEventListener("click", () => {
+        pills.forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+        const val = pill.getAttribute("data-val");
+        activeCustomConfig[fieldKey] = val;
+        const sumEl = document.getElementById(summaryId);
+        if (sumEl) sumEl.textContent = val;
+      });
+    });
+  }
+
+  setupPillGroup(productPills, "product", "sumProduct");
+  setupPillGroup(gsmPills, "gsm", "sumGSM");
+  setupPillGroup(printPills, "printing", "sumPrinting");
+  setupPillGroup(linerPills, "liner", "sumLiner");
+
+  const dimWidth = document.getElementById("customWidth");
+  const dimLength = document.getElementById("customLength");
+  const dimUnit = document.getElementById("customUnit");
+  const sumDimensions = document.getElementById("sumDimensions");
+
+  function updateDimensions() {
+    const w = (dimWidth && dimWidth.value) ? dimWidth.value.trim() : "24";
+    const l = (dimLength && dimLength.value) ? dimLength.value.trim() : "38";
+    const u = (dimUnit && dimUnit.value) ? dimUnit.value : "inch";
+    const str = `${w} x ${l} ${u}`;
+    activeCustomConfig.dimensions = str;
+    if (sumDimensions) sumDimensions.textContent = str;
+  }
+
+  if (dimWidth) dimWidth.addEventListener("input", updateDimensions);
+  if (dimLength) dimLength.addEventListener("input", updateDimensions);
+  if (dimUnit) dimUnit.addEventListener("change", updateDimensions);
+
+  const qtyInput = document.getElementById("customQuantity");
+  const sumQty = document.getElementById("sumQuantity");
+  if (qtyInput) {
+    qtyInput.addEventListener("input", () => {
+      const q = qtyInput.value ? `${Number(qtyInput.value).toLocaleString()} Bags` : "Custom Requirement";
+      activeCustomConfig.quantity = q;
+      if (sumQty) sumQty.textContent = q;
+    });
+  }
+
+  const submitWaBtn = document.getElementById("btnConfigSubmitWA");
+  if (submitWaBtn) {
+    submitWaBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const waNumber = (typeof COMPANY_INFO !== 'undefined' && COMPANY_INFO.whatsappNumber) ? COMPANY_INFO.whatsappNumber : "919108713258";
+      const lines = [
+        `*Rayashree Weaving - Bespoke Packaging Custom Order*`,
+        ``,
+        `📦 *Selected Product Base:* ${activeCustomConfig.product}`,
+        `📐 *Custom Dimensions:* ${activeCustomConfig.dimensions}`,
+        `⚖️ *Target GSM / Fabric Weight:* ${activeCustomConfig.gsm}`,
+        `🎨 *Branding / Printing:* ${activeCustomConfig.printing}`,
+        `🛡️ *Liner / Barrier:* ${activeCustomConfig.liner}`,
+        `📊 *Order Volume:* ${activeCustomConfig.quantity}`,
+        ``,
+        `Please confirm raw material availability, minimum manufacturing run, and factory pricing.`
+      ];
+      window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
+    });
+  }
+
+  const submitRfqBtn = document.getElementById("btnConfigSubmitRFQ");
+  if (submitRfqBtn) {
+    submitRfqBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      openCustomizerModal(activeCustomConfig.product);
+    });
+  }
+}
+
+function initCustomizerModal() {
+  const modal = document.getElementById("customizerModal");
+  if (!modal) return;
+
+  const closeBtns = modal.querySelectorAll(".modal-close-trigger");
+  closeBtns.forEach(btn => {
+    btn.addEventListener("click", closeCustomizerModal);
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeCustomizerModal();
+  });
+
+  const form = document.getElementById("customizerModalForm");
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const clientName = document.getElementById("modalCustName")?.value.trim() || "";
+      const phone = document.getElementById("modalCustPhone")?.value.trim() || "";
+      const prod = document.getElementById("modalCustProduct")?.value || activeCustomConfig.product;
+      const dims = document.getElementById("modalCustDims")?.value.trim() || activeCustomConfig.dimensions;
+      const gsm = document.getElementById("modalCustGSM")?.value.trim() || activeCustomConfig.gsm;
+      const printing = document.getElementById("modalCustPrinting")?.value || activeCustomConfig.printing;
+      const liner = document.getElementById("modalCustLiner")?.value || activeCustomConfig.liner;
+      const qty = document.getElementById("modalCustQty")?.value.trim() || activeCustomConfig.quantity;
+
+      if (!clientName || !phone) {
+        alert("Please enter your name and phone number.");
+        return;
+      }
+
+      if (typeof addInquiry === "function") {
+        addInquiry({
+          clientName: clientName,
+          phone: phone,
+          product: prod,
+          quantity: qty,
+          specifications: `Custom Spec: ${dims}, ${gsm}, Printing: ${printing}, Liner: ${liner}`,
+          priority: "High"
+        });
+      }
+
+      closeCustomizerModal();
+      form.reset();
+
+      const waNumber = (typeof COMPANY_INFO !== 'undefined' && COMPANY_INFO.whatsappNumber) ? COMPANY_INFO.whatsappNumber : "919108713258";
+      const lines = [
+        `*Rayashree Weaving - Custom Bag Specification*`,
+        ``,
+        `📦 *Product:* ${prod}`,
+        `📐 *Dimensions:* ${dims}`,
+        `⚖️ *GSM Weight:* ${gsm}`,
+        `🎨 *Printing:* ${printing}`,
+        `🛡️ *Liner Attachment:* ${liner}`,
+        `📊 *Quantity:* ${qty}`,
+        ``,
+        `👤 *Client Details:*`,
+        `• *Name:* ${clientName}`,
+        `• *Phone:* ${phone}`,
+        ``,
+        `Please share manufacturing quote and lead time.`
+      ];
+      window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
+    });
+  }
+}
+
+function openCustomizerModal(productId = "") {
+  const modal = document.getElementById("customizerModal");
+  const products = (typeof getProducts === 'function') ? getProducts() : [];
+  const prod = products.find(p => p.id === productId || p.slug === productId || p.name === productId);
+
+  if (modal) {
+    if (prod) {
+      const select = document.getElementById("modalCustProduct");
+      if (select) select.value = prod.name;
+      const heading = document.getElementById("modalCustHeading");
+      if (heading) heading.textContent = `Customize ${prod.name}`;
+      const gsmInput = document.getElementById("modalCustGSM");
+      if (gsmInput && prod.gsmRange) gsmInput.value = prod.gsmRange;
+      const dimsInput = document.getElementById("modalCustDims");
+      if (dimsInput && prod.capacityRange) dimsInput.value = prod.capacityRange;
+    }
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+    return;
+  }
+
+  const section = document.getElementById("customizer");
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth" });
+    return;
+  }
+
+  const waNumber = (typeof COMPANY_INFO !== 'undefined' && COMPANY_INFO.whatsappNumber) ? COMPANY_INFO.whatsappNumber : "919108713258";
+  const name = prod ? prod.name : productId || "Industrial Bags";
+  window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(`Hello Rayashree, I would like to customize *${name}* with custom dimensions and GSM.`)}`, "_blank");
+}
+
+function closeCustomizerModal() {
+  const modal = document.getElementById("customizerModal");
+  if (modal) {
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+}
+
+window.openCustomizerModal = openCustomizerModal;
+window.closeCustomizerModal = closeCustomizerModal;
+window.initPackagingConfigurator = initPackagingConfigurator;
+window.initCustomizerModal = initCustomizerModal;
 
 
 
