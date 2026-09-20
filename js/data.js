@@ -22,7 +22,15 @@ const COMPANY_INFO = {
   capacity: "5,000,000+ Sacks / Month",
   established: "2018",
   certifications: ["ISO 9001:2015", "Food Grade BRCGS Compliant", "UV Resistant Standards", "IS 14887:2014"],
-  manufacturersOf: "HDPE / PP Woven Sacks, FIBC Bags, PE Liners & Container Liners, Jute & Linen Textiles"
+  manufacturersOf: "HDPE / PP Woven Sacks, FIBC Bags, PE Liners & Container Liners, Jute & Linen Textiles",
+  machinery: [
+    "BCS Cutting Machine (Lohia Bag Conversion System)",
+    "BCS 6 Colour Online Flexo Printing Machine",
+    "48+ High-Speed Circular Weaving Looms",
+    "High-Tenacity Polymer Tape Extrusion Lines",
+    "Rotogravure BOPP Lamination Line",
+    "AD*STAR Valve Bag Hot-Air Welding Unit"
+  ]
 };
 
 const DEFAULT_PRODUCTS = [
