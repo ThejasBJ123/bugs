@@ -1089,11 +1089,11 @@ function resetDefaultProducts() {
 }
 
 function restoreStandardProducts() {
-  if (confirm("Restore the 7 factory standard manufacturing product lines (Cattle Feed, Poultry Feed, Cement Valve Bags, Silage Bags, Jute Sacks, Linen Fabrics, FIBC Jumbo Bags)?")) {
+  if (confirm("Restore all 12 factory standard manufacturing product lines from the master catalog?")) {
     if (typeof DEFAULT_PRODUCTS !== "undefined") {
       saveProducts(JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)));
       renderProductsTable();
-      showAdminToast("7 Factory standard product lines restored successfully!");
+      showAdminToast("All 12 factory standard product lines restored successfully!");
     }
   }
 }

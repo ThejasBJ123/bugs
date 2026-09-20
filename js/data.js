@@ -40,18 +40,20 @@ const DEFAULT_PRODUCTS = [
     name: "FIBC Bags",
     shortName: "FIBC Bulk Bags",
     category: "Bulk Logistics",
-    badge: "Heavy Duty 2-Ton",
+    badge: "SWL: 1–2 Ton",
     image: "assets/images/fibc-bags.jpg",
-    capacityRange: "500kg - 2,000kg (SWL 1 - 2 Ton)",
-    gsmRange: "140 GSM - 240 GSM",
+    capacityRange: "500–2,000 kg",
+    gsmRange: "SWL: 1–2 Ton",
     material: "Virgin PP Woven Fabric with Safety Factor 5:1 / 6:1",
     tagline: "Heavy-Duty Flexible Intermediate Bulk Containers & Liners",
     specifications: {
+      "Application": "Bulk Logistics",
+      "Size / Capacity": "500–2,000 kg",
+      "Bag Weight / Specification": "SWL: 1–2 Ton",
       "Structure Types": "U-Panel, 4-Panel, Circular, Baffle Q-Bags",
       "Lifting Loops": "Corner Loops, Cross-Corner Loops, Stevedore Straps",
       "Filling / Discharge": "Open Top, Duffle Skirt, Filling Spout, Discharge Valve",
-      "Safety Factor (SF)": "5:1 (Single Trip) / 6:1 (Multi-Trip Heavy Duty)",
-      "Liner Attachments": "Form-Fit, Gusseted, Aluminum Barrier & Conductive Type C"
+      "Safety Factor (SF)": "5:1 (Single Trip) / 6:1 (Multi-Trip Heavy Duty)"
     },
     features: [
       "Rigid ISO 21898 safety drop and load endurance tested",
@@ -66,18 +68,20 @@ const DEFAULT_PRODUCTS = [
     name: "Liner Bags",
     shortName: "Liner Bags",
     category: "Bulk Logistics",
-    badge: "Moisture Proof",
+    badge: "80–200 Micron",
     image: "assets/images/liner-bags.jpg",
-    capacityRange: "Custom Sizes - 50L to 2,000L",
-    gsmRange: "80 Micron - 200 Micron",
+    capacityRange: "50 L–2,000 L",
+    gsmRange: "80–200 Micron",
     material: "Food-Grade Virgin LDPE / LLDPE Polyethylene",
     tagline: "High-Barrier Moisture-Proof Liners for FIBC, Drums & Containers",
     specifications: {
+      "Application": "Bulk Logistics",
+      "Size / Capacity": "50 L–2,000 L",
+      "Bag Weight / Specification": "80–200 Micron",
       "Types": "Form-Fit, Gusseted, Flat, Conductive (Type C), Barrier Foil",
       "Thickness": "80 - 200 Micron (Custom)",
       "Food Grade": "FDA Compliant, ROHS Certified",
-      "Sealing": "Heat Sealed with Reinforced Seams",
-      "Applications": "FIBC Liners, Drum Liners, Container Liners"
+      "Sealing": "Heat Sealed with Reinforced Seams"
     },
     features: [
       "Food-grade compliant for pharmaceuticals, food & chemicals",
@@ -89,47 +93,51 @@ const DEFAULT_PRODUCTS = [
   {
     id: "PROD-CATTLE",
     slug: "cattle-feed",
-    name: "\uD83D\uDC04 Cattle Feed Bags",
+    name: "Cattle Feed Bags",
     shortName: "Cattle Feed Bags",
-    category: "Feed & Agri",
-    badge: "Best Seller",
+    category: "Feed & Agriculture",
+    badge: "Custom Printing",
     image: "assets/images/cattle-feed.jpg",
-    capacityRange: "25kg / 50kg / 75kg",
-    gsmRange: "80 GSM - 95 GSM",
+    capacityRange: "25 / 50 / 75 kg",
+    gsmRange: "Custom printing available",
     material: "100% Virgin HDPE / PP with Anti-Slip Weave",
     tagline: "High-Tensile Anti-Burst Woven Sacks for Animal Feed & Grains",
     specifications: {
+      "Application": "Feed & Agriculture",
+      "Size / Capacity": "25 / 50 / 75 kg",
+      "Bag Weight / Specification": "Custom printing available",
       "Standard Dimensions": "24 x 38 inch / 25 x 40 inch",
       "Weave Type": "10x10 to 12x12 Anti-Slip Diamond Weave",
       "Lamination": "Extrusion BOPP Gloss / Matte Finish",
-      "Printing": "Up to 8-Color High-Definition Rotogravure",
       "Closure Options": "Ultrasonic Hemmed Top, Easy-Open Stitch"
     },
     features: [
       "Zero drop burst guarantee from 10ft stacking height",
       "UV weather stabilizer masterbatch tested for 2,000+ hours",
       "Anti-slip micro-ribbed surface for pallet and truck stability",
-      "Moisture-lock food-grade PE liner insertion available"
+      "Custom multi-color branding and product labeling"
     ]
   },
   {
     id: "PROD-POULTRY",
     slug: "poultry-feed",
-    name: "\uD83D\uDC14 Poultry Feed Bags",
+    name: "Poultry Feed Bags",
     shortName: "Poultry Feed Bags",
-    category: "Feed & Agri",
-    badge: "Export Grade",
+    category: "Feed & Agriculture",
+    badge: "BOPP Photographic",
     image: "assets/images/poultry-feed.jpg",
-    capacityRange: "25kg / 50kg",
-    gsmRange: "85 GSM - 110 GSM",
+    capacityRange: "25 / 50 kg",
+    gsmRange: "BOPP / Photographic",
     material: "Premium PP Polymer with High-Gloss BOPP",
     tagline: "Photographic Multi-Color Printed Sacks with Moisture Barrier",
     specifications: {
+      "Application": "Feed & Agriculture",
+      "Size / Capacity": "25 / 50 kg",
+      "Bag Weight / Specification": "BOPP / Photographic Printing",
       "Standard Dimensions": "22 x 36 inch / 24 x 39 inch",
       "Printing Quality": "HD Photographic Quality (300 DPI)",
       "Handle Options": "Punch D-Cut Handle, Top Hemmed",
-      "Gusseting": "Single & Double Deep Side Gussets",
-      "Lamination": "Micro-Perforated or High Gloss BOPP"
+      "Gusseting": "Single & Double Deep Side Gussets"
     },
     features: [
       "Photo-quality 8-color graphics for retail shelf impact",
@@ -141,21 +149,23 @@ const DEFAULT_PRODUCTS = [
   {
     id: "PROD-CEMENT",
     slug: "cement-bags",
-    name: "\uD83C\uDFD7\uFE0F Cement Bags",
+    name: "Cement Bags",
     shortName: "Cement Bags",
     category: "Building & Construction",
-    badge: "AD*STAR Tech",
+    badge: "AD*STAR Valve",
     image: "assets/images/cement.jpg",
-    capacityRange: "50kg Standard",
-    gsmRange: "70 GSM - 85 GSM",
+    capacityRange: "50 kg",
+    gsmRange: "AD*STAR Valve Bags",
     material: "High-Strength Coated Woven Polypropylene",
     tagline: "Self-Closing Valve Packaging for High-Speed Rotary Cement Fillers",
     specifications: {
-      "Standard Dimensions": "50 x 60 x 11 cm (50kg Cement Standard)",
+      "Application": "Building & Construction",
+      "Size / Capacity": "50 kg",
+      "Bag Weight / Specification": "AD*STAR Valve Bags",
+      "Standard Dimensions": "50 x 60 x 11 cm (50kg Standard)",
       "Valve Type": "Self-Closing Inner & Outer Flap Valve",
-      "Sealing Technology": "Hot Air Welding (No Adhesive/Glue)",
-      "Aeration": "Nano-Perforation for Fast Dust-Free Filling",
-      "Breaking Load": "High Tensile > 750 N (Warp & Weft)"
+      "Sealing Technology": "Hot Air Welding (No Glue)",
+      "Aeration": "Nano-Perforation for Fast Dust-Free Filling"
     },
     features: [
       "Brick-shape stacking eliminates spillage and optimizes transport",
@@ -167,25 +177,27 @@ const DEFAULT_PRODUCTS = [
   {
     id: "PROD-AGRI",
     slug: "agriculture-bags",
-    name: "\uD83C\uDF3E Agriculture Bags",
+    name: "Agriculture Bags",
     shortName: "Agriculture Bags",
     category: "Agriculture & Farming",
-    badge: "Farm Grade",
+    badge: "UV Weatherproof",
     image: "assets/images/agriculture-bags.jpg",
-    capacityRange: "10kg / 25kg / 50kg",
-    gsmRange: "60 GSM - 90 GSM",
+    capacityRange: "10 / 25 / 50 kg",
+    gsmRange: "UV Weatherproof options",
     material: "100% Virgin PP Woven with UV Stabilizer",
     tagline: "Durable Woven Bags for Seeds, Grains, Fertilizers & Produce",
     specifications: {
+      "Application": "Agriculture & Farming",
+      "Size / Capacity": "10 / 25 / 50 kg",
+      "Bag Weight / Specification": "UV Weatherproof options",
       "Standard Dimensions": "18 x 28 inch / 22 x 38 inch",
       "Printing": "Up to 6-Color Flexo / Rotogravure",
       "UV Protection": "UV Masterbatch Stabilized for Field Use",
-      "Closure": "Open Mouth or Valve Type",
-      "Lamination": "BOPP Laminated or Plain Woven"
+      "Closure": "Open Mouth or Valve Type"
     },
     features: [
       "Breathable weave prevents moisture buildup in stored grains",
-      "UV-stabilized for outdoor farm and field use",
+      "UV-stabilized for outdoor farm and field storage",
       "Available in printed or plain versions for bulk labeling",
       "High-tensile stitching for rough field handling"
     ]
@@ -193,21 +205,23 @@ const DEFAULT_PRODUCTS = [
   {
     id: "PROD-SILAGE",
     slug: "silage-bags",
-    name: "\uD83C\uDF31 Silage Bags",
+    name: "Silage Bags",
     shortName: "Silage Bags",
     category: "Agriculture & Farming",
     badge: "High Barrier",
     image: "assets/images/silage-bags.jpg",
-    capacityRange: "25 - 200 L / 500kg Tube",
-    gsmRange: "100 GSM - 250 GSM (150-250 Micron)",
+    capacityRange: "25 L–200 L / 500 kg Tube",
+    gsmRange: "High Barrier / Fermentation",
     material: "Multi-Layer UV Fortified Virgin Polyethylene",
     tagline: "Anerobic Fermentation Sacks for Green Fodder & Crop Storage",
     specifications: {
-      "Available Sizes": "50kg, 100kg & 10ft Continuous Silo Tubes",
+      "Application": "Agriculture & Farming",
+      "Size / Capacity": "25 L–200 L / 500 kg Tube",
+      "Bag Weight / Specification": "High Barrier / Fermentation",
+      "Available Sizes": "50kg, 100kg & Continuous Silo Tubes",
       "UV Resistance": "Minimum 24 Months Field Sunlight Rating",
       "Puncture Strength": "High Dart Impact (> 1,200 grams)",
-      "Oxygen Barrier": "< 10 cc/m2/24h Oxygen Permeability",
-      "Color Options": "White/Black Dual-Tone (Sun Reflective)"
+      "Oxygen Barrier": "< 10 cc/m2/24h Oxygen Permeability"
     },
     features: [
       "White exterior reflects solar heat to preserve silage quality",
@@ -219,27 +233,141 @@ const DEFAULT_PRODUCTS = [
   {
     id: "PROD-INDUSTRIAL",
     slug: "industrial-bags",
-    name: "\uD83C\uDFED Industrial Bags",
+    name: "Industrial Bags",
     shortName: "Industrial Bags",
-    category: "Industrial",
-    badge: "Heavy Duty",
+    category: "Industrial Packaging",
+    badge: "Heavy-Duty PP/HDPE",
     image: "assets/images/industrial-bags.jpg",
-    capacityRange: "10kg - 100kg",
-    gsmRange: "90 GSM - 180 GSM",
+    capacityRange: "10–100 kg",
+    gsmRange: "Heavy-Duty PP / HDPE",
     material: "Heavy-Duty Virgin PP / HDPE Woven Polypropylene",
     tagline: "Robust Woven Sacks for Chemicals, Minerals & Industrial Bulk",
     specifications: {
+      "Application": "Industrial Packaging",
+      "Size / Capacity": "10–100 kg",
+      "Bag Weight / Specification": "Heavy-Duty PP / HDPE",
       "Standard Dimensions": "Custom Sizes Available",
       "Lamination": "BOPP / PE Coated / Uncoated Options",
       "Printing": "Up to 8-Color Rotogravure or Flexo",
-      "Closure": "Open Mouth, Valve, Heat-Sealed or Sewn",
-      "Special Options": "Anti-Static, UV Stabilized, Breathable Weave"
+      "Closure": "Open Mouth, Valve, Heat-Sealed or Sewn"
     },
     features: [
       "High-tensile anti-burst construction for industrial bulk loads",
       "Chemical-resistant coating for corrosive material storage",
       "Custom print, sizing and lamination for brand compliance",
       "Stackable pallet-compatible design for efficient warehouse logistics"
+    ]
+  },
+  {
+    id: "PROD-COTTON",
+    slug: "cotton-calico-bags",
+    name: "Cotton / Calico Bags",
+    shortName: "Cotton Bags",
+    category: "General Packaging",
+    badge: "Multi-Colour",
+    image: "assets/images/linen-fabric.jpg",
+    capacityRange: "Custom Size",
+    gsmRange: "1–2+ Colours / Multi-Colour",
+    material: "Natural Cotton & Calico Woven Fabric",
+    tagline: "Eco-Friendly Reusable Packaging for Retail, Flour & General Goods",
+    specifications: {
+      "Application": "General Packaging",
+      "Size / Capacity": "Custom Size",
+      "Bag Weight / Specification": "1–2+ Colours / Multi-Colour",
+      "Material": "100% Natural Cotton / Calico",
+      "Printing": "1–2+ Colours / Multi-Colour Screen & Digital",
+      "Handles": "Drawstring, Loop Handle, Stitched Hem",
+      "Eco Grade": "100% Biodegradable & Reusable"
+    },
+    features: [
+      "Breathable natural fiber ideal for flour, pulses, spices & retail",
+      "High-definition 1 to 2+ multi-color custom brand printing",
+      "Reusable, washable, and eco-friendly consumer appeal",
+      "Heavy-duty lock stitching for repeated handling"
+    ]
+  },
+  {
+    id: "PROD-GUNNY-JUTE",
+    slug: "gunny-jute-bags",
+    name: "Gunny / Jute Bags",
+    shortName: "Gunny / Jute Bags",
+    category: "Agriculture & General Use",
+    badge: "28 × 42 in",
+    image: "assets/images/jute.jpg",
+    capacityRange: "28 × 42 inches (70–80 kg capacity)",
+    gsmRange: "1–1.25 kg bag weight",
+    material: "100% Golden Natural Jute / Gunny Fiber",
+    tagline: "Traditional High-Strength Heavy-Duty Sacks for Agri Produce",
+    specifications: {
+      "Application": "Agriculture & General Use",
+      "Size / Capacity": "28 × 42 inches",
+      "Bag Weight / Specification": "1–1.25 kg bag weight; 70–80 kg capacity",
+      "Standard Dimensions": "28 × 42 inches (71 × 107 cm)",
+      "Bag Weight": "1.0 kg – 1.25 kg per bag",
+      "Holding Capacity": "70 kg – 80 kg",
+      "Fiber Treatment": "Hydrocarbon-Free (VOT Food Grade)"
+    },
+    features: [
+      "Golden natural high-strength jute weave for 70-80kg heavy grain loads",
+      "Heavy 1 - 1.25 kg bag weight ensures puncture and rough-transit resistance",
+      "Natural breathability prevents sweating and mold in grains & pulses",
+      "Export quality compliant for coffee, grains, potato & onion packaging"
+    ]
+  },
+  {
+    id: "PROD-SUGAR",
+    slug: "sugar-bags",
+    name: "Sugar Bags",
+    shortName: "Sugar Bags",
+    category: "Sugar Packaging",
+    badge: "26 × 37 in",
+    image: "assets/images/bags.jpg",
+    capacityRange: "26 × 37 inches (50 kg capacity)",
+    gsmRange: "950 g–1 kg bag weight",
+    material: "High-Density PP Woven Fabric with Food-Grade Inner Liner",
+    tagline: "Specialized Sugar Mill Packaging with Moisture-Lock Protection",
+    specifications: {
+      "Application": "Sugar Packaging",
+      "Size / Capacity": "26 × 37 inches",
+      "Bag Weight / Specification": "950 g–1 kg bag weight; 50 kg capacity",
+      "Standard Dimensions": "26 × 37 inches (66 × 94 cm)",
+      "Bag Weight": "950 grams – 1.0 kg per bag",
+      "Holding Capacity": "50 kg Sugar Standard",
+      "Liner": "Food-grade PE liner to prevent moisture clumping"
+    },
+    features: [
+      "Engineered strictly to sugar mill standard dimensions 26 × 37 in",
+      "950g - 1kg heavy-duty construction prevents bursting under stacking pressure",
+      "Total moisture barrier safeguards refined sugar against humidity caking",
+      "Anti-skid weave for stable multi-tier warehouse and pallet stacking"
+    ]
+  },
+  {
+    id: "PROD-GP-GUNNY",
+    slug: "general-purpose-gunny-bags",
+    name: "General-Purpose Gunny Bags",
+    shortName: "GP Gunny Bags",
+    category: "Grain & Agriculture",
+    badge: "Ragi & Wheat",
+    image: "assets/images/jute.jpg",
+    capacityRange: "Custom / Requirement Based",
+    gsmRange: "Ragi, Wheat & Grains",
+    material: "Natural Jute & Heavy Woven Twill",
+    tagline: "Versatile Eco-Friendly Sacks for Ragi, Wheat & Agricultural Grains",
+    specifications: {
+      "Application": "Grain & Agriculture",
+      "Size / Capacity": "Custom / Requirement Based",
+      "Bag Weight / Specification": "Ragi, Wheat & other grains",
+      "Compatible Grains": "Ragi, Wheat, Paddy, Maize, Pulses, Seeds",
+      "Dimensions": "Custom sizes tailored to client mandate",
+      "Weave Type": "Standard & Heavy Twill",
+      "Stitching": "Herakle safety stitch with reinforced mouth"
+    },
+    features: [
+      "Optimized for South Indian staple crops: Ragi (Finger Millet), Wheat & Cereals",
+      "Customizable dimensions and weight tailored to local mandi and APMC requirements",
+      "Superior aeration maintains seed germination and moisture equilibrium",
+      "High reusability and biodegradable natural composition"
     ]
   }
 ];
@@ -494,7 +622,7 @@ function getProducts() {
           return true;
         });
 
-        if (cleaned.length > 0) {
+        if (cleaned.length >= DEFAULT_PRODUCTS.length) {
           if (cleaned.length !== parsed.length) {
             localStorage.setItem("rw_products", JSON.stringify(cleaned));
           }
@@ -505,7 +633,7 @@ function getProducts() {
       console.error("Error reading rw_products from localStorage:", e); 
     }
   }
-  // If empty or null, seed with standard default manufacturing products
+  // If empty, null or outdated, seed with all 12 standard manufacturing products
   localStorage.setItem("rw_products", JSON.stringify(DEFAULT_PRODUCTS));
   return DEFAULT_PRODUCTS;
 }

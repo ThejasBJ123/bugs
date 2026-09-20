@@ -768,12 +768,15 @@
 
       <!-- Filter Buttons (Pre-rendered & Dynamic) -->
       <div class="product-filter-bar" id="productFilterBar" style="margin-bottom: 2rem;">
-        <button class="filter-btn active" data-filter="All">All Products (8)</button>
+        <button class="filter-btn active" data-filter="All">All Products (12)</button>
         <button class="filter-btn" data-filter="Bulk Logistics">Bulk Logistics</button>
-        <button class="filter-btn" data-filter="Feed & Agri">Feed & Agri</button>
+        <button class="filter-btn" data-filter="Feed & Agriculture">Feed & Agriculture</button>
         <button class="filter-btn" data-filter="Building & Construction">Building & Construction</button>
         <button class="filter-btn" data-filter="Agriculture & Farming">Agriculture & Farming</button>
-        <button class="filter-btn" data-filter="Industrial">Industrial</button>
+        <button class="filter-btn" data-filter="Industrial Packaging">Industrial Packaging</button>
+        <button class="filter-btn" data-filter="General Packaging">General Packaging</button>
+        <button class="filter-btn" data-filter="Sugar Packaging">Sugar Packaging</button>
+        <button class="filter-btn" data-filter="Gunny">Gunny / Jute</button>
       </div>
 
       <!-- All Products Grid with Images & VERTICAL Action Buttons -->
@@ -1018,23 +1021,23 @@
         </div>
 
         <!-- Product 8: Industrial Bags -->
-        <div class="product-card" data-category="Industrial">
+        <div class="product-card" data-category="Industrial Packaging">
           <div class="product-card-img" onclick="openProductSpecsModal('PROD-INDUSTRIAL')" style="cursor: pointer;">
-            <img src="assets/images/industrial.jpg" alt="Industrial Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
-            <span class="product-badge">Heavy Duty</span>
+            <img src="assets/images/industrial-bags.jpg" alt="Industrial Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+            <span class="product-badge">Heavy-Duty PP/HDPE</span>
           </div>
           <div class="product-card-body">
-            <span class="product-category">Industrial</span>
-            <h3 class="product-title" onclick="openProductSpecsModal('PROD-INDUSTRIAL')" style="cursor: pointer;">⚙️ Industrial Bags</h3>
-            <p class="product-tagline">Heavy-Duty Chemical, Mineral, Resin & Heavy Hardware Sacks</p>
+            <span class="product-category">Industrial Packaging</span>
+            <h3 class="product-title" onclick="openProductSpecsModal('PROD-INDUSTRIAL')" style="cursor: pointer;">Industrial Bags</h3>
+            <p class="product-tagline">Heavy-Duty Chemical, Mineral, Resin & Industrial Bulk Woven Sacks</p>
             <div class="product-specs-preview">
               <div class="spec-preview-item">
-                <span class="spec-preview-label">Capacity / Load:</span>
-                <span class="spec-preview-val">25kg / 50kg / 1,000kg</span>
+                <span class="spec-preview-label">Size / Capacity:</span>
+                <span class="spec-preview-val">10–100 kg</span>
               </div>
               <div class="spec-preview-item">
-                <span class="spec-preview-label">GSM Weight:</span>
-                <span class="spec-preview-val">90 GSM - 180 GSM</span>
+                <span class="spec-preview-label">Bag Weight / Spec:</span>
+                <span class="spec-preview-val">Heavy-Duty PP / HDPE</span>
               </div>
             </div>
             <div class="product-card-footer">
@@ -1044,13 +1047,301 @@
               <button class="btn btn-specs-prod" onclick="openProductSpecsModal('PROD-INDUSTRIAL')">
                 <i class="fa-solid fa-circle-info"></i> View Full Specs
               </button>
-              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*Industrial%20Bags*.%0A%E2%80%A2%20*Category:*%20Industrial%0A%E2%80%A2%20*Capacity%20/%20Load:*%2025kg%20/%2050kg%20/%201,000kg%0A%E2%80%A2%20*GSM%20Weight:*%2090%20GSM%20-%20180%20GSM%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
+              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*Industrial%20Bags*.%0A%E2%80%A2%20*Category:*%20Industrial%20Packaging%0A%E2%80%A2%20*Capacity%20/%20Load:*%2010%E2%80%93100%20kg%0A%E2%80%A2%20*Bag%20Weight%20/%20Spec:*%20Heavy-Duty%20PP%20/%20HDPE%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
                 <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
               </a>
             </div>
           </div>
         </div>
 
+        <!-- Product 9: Cotton / Calico Bags -->
+        <div class="product-card" data-category="General Packaging">
+          <div class="product-card-img" onclick="openProductSpecsModal('PROD-COTTON')" style="cursor: pointer;">
+            <img src="assets/images/linen-fabric.jpg" alt="Cotton / Calico Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+            <span class="product-badge">Multi-Colour</span>
+          </div>
+          <div class="product-card-body">
+            <span class="product-category">General Packaging</span>
+            <h3 class="product-title" onclick="openProductSpecsModal('PROD-COTTON')" style="cursor: pointer;">Cotton / Calico Bags</h3>
+            <p class="product-tagline">Eco-Friendly Reusable Packaging for Retail, Flour & General Goods</p>
+            <div class="product-specs-preview">
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Size / Capacity:</span>
+                <span class="spec-preview-val">Custom Size</span>
+              </div>
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Bag Weight / Spec:</span>
+                <span class="spec-preview-val">1–2+ Colours / Multi-Colour</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn btn-customize-prod" onclick="openCustomizerModal('PROD-COTTON')">
+                <i class="fa-solid fa-sliders"></i> Customize Product
+              </button>
+              <button class="btn btn-specs-prod" onclick="openProductSpecsModal('PROD-COTTON')">
+                <i class="fa-solid fa-circle-info"></i> View Full Specs
+              </button>
+              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*Cotton%20/%20Calico%20Bags*.%0A%E2%80%A2%20*Category:*%20General%20Packaging%0A%E2%80%A2%20*Capacity:*%20Custom%20Size%0A%E2%80%A2%20*Specification:*%201%E2%80%932%2B%20Colours%20/%20Multi-Colour%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
+                <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 10: Gunny / Jute Bags -->
+        <div class="product-card" data-category="Agriculture & General Use">
+          <div class="product-card-img" onclick="openProductSpecsModal('PROD-GUNNY-JUTE')" style="cursor: pointer;">
+            <img src="assets/images/jute.jpg" alt="Gunny / Jute Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+            <span class="product-badge">28 × 42 in</span>
+          </div>
+          <div class="product-card-body">
+            <span class="product-category">Agriculture & General Use</span>
+            <h3 class="product-title" onclick="openProductSpecsModal('PROD-GUNNY-JUTE')" style="cursor: pointer;">Gunny / Jute Bags</h3>
+            <p class="product-tagline">Traditional High-Strength Heavy-Duty Sacks for Agri Produce</p>
+            <div class="product-specs-preview">
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Size / Capacity:</span>
+                <span class="spec-preview-val">28 × 42 inches</span>
+              </div>
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Bag Weight / Spec:</span>
+                <span class="spec-preview-val">1–1.25 kg bag weight; 70–80 kg capacity</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn btn-customize-prod" onclick="openCustomizerModal('PROD-GUNNY-JUTE')">
+                <i class="fa-solid fa-sliders"></i> Customize Product
+              </button>
+              <button class="btn btn-specs-prod" onclick="openProductSpecsModal('PROD-GUNNY-JUTE')">
+                <i class="fa-solid fa-circle-info"></i> View Full Specs
+              </button>
+              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*Gunny%20/%20Jute%20Bags*.%0A%E2%80%A2%20*Category:*%20Agriculture%20%26%20General%20Use%0A%E2%80%A2%20*Size:*%2028%20%C3%97%2042%20inches%0A%E2%80%A2%20*Specification:*%201%E2%80%931.25%20kg%20bag%20weight;%2070%E2%80%9380%20kg%20capacity%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
+                <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 11: Sugar Bags -->
+        <div class="product-card" data-category="Sugar Packaging">
+          <div class="product-card-img" onclick="openProductSpecsModal('PROD-SUGAR')" style="cursor: pointer;">
+            <img src="assets/images/bags.jpg" alt="Sugar Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+            <span class="product-badge">26 × 37 in</span>
+          </div>
+          <div class="product-card-body">
+            <span class="product-category">Sugar Packaging</span>
+            <h3 class="product-title" onclick="openProductSpecsModal('PROD-SUGAR')" style="cursor: pointer;">Sugar Bags</h3>
+            <p class="product-tagline">Specialized Sugar Mill Packaging with Moisture-Lock Protection</p>
+            <div class="product-specs-preview">
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Size / Capacity:</span>
+                <span class="spec-preview-val">26 × 37 inches</span>
+              </div>
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Bag Weight / Spec:</span>
+                <span class="spec-preview-val">950 g–1 kg bag weight; 50 kg capacity</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn btn-customize-prod" onclick="openCustomizerModal('PROD-SUGAR')">
+                <i class="fa-solid fa-sliders"></i> Customize Product
+              </button>
+              <button class="btn btn-specs-prod" onclick="openProductSpecsModal('PROD-SUGAR')">
+                <i class="fa-solid fa-circle-info"></i> View Full Specs
+              </button>
+              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*Sugar%20Bags*.%0A%E2%80%A2%20*Category:*%20Sugar%20Packaging%0A%E2%80%A2%20*Size:*%2026%20%C3%97%2037%20inches%0A%E2%80%A2%20*Specification:*%20950%20g%E2%80%931%20kg%20bag%20weight;%2050%20kg%20capacity%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
+                <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 12: General-Purpose Gunny Bags -->
+        <div class="product-card" data-category="Grain & Agriculture">
+          <div class="product-card-img" onclick="openProductSpecsModal('PROD-GP-GUNNY')" style="cursor: pointer;">
+            <img src="assets/images/jute.jpg" alt="General-Purpose Gunny Bags" loading="lazy" onerror="this.src='assets/images/bags.jpg'">
+            <span class="product-badge">Ragi & Wheat</span>
+          </div>
+          <div class="product-card-body">
+            <span class="product-category">Grain & Agriculture</span>
+            <h3 class="product-title" onclick="openProductSpecsModal('PROD-GP-GUNNY')" style="cursor: pointer;">General-Purpose Gunny Bags</h3>
+            <p class="product-tagline">Versatile Eco-Friendly Sacks for Ragi, Wheat & Agricultural Grains</p>
+            <div class="product-specs-preview">
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Size / Capacity:</span>
+                <span class="spec-preview-val">Custom / Requirement Based</span>
+              </div>
+              <div class="spec-preview-item">
+                <span class="spec-preview-label">Bag Weight / Spec:</span>
+                <span class="spec-preview-val">Ragi, Wheat & other grains</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn btn-customize-prod" onclick="openCustomizerModal('PROD-GP-GUNNY')">
+                <i class="fa-solid fa-sliders"></i> Customize Product
+              </button>
+              <button class="btn btn-specs-prod" onclick="openProductSpecsModal('PROD-GP-GUNNY')">
+                <i class="fa-solid fa-circle-info"></i> View Full Specs
+              </button>
+              <a href="https://wa.me/919108713258?text=Hello%20Rayashree%20(Rayashree%20Weaving),%0A%0AI%20want%20to%20order%20/%20inquire%20about%20*General-Purpose%20Gunny%20Bags*.%0A%E2%80%A2%20*Category:*%20Grain%20%26%20Agriculture%0A%E2%80%A2%20*Capacity:*%20Custom%20/%20Requirement%20Based%0A%E2%80%A2%20*Specification:*%20Ragi,%20Wheat%20%26%20other%20grains%0A%0APlease%20share%20current%20factory%20pricing%20and%20dispatch%20timeline." target="_blank" class="btn btn-whatsapp-prod">
+                <i class="fa-brands fa-whatsapp"></i> Buy / Inquire on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Official Product Specifications Matrix Table -->
+      <div class="product-matrix-container" style="margin-top: 3.5rem; background: #ffffff; border-radius: 14px; border: 1px solid rgba(223, 183, 116, 0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.06); padding: 2rem; overflow-x: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+          <div>
+            <span class="section-tag section-tag-emerald" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+              <i class="fa-solid fa-clipboard-list text-gold"></i> Complete Factory Manufacturing Matrix
+            </span>
+            <h3 style="font-size: 1.65rem; font-weight: 800; color: var(--primary-900); margin: 0.35rem 0 0 0;">
+              Product Portfolio & Technical Specifications
+            </h3>
+          </div>
+          <a href="https://wa.me/919108713258?text=Hello%20Rayashree,%20I%20would%20like%20to%20request%20a%20master%20quotation%20for%20your%20products." target="_blank" class="btn btn-gold btn-sm">
+            <i class="fa-brands fa-whatsapp"></i> Inquire Full Catalog
+          </a>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
+          <thead>
+            <tr style="background: linear-gradient(135deg, #032b27 0%, #07524a 100%); color: #ffffff;">
+              <th style="padding: 0.9rem 1rem; border-top-left-radius: 8px; font-weight: 800; text-align: center; width: 60px;">No.</th>
+              <th style="padding: 0.9rem 1rem; font-weight: 800;">Product</th>
+              <th style="padding: 0.9rem 1rem; font-weight: 800;">Application</th>
+              <th style="padding: 0.9rem 1rem; font-weight: 800;">Size / Capacity</th>
+              <th style="padding: 0.9rem 1rem; font-weight: 800;">Bag Weight / Specification</th>
+              <th style="padding: 0.9rem 1rem; border-top-right-radius: 8px; text-align: center; font-weight: 800;">Quick Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+              <td style="padding: 0.85rem 1rem; text-align: center; font-weight: 700; color: #043933;">1</td>
+              <td style="padding: 0.85rem 1rem; font-weight: 800; color: #07524a;">FIBC Bags</td>
+              <td style="padding: 0.85rem 1rem;"><span style="background: #e6f4f1; color: #043933; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">Bulk Logistics</span></td>
+              <td style="padding: 0.85rem 1rem; font-weight: 600;">500–2,000 kg</td>
+              <td style="padding: 0.85rem 1rem; color: #334155;">SWL: 1–2 Ton</td>
+              <td style="padding: 0.85rem 1rem; text-align: center;">
+                <button onclick="openProductSpecsModal('PROD-FIBC')" class="btn btn-outline btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;"><i class="fa-solid fa-circle-info"></i> Specs</button>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+              <td style="padding: 0.85rem 1rem; text-align: center; font-weight: 700; color: #043933;">2</td>
+              <td style="padding: 0.85rem 1rem; font-weight: 800; color: #07524a;">Liner Bags</td>
+              <td style="padding: 0.85rem 1rem;"><span style="background: #e6f4f1; color: #043933; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">Bulk Logistics</span></td>
+              <td style="padding: 0.85rem 1rem; font-weight: 600;">50 L–2,000 L</td>
+              <td style="padding: 0.85rem 1rem; color: #334155;">80–200 Micron</td>
+              <td style="padding: 0.85rem 1rem; text-align: center;">
+                <button onclick="openProductSpecsModal('PROD-LINER')" class="btn btn-outline btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;"><i class="fa-solid fa-circle-info"></i> Specs</button>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+              <td style="padding: 0.85rem 1rem; text-align: center; font-weight: 700; color: #043933;">3</td>
+              <td style="padding: 0.85rem 1rem; font-weight: 800; color: #07524a;">Cattle Feed Bags</td>
+              <td style="padding: 0.85rem 1rem;"><span style="background: #fef3c7; color: #92400e; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">Feed & Agriculture</span></td>
+              <td style="padding: 0.85rem 1rem; font-weight: 600;">25 / 50 / 75 kg</td>
+              <td style="padding: 0.85rem 1rem; color: #334155;">Custom printing available</td>
+              <td style="padding: 0.85rem 1rem; text-align: center;">
+                <button onclick="openProductSpecsModal('PROD-CATTLE')" class="btn btn-outline btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;"><i class="fa-solid fa-circle-info"></i> Specs</button>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+              <td style="padding: 0.85rem 1rem; text-align: center; font-weight: 700; color: #043933;">4</td>
+              <td style="padding: 0.85rem 1rem; font-weight: 800; color: #07524a;">Poultry Feed Bags</td>
+              <td style="padding: 0.85rem 1rem;"><span style="background: #fef3c7; color: #92400e; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">Feed & Agriculture</span></td>
+              <td style="padding: 0.85rem 1rem; font-weight: 600;">25 / 50 kg</td>
+              <td style="padding: 0.85rem 1rem; color: #334155;">BOPP / Photographic Printing</td>
+              <td style="padding: 0.85rem 1rem; text-align: center;">
+                <button onclick="openProductSpecsModal('PROD-POULTRY')" class="btn btn-outline btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;"><i class="fa-solid fa-circle-info"></i> Specs</button>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+              <td style="padding: 0.85rem 1rem; text-align: center; font-weight: 700; color: #043933;">5</td>
+              <td style="padding: 0.85rem 1rem; font-weight: 800; color: #07524a;">Cement Bags</td>
+              <td style="padding: 0.85rem 1rem;"><span style="background: #ede9fe; color: #5b21b6; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">Building & Construction</span></td>
+              <td style="padding: 0.85rem 1rem; font-weight: 600;">50 kg</td>
+              <td style="padding: 0.85rem 1rem; color: #334155;">AD*STAR Valve Bags</td>
+              <td style="padding: 0.85rem 1rem; text-align: center;">
+                <button onclick="openProductSpecsModal('PROD-CEMENT')" class="btn btn-outline btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;"><i class="fa-solid fa-circle-info"></i> Specs</button>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+              <td style="padding: 0.85rem 1rem; text-align: center; font-weight: 700; color: #043933;">6</td>
+              <td style="padding: 0.85rem 1rem; font-weight: 800; color: #07524a;">Agriculture Bags</td>
+              <td style="padding: 0.85rem 1rem;"><span style="background: #dcfce7; color: #166534; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">Agriculture & Farming</span></td>
+              <td style="padding: 0.85rem 1rem; font-weight: 600;">10 / 25 / 50 kg</td>
+              <td style="padding: 0.85rem 1rem; color: #334155;">UV Weatherproof options</td>
+              <td style="padding: 0.85rem 1rem; text-align: center;">
+                <button onclick="openProductSpecsModal('PROD-AGRI')" class="btn btn-outline btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;"><i class="fa-solid fa-circle-info"></i> Specs</button>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+              <td style="padding: 0.85rem 1rem; text-align: center; font-weight: 700; color: #043933;">7</td>
+              <td style="padding: 0.85rem 1rem; font-weight: 800; color: #07524a;">Silage Bags</td>
+              <td style="padding: 0.85rem 1rem;"><span style="background: #dcfce7; color: #166534; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">Agriculture & Farming</span></td>
+              <td style="padding: 0.85rem 1rem; font-weight: 600;">25 L–200 L / 500 kg Tube</td>
+              <td style="padding: 0.85rem 1rem; color: #334155;">High Barrier / Fermentation</td>
+              <td style="padding: 0.85rem 1rem; text-align: center;">
+                <button onclick="openProductSpecsModal('PROD-SILAGE')" class="btn btn-outline btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;"><i class="fa-solid fa-circle-info"></i> Specs</button>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+              <td style="padding: 0.85rem 1rem; text-align: center; font-weight: 700; color: #043933;">8</td>
+              <td style="padding: 0.85rem 1rem; font-weight: 800; color: #07524a;">Industrial Bags</td>
+              <td style="padding: 0.85rem 1rem;"><span style="background: #e2e8f0; color: #334155; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">Industrial Packaging</span></td>
+              <td style="padding: 0.85rem 1rem; font-weight: 600;">10–100 kg</td>
+              <td style="padding: 0.85rem 1rem; color: #334155;">Heavy-Duty PP / HDPE</td>
+              <td style="padding: 0.85rem 1rem; text-align: center;">
+                <button onclick="openProductSpecsModal('PROD-INDUSTRIAL')" class="btn btn-outline btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;"><i class="fa-solid fa-circle-info"></i> Specs</button>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+              <td style="padding: 0.85rem 1rem; text-align: center; font-weight: 700; color: #043933;">9</td>
+              <td style="padding: 0.85rem 1rem; font-weight: 800; color: #07524a;">Cotton / Calico Bags</td>
+              <td style="padding: 0.85rem 1rem;"><span style="background: #f1f5f9; color: #475569; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">General Packaging</span></td>
+              <td style="padding: 0.85rem 1rem; font-weight: 600;">Custom Size</td>
+              <td style="padding: 0.85rem 1rem; color: #334155;">1–2+ Colours / Multi-Colour</td>
+              <td style="padding: 0.85rem 1rem; text-align: center;">
+                <button onclick="openProductSpecsModal('PROD-COTTON')" class="btn btn-outline btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;"><i class="fa-solid fa-circle-info"></i> Specs</button>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+              <td style="padding: 0.85rem 1rem; text-align: center; font-weight: 700; color: #043933;">10</td>
+              <td style="padding: 0.85rem 1rem; font-weight: 800; color: #07524a;">Gunny / Jute Bags</td>
+              <td style="padding: 0.85rem 1rem;"><span style="background: #fef9c3; color: #854d0e; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">Agriculture & General Use</span></td>
+              <td style="padding: 0.85rem 1rem; font-weight: 700; color: #064e3b;">28 × 42 inches</td>
+              <td style="padding: 0.85rem 1rem; color: #334155;">1–1.25 kg bag weight; 70–80 kg capacity</td>
+              <td style="padding: 0.85rem 1rem; text-align: center;">
+                <button onclick="openProductSpecsModal('PROD-GUNNY-JUTE')" class="btn btn-outline btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;"><i class="fa-solid fa-circle-info"></i> Specs</button>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+              <td style="padding: 0.85rem 1rem; text-align: center; font-weight: 700; color: #043933;">11</td>
+              <td style="padding: 0.85rem 1rem; font-weight: 800; color: #07524a;">Sugar Bags</td>
+              <td style="padding: 0.85rem 1rem;"><span style="background: #e0f2fe; color: #0369a1; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">Sugar Packaging</span></td>
+              <td style="padding: 0.85rem 1rem; font-weight: 700; color: #064e3b;">26 × 37 inches</td>
+              <td style="padding: 0.85rem 1rem; color: #334155;">950 g–1 kg bag weight; 50 kg capacity</td>
+              <td style="padding: 0.85rem 1rem; text-align: center;">
+                <button onclick="openProductSpecsModal('PROD-SUGAR')" class="btn btn-outline btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;"><i class="fa-solid fa-circle-info"></i> Specs</button>
+              </td>
+            </tr>
+            <tr style="transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+              <td style="padding: 0.85rem 1rem; text-align: center; font-weight: 700; color: #043933;">12</td>
+              <td style="padding: 0.85rem 1rem; font-weight: 800; color: #07524a;">General-Purpose Gunny Bags</td>
+              <td style="padding: 0.85rem 1rem;"><span style="background: #ffedd5; color: #9a3412; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem;">Grain & Agriculture</span></td>
+              <td style="padding: 0.85rem 1rem; font-weight: 600;">Custom / Requirement Based</td>
+              <td style="padding: 0.85rem 1rem; color: #334155;">Ragi, Wheat & other grains</td>
+              <td style="padding: 0.85rem 1rem; text-align: center;">
+                <button onclick="openProductSpecsModal('PROD-GP-GUNNY')" class="btn btn-outline btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;"><i class="fa-solid fa-circle-info"></i> Specs</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div class="text-center" style="margin-top: 2.5rem;">
@@ -1177,13 +1468,17 @@
                 <span class="pill-name">FIBC Bags</span>
                 <span class="pill-meta">1 - 2 Ton SWL</span>
               </div>
+              <div class="config-pill" data-field="product" data-val="Liner Bags">
+                <span class="pill-name">PE Liners</span>
+                <span class="pill-meta">80–200 Micron</span>
+              </div>
               <div class="config-pill" data-field="product" data-val="Cattle Feed Bags">
                 <span class="pill-name">Cattle Feed</span>
                 <span class="pill-meta">25 / 50 / 75 kg</span>
               </div>
               <div class="config-pill" data-field="product" data-val="Poultry Feed Bags">
                 <span class="pill-name">Poultry Feed</span>
-                <span class="pill-meta">HD BOPP Print</span>
+                <span class="pill-meta">BOPP Print</span>
               </div>
               <div class="config-pill" data-field="product" data-val="Cement Bags">
                 <span class="pill-name">Cement Bags</span>
@@ -1197,13 +1492,25 @@
                 <span class="pill-name">Silage Bags</span>
                 <span class="pill-meta">High Barrier</span>
               </div>
-              <div class="config-pill" data-field="product" data-val="Liner Bags">
-                <span class="pill-name">PE Liners</span>
-                <span class="pill-meta">Moisture Proof</span>
-              </div>
               <div class="config-pill" data-field="product" data-val="Industrial Bags">
                 <span class="pill-name">Industrial</span>
-                <span class="pill-meta">Heavy Duty</span>
+                <span class="pill-meta">Heavy Duty PP</span>
+              </div>
+              <div class="config-pill" data-field="product" data-val="Cotton / Calico Bags">
+                <span class="pill-name">Cotton / Calico</span>
+                <span class="pill-meta">Multi-Colour</span>
+              </div>
+              <div class="config-pill" data-field="product" data-val="Gunny / Jute Bags">
+                <span class="pill-name">Gunny / Jute</span>
+                <span class="pill-meta">28 × 42 inches</span>
+              </div>
+              <div class="config-pill" data-field="product" data-val="Sugar Bags">
+                <span class="pill-name">Sugar Bags</span>
+                <span class="pill-meta">26 × 37 inches</span>
+              </div>
+              <div class="config-pill" data-field="product" data-val="General-Purpose Gunny Bags">
+                <span class="pill-name">GP Gunny Bags</span>
+                <span class="pill-meta">Ragi & Wheat</span>
               </div>
             </div>
           </div>
@@ -1849,7 +2156,7 @@
   <script>
     try {
       var _storedProds = localStorage.getItem("rw_products");
-      if (_storedProds === "[]" || _storedProds === "null" || !_storedProds) {
+      if (!_storedProds || _storedProds === "[]" || _storedProds === "null" || JSON.parse(_storedProds).length < 12) {
         localStorage.removeItem("rw_products");
       }
       var _storedComp = localStorage.getItem("rw_company_info");
