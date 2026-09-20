@@ -740,7 +740,7 @@
     <div class="container header-inner">
       <a href="index.html" class="brand-logo" title="Rayashree Weaving Pvt. Ltd.">
         <div class="brand-logo-pill">
-          <img src="assets/logo.svg" alt="Rayashree Weaving Logo" class="brand-header-logo" onerror="this.src='assets/logo.png'">
+          <img src="assets/logo.png" alt="Rayashree Weaving Logo" class="brand-header-logo">
         </div>
       </a>
 
@@ -1639,7 +1639,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <div class="brand-logo-pill" style="display: inline-flex; margin-bottom: 1.25rem;">
-            <img src="assets/logo.svg" alt="Rayashree Weaving Logo" class="brand-header-logo" onerror="this.src='assets/logo.png'">
+            <img src="assets/logo.png" alt="Rayashree Weaving Logo" class="brand-header-logo">
           </div>
           <p class="footer-desc">
             Rayashree Weaving Pvt. Ltd. is Bangalore's premier manufacturing powerhouse producing high-tensile HDPE / PP Woven Sacks, FIBC Bags, PE Liners, Container Liners, Jute, and Linen Fabrics.
@@ -1876,7 +1876,7 @@
         localStorage.removeItem("rw_products");
       }
       var _storedComp = localStorage.getItem("rw_company_info");
-      if (_storedComp && _storedComp.includes("logo.png")) {
+      if (_storedComp && (_storedComp.includes("logo.svg") || _storedComp.includes("logo-white.svg"))) {
         localStorage.removeItem("rw_company_info");
       }
     } catch(e) {}

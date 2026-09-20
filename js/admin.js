@@ -1259,7 +1259,7 @@ function loadCmsFormValues() {
 
   // 6. Logo & Visual Branding CMS
   if (company) {
-    const currentLogo = company.logo || company.logoWhite || "../assets/logo-white.svg";
+    const currentLogo = company.logo || company.logoWhite || "../assets/logo.png";
     if (document.getElementById("cmsBrandLogoUrl")) document.getElementById("cmsBrandLogoUrl").value = currentLogo;
     if (document.getElementById("cmsBrandName")) document.getElementById("cmsBrandName").value = company.brandName || company.name || "Rayashree Weaving";
     if (document.getElementById("cmsBrandTagline")) document.getElementById("cmsBrandTagline").value = company.tagline || "";

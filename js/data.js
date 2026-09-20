@@ -6,8 +6,8 @@ const COMPANY_INFO = {
   name: "Rayashree Weaving Pvt. Ltd.",
   brandName: "Rayashree Weaving",
   tagline: "Precision Woven Solutions • Global Quality Packaging & Textiles",
-  logo: "assets/logo.svg",
-  logoWhite: "assets/logo-white.svg",
+  logo: "assets/logo.png",
+  logoWhite: "assets/logo.png",
   ceo: "Rayashree",
   designation: "Company CEO",
   phone: "+91 9108713258",
@@ -298,11 +298,11 @@ function getCompanyInfo() {
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      if (!parsed.logo) {
-        parsed.logo = "assets/logo.svg";
+      if (!parsed.logo || parsed.logo.includes(".svg")) {
+        parsed.logo = "assets/logo.png";
       }
-      if (!parsed.logoWhite) {
-        parsed.logoWhite = "assets/logo-white.svg";
+      if (!parsed.logoWhite || parsed.logoWhite.includes(".svg")) {
+        parsed.logoWhite = "assets/logo.png";
       }
       return { ...COMPANY_INFO, ...parsed };
     } catch (e) { console.error(e); }
