@@ -156,38 +156,38 @@ function applyDynamicSiteContent() {
 
   // 3. Home Page Hero & Stats (if on index.html)
   if (content && content.home) {
-    const heroTag = document.querySelector(".hero-tag");
+    const heroTag = document.querySelector(".hero-tag, .hero-compact .section-tag");
     if (heroTag && content.home.heroTag) heroTag.textContent = content.home.heroTag;
 
-    const heroTitle = document.querySelector(".hero-title");
+    const heroTitle = document.querySelector(".hero-title, .hero-compact-title");
     if (heroTitle && content.home.heroTitle) heroTitle.textContent = content.home.heroTitle;
 
-    const heroSubtitle = document.querySelector(".hero-subtitle");
+    const heroSubtitle = document.querySelector(".hero-subtitle, .hero-compact-desc");
     if (heroSubtitle && content.home.heroSubtitle) heroSubtitle.textContent = content.home.heroSubtitle;
 
-    const statCards = document.querySelectorAll(".stat-card, .stat-item");
+    const statCards = document.querySelectorAll(".stat-card, .stat-item, .mini-stat-item");
     if (statCards.length >= 4) {
       if (content.home.stat1Val) {
-        const num = statCards[0].querySelector(".stat-number");
-        const lbl = statCards[0].querySelector(".stat-label");
+        const num = statCards[0].querySelector(".stat-number, .mini-stat-num");
+        const lbl = statCards[0].querySelector(".stat-label, .mini-stat-lbl");
         if (num) num.textContent = content.home.stat1Val;
         if (lbl) lbl.textContent = content.home.stat1Label;
       }
       if (content.home.stat2Val) {
-        const num = statCards[1].querySelector(".stat-number");
-        const lbl = statCards[1].querySelector(".stat-label");
+        const num = statCards[1].querySelector(".stat-number, .mini-stat-num");
+        const lbl = statCards[1].querySelector(".stat-label, .mini-stat-lbl");
         if (num) num.textContent = content.home.stat2Val || "48+ Looms";
         if (lbl) lbl.textContent = content.home.stat2Label || "High-Speed Circular Looms";
       }
       if (content.home.stat3Val) {
-        const num = statCards[2].querySelector(".stat-number");
-        const lbl = statCards[2].querySelector(".stat-label");
+        const num = statCards[2].querySelector(".stat-number, .mini-stat-num");
+        const lbl = statCards[2].querySelector(".stat-label, .mini-stat-lbl");
         if (num) num.textContent = content.home.stat3Val;
         if (lbl) lbl.textContent = content.home.stat3Label;
       }
       if (content.home.stat4Val) {
-        const num = statCards[3].querySelector(".stat-number");
-        const lbl = statCards[3].querySelector(".stat-label");
+        const num = statCards[3].querySelector(".stat-number, .mini-stat-num");
+        const lbl = statCards[3].querySelector(".stat-label, .mini-stat-lbl");
         if (num) num.textContent = content.home.stat4Val;
         if (lbl) lbl.textContent = content.home.stat4Label;
       }
@@ -201,6 +201,12 @@ function applyDynamicSiteContent() {
     
     const heroP = document.querySelector("h1 + p");
     if (heroP && content.products.heroSubtitle) heroP.textContent = content.products.heroSubtitle;
+
+    const customTitle = document.querySelector(".section-tag-emerald + h2");
+    if (customTitle && content.products.customTitle) customTitle.textContent = content.products.customTitle;
+
+    const customDesc = document.querySelector(".section-tag-emerald + h2 + p");
+    if (customDesc && content.products.customDesc) customDesc.textContent = content.products.customDesc;
   }
 
   // 5. About Us Page Dynamic Content (if on about.html)
@@ -208,8 +214,16 @@ function applyDynamicSiteContent() {
     const h2Hero = document.querySelector(".section-tag-emerald + h2");
     if (h2Hero && content.about.heading) h2Hero.textContent = content.about.heading;
 
+    const aboutP = document.querySelector(".section-tag-emerald + h2 + p");
+    if (aboutP && content.about.subheading) aboutP.textContent = content.about.subheading;
+
     const ceoQuote = document.querySelector(".executive-grid p");
     if (ceoQuote && content.about.ceoMessage) ceoQuote.textContent = `"${content.about.ceoMessage}"`;
+
+    if (company && company.ceo) {
+      const ceoNameInCard = document.querySelector(".profile-info h3");
+      if (ceoNameInCard) ceoNameInCard.textContent = company.ceo;
+    }
   }
 
   // 6. Infrastructure Page Dynamic Content (if on infrastructure.html)
@@ -222,9 +236,27 @@ function applyDynamicSiteContent() {
   }
 
   // 7. Contact Page Dynamic Content (if on contact.html)
-  if (company && window.location.pathname.includes("contact.html")) {
-    const ceoNameEl = document.querySelector(".fa-user-tie ~ div > div:first-child");
-    if (ceoNameEl && company.ceo) ceoNameEl.textContent = company.ceo;
+  if (window.location.pathname.includes("contact.html")) {
+    if (company && company.ceo) {
+      const ceoNameEl = document.querySelector(".fa-user-tie ~ div > div:first-child");
+      if (ceoNameEl) ceoNameEl.textContent = company.ceo;
+      const ceoChatBtn = document.querySelector(".btn-gold");
+      if (ceoChatBtn && ceoChatBtn.textContent.includes("Rayashree")) {
+        ceoChatBtn.innerHTML = `<i class="fa-brands fa-whatsapp"></i> Chat with CEO ${company.ceo}`;
+      }
+    }
+    if (company && company.hours) {
+      const hoursEl = document.querySelector(".fa-phone-volume ~ div > div:last-child");
+      if (hoursEl) hoursEl.textContent = company.hours;
+    }
+  }
+
+  // 8. Global CEO Name across all footers
+  if (company && company.ceo) {
+    const footerCeos = document.querySelectorAll(".footer-contact-item .fa-user-tie ~ span");
+    footerCeos.forEach(el => {
+      el.innerHTML = `<strong>${company.ceo}</strong> (Company CEO)`;
+    });
   }
 }
 
