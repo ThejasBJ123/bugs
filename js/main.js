@@ -34,6 +34,7 @@ function initApp() {
   try { initFeedbackModal(); } catch (e) { console.error("initFeedbackModal error:", e); }
   try { initPackagingConfigurator(); } catch (e) { console.error("initPackagingConfigurator error:", e); }
   try { initCustomizerModal(); } catch (e) { console.error("initCustomizerModal error:", e); }
+  try { initBackToTopButton(); } catch (e) { console.error("initBackToTopButton error:", e); }
 
   // Sync products from server (for Hostinger or multi-device browsing)
   if (typeof syncServerProducts === "function") {
@@ -283,6 +284,42 @@ function initNavbar() {
       }
     });
   }
+}
+
+/* ==========================================================================
+   Floating Back to Top Button
+   ========================================================================== */
+
+function initBackToTopButton() {
+  let btn = document.getElementById("backToTopBtn");
+  if (!btn) {
+    btn = document.createElement("button");
+    btn.id = "backToTopBtn";
+    btn.className = "floating-back-to-top";
+    btn.setAttribute("aria-label", "Back to top");
+    btn.setAttribute("title", "Back to top");
+    btn.innerHTML = `<i class="fa-solid fa-chevron-up"></i><span class="top-tooltip">Back to Top</span>`;
+    document.body.appendChild(btn);
+  }
+
+  const toggleVisibility = () => {
+    if (window.scrollY > 280) {
+      btn.classList.add("visible");
+    } else {
+      btn.classList.remove("visible");
+    }
+  };
+
+  window.addEventListener("scroll", toggleVisibility, { passive: true });
+  toggleVisibility();
+
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
 }
 
 /* ==========================================================================

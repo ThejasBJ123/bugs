@@ -613,6 +613,93 @@
       color: #dfb774 !important;
       border-color: #032b27 !important;
     }
+
+    /* Floating Back to Top Button */
+    .floating-back-to-top {
+      position: fixed;
+      bottom: 102px;
+      right: 34px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #032b27 0%, #07524a 100%);
+      color: #ffffff;
+      border: 1.5px solid #dfb774;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      box-shadow: 0 8px 25px rgba(3, 43, 39, 0.4);
+      z-index: 99998;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(0.85);
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease, box-shadow 0.25s ease;
+      outline: none;
+    }
+    .floating-back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+    .floating-back-to-top:hover {
+      background: linear-gradient(135deg, #dfb774 0%, #c4984f 100%);
+      color: #032b27;
+      border-color: #ffffff;
+      transform: translateY(-4px) scale(1.08);
+      box-shadow: 0 12px 30px rgba(223, 183, 116, 0.5);
+    }
+    .floating-back-to-top:active {
+      transform: translateY(1px) scale(0.96);
+    }
+    .floating-back-to-top .top-tooltip {
+      position: absolute;
+      right: 64px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(3, 43, 39, 0.96);
+      color: #ffffff;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(223, 183, 116, 0.4);
+    }
+    .floating-back-to-top .top-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -6px;
+      transform: translateY(-50%);
+      border-width: 6px 0 6px 6px;
+      border-style: solid;
+      border-color: transparent transparent transparent rgba(3, 43, 39, 0.96);
+    }
+    .floating-back-to-top:hover .top-tooltip {
+      opacity: 1;
+      visibility: visible;
+      right: 68px;
+    }
+    @media (max-width: 768px) {
+      .floating-back-to-top {
+        bottom: 8.6rem !important;
+        right: 1.15rem !important;
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 1.1rem !important;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3) !important;
+      }
+      .floating-back-to-top .top-tooltip {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1609,6 +1696,12 @@
       </div>
     </div>
   </footer>
+
+  <!-- Floating Back to Top Button -->
+  <button class="floating-back-to-top" id="backToTopBtn" aria-label="Back to Top" title="Back to Top">
+    <i class="fa-solid fa-chevron-up"></i>
+    <span class="top-tooltip">Back to Top</span>
+  </button>
 
   <!-- Floating Direct WhatsApp Button -->
   <a href="https://wa.me/919108713258?text=Hello%20Rayashree,%20I%20am%20visiting%20the%20Rayashree%20Weaving%20website%20and%20would%20like%20to%20inquire%20about%20your%20products." target="_blank" class="floating-whatsapp" title="Chat on WhatsApp with CEO Rayashree">
